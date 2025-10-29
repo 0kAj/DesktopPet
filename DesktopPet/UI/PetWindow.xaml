@@ -13,6 +13,8 @@
         WindowState="Normal"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
+        MouseDown="Pet_OnMouseDown"
+        MouseUp="Pet_OnMouseUp"
         Title="PetWindow" Height="200" Width="200">
     <StackPanel>
         <Label Foreground="Beige" Padding="70 0" Name="debugLabel">DebugInfo</Label>

@@ -30,7 +30,7 @@ public class GravityMovementState : IBehaviourState
 
     public bool CanTick()
     {
-        return true;
+        return !(_petWindow.IsOnGround || _petWindow.IsOnDragging);
     }
 
     public void Tick()

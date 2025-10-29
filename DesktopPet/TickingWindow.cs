@@ -1,4 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace DesktopPet;
@@ -36,4 +39,19 @@ public abstract class TickingWindow : Window
     }
     
     protected abstract void Tick();
+    
+    protected Point GetGlobalMousePos() => PointToScreen(Mouse.GetPosition(this));
+    
+    protected Point GetDPISaveGlobalMousePos()
+    {
+        var pos = GetGlobalMousePos();
+        double scale = GetWindowsScale(this); // z. B. 1.0 oder 1.25
+
+        // physische Pixel → WPF Device-Independent Pixels (DIPs)
+        return new Point(pos.X / scale, pos.Y / scale);
+    }
+
+    
+    protected double GetWindowsScale(Visual v) => VisualTreeHelper.GetDpi(v).PixelsPerDip;
+    
 }
