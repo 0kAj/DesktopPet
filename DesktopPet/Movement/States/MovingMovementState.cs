@@ -9,7 +9,7 @@ namespace DesktopPet.Movement.States
     {
         private readonly PetWindow _petWindow;
         private double _targetX;
-        private const double Speed = 100;
+        private const double Speed = 3;
         private bool _isDone;
 
         public bool IsDone => _isDone;
@@ -34,14 +34,14 @@ namespace DesktopPet.Movement.States
 
         public bool CanTick() => !_isDone && _petWindow.IsOnGround;
 
-        public void Tick(double deltaTime)
+        public void Tick()
         {
             if (_isDone)
                 return;
 
             double direction = Math.Sign(_targetX - _petWindow.Left);
 
-            _petWindow.Left += direction * Speed * deltaTime;
+            _petWindow.Left += direction * Speed;
 
             if ((direction > 0 && _petWindow.Left >= _targetX) ||
                 (direction < 0 && _petWindow.Left <= _targetX))

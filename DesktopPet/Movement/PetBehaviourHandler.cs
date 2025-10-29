@@ -13,12 +13,12 @@ public class PetMovementHandler
         _behaviourStates.ForEach((s) => s.OnStart());
     }
 
-    public void Tick(double deltaTime)
+    public void Tick()
     {
         // Alle triggerbaren States gleichzeitig aktivieren
         foreach (var state in _behaviourStates.Where(s => s.CanTick()))
         {
-            state.Tick(deltaTime);
+            state.Tick();
             if (state.IsDone)
                 state.OnEnd();
         }

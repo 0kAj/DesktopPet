@@ -1,39 +1,39 @@
 ﻿using System.Windows;
+using System.Windows.Threading;
 
 namespace DesktopPet;
 
 public abstract class TickingWindow : Window
 {
-    protected bool DoTick { get; set; }
-    private bool _isTicking;
-    DateTime lastUpdate;
+    private bool DoTick { get; set; }
+
+    public bool IsTicking => _timer.IsEnabled;
+    private DispatcherTimer _timer;
 
     protected TickingWindow()
     {
         DoTick = true;
-        Loaded += (sender, args) => StartTick();
-        lastUpdate = DateTime.Now;
+        
+        _timer = new DispatcherTimer();
+        SetDelta(0.01);
+        _timer.Tick += (_, __) => Tick();
+        _timer.Start();
     }
 
-    protected async void StartTick()
+    protected void SetDelta(double delta)
     {
-        if (_isTicking)
-            return;
-        
-        _isTicking = true;
-        
-        while (DoTick)
-        {
-            // Zeitdifferenz berechnen (in Sekunden)
-            var now = DateTime.Now;
-            double deltaTime = (now - lastUpdate).TotalSeconds;
-            lastUpdate = now;
-            
-            Tick(deltaTime);
-            await Task.Delay(10);
-        }
-        _isTicking = false;
+        _timer.Interval = TimeSpan.FromSeconds(delta);
     }
     
-    protected abstract void Tick(double deltaTime);
+    protected void StartTicking()
+    {
+        _timer.Start();
+    }
+
+    protected void StopTicking()
+    {
+        _timer.Stop();
+    }
+    
+    protected abstract void Tick();
 }

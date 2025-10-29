@@ -19,11 +19,11 @@ public partial class PetWindow : TickingWindow
             new MovingMovementState(this));
     }
 
-    protected override void Tick(double deltaTime)
+    protected override void Tick()
     {
         // lasse das Pet vom Zentrum auf die Taskleiste fallen
         // bewege nach irgendwo auf der Taskleiste
         // bewege es nach rechts
-        _petMovementHandler.Tick(deltaTime);
+        _petMovementHandler.Tick();
     }
 }

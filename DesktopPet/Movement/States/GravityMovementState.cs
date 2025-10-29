@@ -8,7 +8,7 @@ public class GravityMovementState : IBehaviourState
 {
     private double _targetY;
     private double _velocityY = 0;
-    private const double Gravity = 9.81 * 30;
+    private const double Gravity = 9.81 / 100;
     private readonly PetWindow _petWindow;
 
     public GravityMovementState(PetWindow petWindow)
@@ -33,10 +33,10 @@ public class GravityMovementState : IBehaviourState
         return true;
     }
 
-    public void Tick(double deltaTime)
+    public void Tick()
     {
-        _velocityY += Gravity * deltaTime;
-        _petWindow.Top += _velocityY * deltaTime;
+        _velocityY += Gravity;
+        _petWindow.Top += _velocityY;
 
         if (_petWindow.Top >= _targetY)
         {

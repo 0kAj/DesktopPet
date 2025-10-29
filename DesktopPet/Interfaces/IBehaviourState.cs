@@ -7,6 +7,6 @@ public interface IBehaviourState
     bool IsDone { get; }
     void OnStart();
     bool CanTick();
-    void Tick(double deltaTime);
+    void Tick();
     void OnEnd();
 }
