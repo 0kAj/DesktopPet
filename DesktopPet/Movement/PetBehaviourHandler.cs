@@ -10,7 +10,6 @@ public class PetMovementHandler
     public PetMovementHandler(params IBehaviourState[] startStates)
     {
         _behaviourStates.AddRange(startStates);
-        _behaviourStates.ForEach((s) => s.OnStart());
     }
 
     public void Tick()

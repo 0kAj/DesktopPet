@@ -17,9 +17,13 @@ namespace DesktopPet.Movement.States
         public MovingMovementState(PetWindow petWindow)
         {
             this._petWindow = petWindow;
+
+            GenerateRadomTargetX();
+            
+            _isDone = false;
         }
 
-        public void OnStart()
+        private void GenerateRadomTargetX()
         {
             var screen = SystemParameters.WorkArea;
 
@@ -28,8 +32,6 @@ namespace DesktopPet.Movement.States
             _targetX = random.Next((int)screen.Left, (int)(screen.Right - _petWindow.Width));
             
             _petWindow.debugLabel.Content = _targetX.ToString();
-            
-            _isDone = false;
         }
 
         public bool CanTick() => !_isDone && _petWindow.IsOnGround;
@@ -48,13 +50,13 @@ namespace DesktopPet.Movement.States
             {
                 _petWindow.Left = _targetX;
                 _isDone = true;
-                OnEnd();
+                GenerateRadomTargetX();
             }
         }
 
         public void OnEnd()
         {
-            OnStart(); // looping
+            
         }
     }
 }

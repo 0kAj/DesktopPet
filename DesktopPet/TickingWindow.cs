@@ -10,7 +10,7 @@ public abstract class TickingWindow : Window
     private bool DoTick { get; set; }
 
     public bool IsTicking => _timer.IsEnabled;
-    private readonly DispatcherTimer _timer;
+    private DispatcherTimer _timer;
 
     protected TickingWindow()
     {

@@ -5,10 +5,11 @@ namespace DesktopPet.UI;
 
 public partial class PetWindow : TickingWindow
 {
-    private readonly PetMovementHandler _petMovementHandler;
+    private PetMovementHandler _petMovementHandler;
     
     public bool IsOnGround { get; set; }
     public bool IsOnDragging { get; set; }
+    public double VelocityY { get; set; }
     
     public PetWindow()
     {

@@ -5,14 +5,17 @@ using DesktopPet.UI;
 
 namespace DesktopPet.Movement.States;
 
-public class DragDropMovementState(PetWindow petWindow) : IBehaviourState
+public class DragDropMovementState : IBehaviourState
 {
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
 
+    private PetWindow _petWindow;
+    
     public bool IsDone => false; // always draggable
-    public void OnStart()
+    public DragDropMovementState(PetWindow petWindow)
     {
+        _petWindow = petWindow;
         // MouseDown="Pet_OnMouseDown"
         // MouseUp="Pet_OnMouseUp"
         petWindow.MouseDown += Pet_OnMouseDown;
@@ -23,13 +26,13 @@ public class DragDropMovementState(PetWindow petWindow) : IBehaviourState
 
     public void Tick()
     {
-        if (petWindow.IsOnDragging)
+        if (_petWindow.IsOnDragging)
         {
-            var dragPos = petWindow.GetDPISaveGlobalMousePos();
+            var dragPos = _petWindow.GetDPISaveGlobalMousePos();
             var dir = dragPos - _dragStartPos;
             var targetpos = _dragStartWindowPos + dir;
-            petWindow.Left = targetpos.X;
-            petWindow.Top = targetpos.Y;
+            _petWindow.Left = targetpos.X;
+            _petWindow.Top = targetpos.Y;
         }
     }
 
@@ -42,19 +45,20 @@ public class DragDropMovementState(PetWindow petWindow) : IBehaviourState
     private void Pet_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         // drag start
-        petWindow.IsOnDragging = true;
-        _dragStartPos = petWindow.GetDPISaveGlobalMousePos();
-        _dragStartWindowPos = new Vector(petWindow.Left, petWindow.Top);
-        petWindow.debugLabel.Content = "Mouse Down";
-        petWindow.CaptureMouse();
+        _petWindow.IsOnDragging = true;
+        _petWindow.IsOnGround = false;
+        _petWindow.VelocityY = 0;
+        _dragStartPos = _petWindow.GetDPISaveGlobalMousePos();
+        _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
+        _petWindow.debugLabel.Content = "Mouse Down";
+        _petWindow.CaptureMouse();
     }
 
     private void Pet_OnMouseUp(object sender, MouseButtonEventArgs e)
     {
         // drag end
-        petWindow.IsOnGround = false;
-        petWindow.IsOnDragging = false;
-        petWindow.debugLabel.Content = "Mouse Up";
-        petWindow.ReleaseMouseCapture();
+        _petWindow.IsOnDragging = false;
+        _petWindow.debugLabel.Content = "Mouse Up";
+        _petWindow.ReleaseMouseCapture();
     }
 }

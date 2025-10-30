@@ -6,10 +6,9 @@ namespace DesktopPet.Movement.States;
 
 public class GravityMovementState : IBehaviourState
 {
-    private readonly double _targetY;
-    private double _velocityY = 0;
+    private double _targetY;
     private const double Gravity = 9.81 / 100;
-    private readonly PetWindow _petWindow;
+    private PetWindow _petWindow;
 
     public GravityMovementState(PetWindow petWindow)
     {
@@ -23,11 +22,6 @@ public class GravityMovementState : IBehaviourState
 
     public bool IsDone => _petWindow.IsOnGround;
 
-    public void OnStart()
-    {
-        
-    }
-
     public bool CanTick()
     {
         return !(_petWindow.IsOnGround || _petWindow.IsOnDragging);
@@ -35,13 +29,13 @@ public class GravityMovementState : IBehaviourState
 
     public void Tick()
     {
-        _velocityY += Gravity;
-        _petWindow.Top += _velocityY;
+        _petWindow.VelocityY += Gravity;
+        _petWindow.Top += _petWindow.VelocityY;
 
         if (_petWindow.Top >= _targetY)
         {
             _petWindow.Top = _targetY;
-            _velocityY = 0;
+            _petWindow.VelocityY = 0;
             _petWindow.IsOnGround = true;
             OnEnd();
         }
