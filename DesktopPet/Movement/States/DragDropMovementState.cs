@@ -47,7 +47,7 @@ public class DragDropMovementState : IBehaviourState
         // drag start
         _petWindow.IsOnDragging = true;
         _petWindow.IsOnGround = false;
-        _petWindow.VelocityY = 0;
+        _petWindow.ResetVelocity();
         _dragStartPos = _petWindow.GetDPISaveGlobalMousePos();
         _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
         _petWindow.debugLabel.Content = "Mouse Down";

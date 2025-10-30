@@ -30,11 +30,9 @@ public class GravityMovementState : IBehaviourState
     public void Tick()
     {
         _petWindow.VelocityY += Gravity;
-        _petWindow.Top += _petWindow.VelocityY;
 
         if (_petWindow.Top >= _targetY)
         {
-            _petWindow.Top = _targetY;
             _petWindow.VelocityY = 0;
             _petWindow.IsOnGround = true;
             OnEnd();

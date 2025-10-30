@@ -16,11 +16,9 @@ namespace DesktopPet.Movement.States
 
         public MovingMovementState(PetWindow petWindow)
         {
-            this._petWindow = petWindow;
+            _petWindow = petWindow;
 
             GenerateRadomTargetX();
-            
-            _isDone = false;
         }
 
         private void GenerateRadomTargetX()
@@ -32,6 +30,7 @@ namespace DesktopPet.Movement.States
             _targetX = random.Next((int)screen.Left, (int)(screen.Right - _petWindow.Width));
             
             _petWindow.debugLabel.Content = _targetX.ToString();
+            _isDone = false;
         }
 
         public bool CanTick() => !_isDone && _petWindow.IsOnGround;
@@ -41,14 +40,16 @@ namespace DesktopPet.Movement.States
             if (_isDone)
                 return;
 
-            double direction = Math.Sign(_targetX - _petWindow.Left);
+            var distance = _targetX - _petWindow.Left;
+            double direction = Math.Sign(distance);
 
-            _petWindow.Left += direction * Speed;
+            // _petWindow.Left += direction * Speed;
+            _petWindow.VelocityX = direction * Speed;
 
-            if ((direction > 0 && _petWindow.Left >= _targetX) ||
-                (direction < 0 && _petWindow.Left <= _targetX))
+            if (Math.Abs(distance) < 5)
             {
-                _petWindow.Left = _targetX;
+                // _petWindow.Left = _targetX;
+                // _petWindow.VelocityX = 0;
                 _isDone = true;
                 GenerateRadomTargetX();
             }

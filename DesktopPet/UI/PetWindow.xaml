@@ -1,4 +1,4 @@
-﻿<desktopPet:TickingWindow x:Class="DesktopPet.UI.PetWindow"
+﻿<desktopPet:VelocityWindow x:Class="DesktopPet.UI.PetWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,9 +13,9 @@
         WindowState="Normal"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="PetWindow" Height="200" Width="200">
-    <StackPanel>
-        <Label Foreground="Beige" Padding="70 0" Name="debugLabel">DebugInfo</Label>
-        <Rectangle Name="pet" Margin="0 135 0 0" Height="50" Width="50" Fill="Aqua"/>
-    </StackPanel>
-</desktopPet:TickingWindow>
+        Title="PetWindow" Height="77" Width="51">
+    <DockPanel>
+        <Label DockPanel.Dock="Top" Foreground="Beige" Name="debugLabel">DebugInfo</Label>
+        <Rectangle Name="pet"  Height="50" Width="50" Fill="Aqua"/>
+    </DockPanel>
+</desktopPet:VelocityWindow>
