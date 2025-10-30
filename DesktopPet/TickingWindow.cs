@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -11,7 +10,7 @@ public abstract class TickingWindow : Window
     private bool DoTick { get; set; }
 
     public bool IsTicking => _timer.IsEnabled;
-    private DispatcherTimer _timer;
+    private readonly DispatcherTimer _timer;
 
     protected TickingWindow()
     {

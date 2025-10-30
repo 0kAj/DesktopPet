@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using DesktopPet.Movement;
+﻿using DesktopPet.Movement;
 using DesktopPet.Movement.States;
 
 namespace DesktopPet.UI;
@@ -10,7 +8,6 @@ public partial class PetWindow : TickingWindow
     private readonly PetMovementHandler _petMovementHandler;
     
     public bool IsOnGround { get; set; }
-    
     public bool IsOnDragging { get; set; }
     
     public PetWindow()

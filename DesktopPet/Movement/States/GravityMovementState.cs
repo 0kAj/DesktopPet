@@ -6,14 +6,14 @@ namespace DesktopPet.Movement.States;
 
 public class GravityMovementState : IBehaviourState
 {
-    private double _targetY;
+    private readonly double _targetY;
     private double _velocityY = 0;
     private const double Gravity = 9.81 / 100;
     private readonly PetWindow _petWindow;
 
     public GravityMovementState(PetWindow petWindow)
     {
-        this._petWindow = petWindow;
+        _petWindow = petWindow;
 
         var screenHeight = SystemParameters.WorkArea;
         _targetY = screenHeight.Bottom - petWindow.Height;
