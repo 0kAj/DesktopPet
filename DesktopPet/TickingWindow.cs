@@ -42,7 +42,7 @@ public abstract class TickingWindow : Window
     
     protected Point GetGlobalMousePos() => PointToScreen(Mouse.GetPosition(this));
     
-    protected Point GetDPISaveGlobalMousePos()
+    public Point GetDPISaveGlobalMousePos()
     {
         var pos = GetGlobalMousePos();
         double scale = GetWindowsScale(this); // z. B. 1.0 oder 1.25

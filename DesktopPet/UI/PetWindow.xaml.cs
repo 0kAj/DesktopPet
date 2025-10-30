@@ -12,16 +12,14 @@ public partial class PetWindow : TickingWindow
     public bool IsOnGround { get; set; }
     
     public bool IsOnDragging { get; set; }
-
-    private Point dragStartPos;
-    private Vector dragStartWindowPos;
     
     public PetWindow()
     {
         InitializeComponent();
         _petMovementHandler = new PetMovementHandler(
-            new GravityMovementState(this));
-            // new MovingMovementState(this)
+            new GravityMovementState(this),
+            new MovingMovementState(this),
+            new DragDropMovementState(this));
     }
 
     protected override void Tick()
@@ -30,33 +28,5 @@ public partial class PetWindow : TickingWindow
         // bewege nach irgendwo auf der Taskleiste
         // bewege es nach rechts
         _petMovementHandler.Tick();
-
-        if (IsOnDragging)
-        {
-            var dragPos = GetDPISaveGlobalMousePos();
-            var dir = dragPos - dragStartPos;
-            var targetpos = dragStartWindowPos + dir;
-            Left = targetpos.X;
-            Top = targetpos.Y;
-        }
-    }
-
-    private void Pet_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        // drag start
-        IsOnDragging = true;
-        dragStartPos = GetDPISaveGlobalMousePos();
-        dragStartWindowPos = new Vector(Left, Top);
-        debugLabel.Content = "Mouse Down";
-        CaptureMouse();
-    }
-
-    private void Pet_OnMouseUp(object sender, MouseButtonEventArgs e)
-    {
-        // drag end
-        IsOnGround = false;
-        IsOnDragging = false;
-        debugLabel.Content = "Mouse Up";
-        ReleaseMouseCapture();
     }
 }
