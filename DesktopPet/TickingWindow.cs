@@ -52,5 +52,7 @@ public abstract class TickingWindow : Window
 
     
     protected double GetWindowsScale(Visual v) => VisualTreeHelper.GetDpi(v).PixelsPerDip;
+
+    public Vector GetPositionVector() => new (Left + Width / 2, Top);
     
 }

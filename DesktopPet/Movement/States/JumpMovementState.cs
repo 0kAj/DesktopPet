@@ -19,7 +19,7 @@ public class JumpMovementState : IBehaviourState
 
     public bool CanTick()
     {
-        return _random.Next() % _jumpChance == 0;
+        return _petWindow.IsOnGround && _random.Next() % _jumpChance == 0;
     }
 
     public void Tick()

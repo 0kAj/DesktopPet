@@ -10,14 +10,17 @@ public partial class PetWindow : VelocityWindow
     public bool IsOnGround { get; set; }
     public bool IsOnDragging { get; set; }
     
+    public double Speed { get; set; }
+    
     public PetWindow()
     {
         InitializeComponent();
+        Speed = 3;
         _petMovementHandler = new PetMovementHandler(
             new GravityMovementState(this),
-            new MovingMovementState(this),
             new DragDropMovementState(this),
-            new JumpMovementState(100, this));
+            new JumpMovementState(1000, this),
+            new MoveToPositionMovementState(MoveToPositionMovementState.PositionState.Right, this));
     }
 
     protected override void Tick()

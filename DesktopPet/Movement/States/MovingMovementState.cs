@@ -9,7 +9,6 @@ namespace DesktopPet.Movement.States
     {
         private readonly PetWindow _petWindow;
         private double _targetX;
-        private const double Speed = 3;
         private bool _isDone;
 
         public bool IsDone => _isDone;
@@ -44,7 +43,7 @@ namespace DesktopPet.Movement.States
             double direction = Math.Sign(distance);
 
             // _petWindow.Left += direction * Speed;
-            _petWindow.VelocityX = direction * Speed;
+            _petWindow.VelocityX = direction * _petWindow.Speed;
 
             if (Math.Abs(distance) < 5)
             {
