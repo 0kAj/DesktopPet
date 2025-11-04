@@ -1,13 +1,13 @@
 using DesktopPet.Interfaces;
 using DesktopPet.UI;
 
-namespace DesktopPet.Movement.States;
+namespace DesktopPet.Handlers.MovementStates;
 
 public class JumpMovementState : IBehaviourState
 {
-    private Random _random = new Random();
-    private int _jumpChance;
-    private PetWindow _petWindow;
+    private readonly int _jumpChance;
+    private readonly PetWindow _petWindow;
+    private readonly Random _random = new();
 
     public JumpMovementState(int jumpChance, PetWindow petWindow)
     {
@@ -33,6 +33,5 @@ public class JumpMovementState : IBehaviourState
 
     public void OnEnd()
     {
-        
     }
 }

@@ -1,17 +1,15 @@
-﻿using DesktopPet.Movement;
-using DesktopPet.Movement.States;
+﻿using System.Windows;
+using DesktopPet.Handlers;
+using DesktopPet.Handlers.Events;
+using DesktopPet.Handlers.MovementStates;
 
 namespace DesktopPet.UI;
 
 public partial class PetWindow : VelocityWindow
 {
     private PetMovementHandler _petMovementHandler;
-    
-    public bool IsOnGround { get; set; }
-    public bool IsOnDragging { get; set; }
-    
-    public double Speed { get; set; }
-    
+    private PetEventHandler _petEventHandler;
+
     public PetWindow()
     {
         InitializeComponent();
@@ -21,7 +19,15 @@ public partial class PetWindow : VelocityWindow
             new DragDropMovementState(this),
             new JumpMovementState(1000, this),
             new MoveToPositionMovementState(MoveToPositionMovementState.PositionState.Right, this));
+
+        // add PetEventHandler
+        _petEventHandler = new PetEventHandler(new PetActionContextMenuPetEvent(this));
     }
+
+    public bool IsOnGround { get; set; }
+    public bool IsOnDragging { get; set; }
+
+    public double Speed { get; set; }
 
     protected override void Tick()
     {

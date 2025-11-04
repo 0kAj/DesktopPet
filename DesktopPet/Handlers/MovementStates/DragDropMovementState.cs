@@ -3,16 +3,15 @@ using System.Windows.Input;
 using DesktopPet.Interfaces;
 using DesktopPet.UI;
 
-namespace DesktopPet.Movement.States;
+namespace DesktopPet.Handlers.MovementStates;
 
 public class DragDropMovementState : IBehaviourState
 {
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
 
-    private PetWindow _petWindow;
-    
-    public bool IsDone => false; // always draggable
+    private readonly PetWindow _petWindow;
+
     public DragDropMovementState(PetWindow petWindow)
     {
         _petWindow = petWindow;
@@ -22,7 +21,13 @@ public class DragDropMovementState : IBehaviourState
         petWindow.MouseUp += Pet_OnMouseUp;
     }
 
-    public bool CanTick() => true; // always draggable
+    public bool IsDone => false; // always draggable
+
+    public bool CanTick()
+    {
+        return true;
+        // always draggable
+    }
 
     public void Tick()
     {
@@ -38,12 +43,14 @@ public class DragDropMovementState : IBehaviourState
 
     public void OnEnd()
     {
-        
     }
-    
-    
+
+
     private void Pet_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
+        // check if leftclick
+        if (e.ChangedButton != MouseButton.Left) return;
+
         // drag start
         _petWindow.IsOnDragging = true;
         _petWindow.IsOnGround = false;
@@ -56,6 +63,8 @@ public class DragDropMovementState : IBehaviourState
 
     private void Pet_OnMouseUp(object sender, MouseButtonEventArgs e)
     {
+        // check if leftclick
+        if (e.ChangedButton != MouseButton.Left) return;
         // drag end
         _petWindow.IsOnDragging = false;
         _petWindow.debugLabel.Content = "Mouse Up";

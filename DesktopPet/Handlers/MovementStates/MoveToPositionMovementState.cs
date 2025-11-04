@@ -2,13 +2,19 @@ using System.Windows;
 using DesktopPet.Interfaces;
 using DesktopPet.UI;
 
-namespace DesktopPet.Movement.States;
+namespace DesktopPet.Handlers.MovementStates;
 
 public class MoveToPositionMovementState : IBehaviourState
 {
-    private PositionState _targetPositionState;
-    
-    private PetWindow _petWindow;
+    public enum PositionState
+    {
+        Left,
+        Right,
+        Center
+    }
+
+    private readonly PetWindow _petWindow;
+    private readonly PositionState _targetPositionState;
 
     public MoveToPositionMovementState(PositionState targetPositionState, PetWindow petWindow)
     {
@@ -17,7 +23,11 @@ public class MoveToPositionMovementState : IBehaviourState
     }
 
     public bool IsDone => Math.Abs((GetTargetPosition() - _petWindow.GetPositionVector()).Length) <= 10;
-    public bool CanTick() => _petWindow.IsOnGround;
+
+    public bool CanTick()
+    {
+        return _petWindow.IsOnGround;
+    }
 
     public void Tick()
     {
@@ -28,11 +38,17 @@ public class MoveToPositionMovementState : IBehaviourState
         _petWindow.VelocityY = direction.Y;
     }
 
+    public void OnEnd()
+    {
+        // reset velocity
+        _petWindow.ResetVelocity();
+    }
+
     private Vector GetTargetPosition()
     {
         // target y = taskbar y
         var targetY = SystemParameters.WorkArea.Bottom - _petWindow.Height;
-        
+
         // target x = CENTER, LEFT, RIGHT
         switch (_targetPositionState)
         {
@@ -50,18 +66,5 @@ public class MoveToPositionMovementState : IBehaviourState
                     SystemParameters.PrimaryScreenWidth - 100f,
                     targetY);
         }
-    }
-
-    public void OnEnd()
-    {
-        // reset velocity
-        _petWindow.ResetVelocity();
-    }
-
-    public enum PositionState
-    {
-        Left,
-        Right,
-        Center
     }
 }

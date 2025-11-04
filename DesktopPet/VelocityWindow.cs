@@ -4,19 +4,20 @@ namespace DesktopPet;
 
 public class VelocityWindow : TickingWindow
 {
-    public double VelocityX { get; set;}
-    public double VelocityY { get; set;}
+    public double VelocityX { get; set; }
+    public double VelocityY { get; set; }
+
     protected override void Tick()
     {
         Top += VelocityY;
         Left += VelocityX;
 
         // Bildschirmgröße holen
-        double screenWidth = SystemParameters.PrimaryScreenWidth;
-        double screenHeight = SystemParameters.PrimaryScreenHeight;
+        var screenWidth = SystemParameters.PrimaryScreenWidth;
+        var screenHeight = SystemParameters.PrimaryScreenHeight;
 
-        double windowWidth =  Width;
-        double windowHeight = Height;
+        var windowWidth = Width;
+        var windowHeight = Height;
 
         // Begrenzung in X-Richtung
         if (Left < 0)

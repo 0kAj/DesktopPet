@@ -1,6 +1,4 @@
-﻿using DesktopPet.UI;
-
-namespace DesktopPet.Interfaces;
+﻿namespace DesktopPet.Interfaces;
 
 public interface IBehaviourState
 {

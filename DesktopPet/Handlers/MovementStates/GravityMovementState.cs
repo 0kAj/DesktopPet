@@ -2,13 +2,13 @@
 using DesktopPet.Interfaces;
 using DesktopPet.UI;
 
-namespace DesktopPet.Movement.States;
+namespace DesktopPet.Handlers.MovementStates;
 
 public class GravityMovementState : IBehaviourState
 {
-    private double _targetY;
     private const double Gravity = 9.81 / 100;
-    private PetWindow _petWindow;
+    private readonly PetWindow _petWindow;
+    private readonly double _targetY;
 
     public GravityMovementState(PetWindow petWindow)
     {
@@ -16,7 +16,7 @@ public class GravityMovementState : IBehaviourState
 
         var screenHeight = SystemParameters.WorkArea;
         _targetY = screenHeight.Bottom - petWindow.Height;
-        
+
         _petWindow.IsOnGround = false;
     }
 
@@ -41,6 +41,5 @@ public class GravityMovementState : IBehaviourState
 
     public void OnEnd()
     {
-        
     }
 }

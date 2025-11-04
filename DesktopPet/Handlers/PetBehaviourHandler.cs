@@ -1,7 +1,6 @@
 ﻿using DesktopPet.Interfaces;
-using DesktopPet.UI;
 
-namespace DesktopPet.Movement;
+namespace DesktopPet.Handlers;
 
 public class PetMovementHandler
 {
