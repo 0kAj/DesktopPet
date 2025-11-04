@@ -7,10 +7,9 @@ namespace DesktopPet.Handlers.MovementStates;
 
 public class DragDropMovementState : IBehaviourState
 {
+    private readonly PetWindow _petWindow;
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
-
-    private readonly PetWindow _petWindow;
 
     public DragDropMovementState(PetWindow petWindow)
     {

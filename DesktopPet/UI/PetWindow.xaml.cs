@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using DesktopPet.Handlers;
+﻿using DesktopPet.Handlers;
 using DesktopPet.Handlers.Events;
 using DesktopPet.Handlers.MovementStates;
 
@@ -7,8 +6,8 @@ namespace DesktopPet.UI;
 
 public partial class PetWindow : VelocityWindow
 {
-    private PetMovementHandler _petMovementHandler;
     private PetEventHandler _petEventHandler;
+    private readonly PetMovementHandler _petMovementHandler;
 
     public PetWindow()
     {

@@ -1,6 +1,6 @@
 namespace DesktopPet.Interfaces;
 
-public interface PetEvent
+public interface IPetEvent
 {
     void OnUnregister();
 }

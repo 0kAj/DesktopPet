@@ -4,19 +4,19 @@ namespace DesktopPet.Handlers;
 
 public class PetEventHandler
 {
-    private List<PetEvent> _activePetEvents = new ();
+    private readonly List<IPetEvent> _activePetEvents = new();
 
-    public PetEventHandler(params PetEvent[] activePetEvents)
+    public PetEventHandler(params IPetEvent[] activePetEvents)
     {
         _activePetEvents.AddRange(activePetEvents);
     }
 
-    public void AddPetEvent(PetEvent petEvent)
+    public void AddPetEvent(IPetEvent petEvent)
     {
         _activePetEvents.Add(petEvent);
     }
 
-    public void RemovePetEvent(PetEvent petEvent)
+    public void RemovePetEvent(IPetEvent petEvent)
     {
         petEvent.OnUnregister();
         _activePetEvents.Remove(petEvent);

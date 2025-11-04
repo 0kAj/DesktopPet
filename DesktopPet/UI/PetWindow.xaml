@@ -15,6 +15,6 @@
                            Title="PetWindow" Height="77" Width="51">
     <DockPanel>
         <Label DockPanel.Dock="Top" Foreground="Beige" Name="debugLabel">DebugInfo</Label>
-        <Rectangle Name="pet" Height="50" Width="50" Fill="Aqua"/>
+        <Rectangle Name="pet" Height="50" Width="50" Fill="Aqua" />
     </DockPanel>
 </desktopPet:VelocityWindow>

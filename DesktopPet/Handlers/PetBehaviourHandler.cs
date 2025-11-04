@@ -4,7 +4,7 @@ namespace DesktopPet.Handlers;
 
 public class PetMovementHandler
 {
-    private List<IBehaviourState> _behaviourStates = new();
+    private readonly List<IBehaviourState> _behaviourStates = new();
 
     public PetMovementHandler(params IBehaviourState[] startStates)
     {
