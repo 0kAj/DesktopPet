@@ -30,6 +30,12 @@ public class PetActionContextMenuPetEvent : IPetEvent
 
         var playMenuItem = new MenuItem();
         playMenuItem.Header = "Play";
+        var game1MenuItem = new MenuItem();
+        game1MenuItem.Header = "Game Selector";
+        playMenuItem.Items.Add(game1MenuItem);
+        var recentGamesMenuItem = new MenuItem();
+        recentGamesMenuItem.Header = "Recent Games";
+        playMenuItem.Items.Add(recentGamesMenuItem);
         playMenuItem.Click += PlayMenuItem_OnClick;
         cm.Items.Add(playMenuItem);
 
