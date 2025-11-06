@@ -7,8 +7,6 @@ namespace DesktopPet.Handlers.Events;
 
 public class PetActionContextMenuPetEvent : IPetEvent
 {
-    private ContextMenu _petActionContextMenu;
-
     private readonly PetWindow _petWindow;
 
     public PetActionContextMenuPetEvent(PetWindow petWindow)
@@ -43,7 +41,6 @@ public class PetActionContextMenuPetEvent : IPetEvent
         feedMenuItem.Header = "Feed";
         feedMenuItem.Click += FeedMenuItem_OnClick;
         cm.Items.Add(feedMenuItem);
-
         cm.Items.Add(new Separator());
 
         var backMenuItem = new MenuItem();
@@ -60,12 +57,16 @@ public class PetActionContextMenuPetEvent : IPetEvent
         // Var. 1 OpenGameWindow
         // Var. 2 ContextSubMenu with Games
         _petWindow.debugLabel.Content = "Play";
+        
+        GameSelectorWindow gameSelectorWindow = new(_petWindow);
+        gameSelectorWindow.Show();
     }
 
     private void FeedMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
         // Start FeedGame
         _petWindow.debugLabel.Content = "Feed";
+        GameSelectorWindow.StartGame(GameSelectorWindow.GameType.FoodCollector, _petWindow);
     }
 
     private void BackMenuItem_OnClick(object sender, RoutedEventArgs e)

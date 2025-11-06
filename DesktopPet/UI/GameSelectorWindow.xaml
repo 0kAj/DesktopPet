@@ -5,8 +5,58 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DesktopPet.UI"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="GameSelectorWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Viewbox Stretch="Uniform">
+        <Grid>  
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Column="0" Grid.Row="0">
+                <WrapPanel Margin="20" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <Rectangle Margin="5" Name="Game1" Height="200" Width="200" Fill="Beige"></Rectangle>
+                    <Rectangle Margin="5" Name="Game2" Height="200" Width="200" Fill="Beige"></Rectangle>
+                    <Rectangle Margin="5" Name="Game3" Height="200" Width="200" Fill="Beige"></Rectangle>
+                </WrapPanel>
+            </ScrollViewer>
+            <StackPanel Grid.Column="1" Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical"
+                        Margin="20">
+                <Rectangle Name="pet" Height="90" Width="90" Fill="Aqua"/>
+                <StackPanel Background="Beige"
+                            Margin="10">
+                    <Label FontWeight="Bold" Foreground="Brown">Hunger</Label>
+                    <!-- Hungerbar -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="10 0 10 0">
+                        <Ellipse Margin="0 0 5 0" Height="10" Width="10" Fill="Brown" VerticalAlignment="Center"></Ellipse>
+                        <ProgressBar Name="hungerbar" Height="10" Value="90" Width="80" Foreground="Coral" Background="BurlyWood"/>
+                    </StackPanel>
+                    <!-- Thirstbar -->
+                    <Label FontWeight="Bold" Foreground="DarkBlue">Thrist</Label>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="10 0 10 0">
+                        <Ellipse Margin="0 0 5 0"  Height="10" Width="10" Fill="DarkBlue" VerticalAlignment="Center"></Ellipse>
+                        <ProgressBar Name="thirstbar" Height="10" Value="90" Width="80" Foreground="Blue" Background="CornflowerBlue"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center"
+                                Orientation="Horizontal"
+                                Margin="10">
+                        <Button Click="Feed_button_OnClick" Margin="5" Name="feed_button">Feed</Button>
+                        <Button Margin="5" Name="thirst_button">Thirst</Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
 </Window>

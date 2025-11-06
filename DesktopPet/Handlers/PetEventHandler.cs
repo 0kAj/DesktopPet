@@ -21,4 +21,11 @@ public class PetEventHandler
         petEvent.OnUnregister();
         _activePetEvents.Remove(petEvent);
     }
+
+    public void ClearStates()
+    {
+        var toRemove = _activePetEvents.ToArray(); // copy
+       foreach (var petEvent in toRemove)
+           RemovePetEvent(petEvent);
+    }
 }

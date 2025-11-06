@@ -1,11 +1,12 @@
 ﻿using DesktopPet.Interfaces;
+using DesktopPet.UI;
 
 namespace DesktopPet.Handlers;
 
 public class PetMovementHandler
 {
     private readonly List<IBehaviourState> _behaviourStates = new();
-
+    
     public PetMovementHandler(params IBehaviourState[] startStates)
     {
         _behaviourStates.AddRange(startStates);
@@ -30,5 +31,12 @@ public class PetMovementHandler
     public void RemoveState(IBehaviourState state)
     {
         _behaviourStates.Remove(state);
+    }
+
+    public void ClearStates()
+    {
+        var toRemove = _behaviourStates.ToArray(); // copy
+        foreach (var state in toRemove)
+            RemoveState(state);
     }
 }

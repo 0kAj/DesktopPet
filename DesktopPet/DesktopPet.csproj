@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <Folder Include="exceptions\"/>
+        <Folder Include="MiniGames\" />
     </ItemGroup>
 
 </Project>
