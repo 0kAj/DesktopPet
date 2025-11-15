@@ -6,9 +6,9 @@ namespace DesktopPet.Handlers.MovementStates;
 
 public class GravityMovementState : IBehaviourState
 {
+    private readonly PetBrain _brain;
     private readonly double _gravity;
     private readonly PetWindow _petWindow;
-    private readonly PetBrain _brain;
 
     public GravityMovementState(double gravity, PetBrain petBrain)
     {
@@ -45,13 +45,12 @@ public class GravityMovementState : IBehaviourState
 
         // platforms
         if (_brain.PlatformManager != null && !landed)
-        {
             foreach (var platform in _brain.PlatformManager.Platforms)
             {
                 var platformRect = platform.GetCollisionRect();
 
                 var overlap = collisionRect.Bottom - platformRect.Top;
-                
+
                 const double tolerance = 10.0;
                 if (collisionRect.Bottom >= platformRect.Top &&
                     collisionRect.Bottom <= platformRect.Top + tolerance &&
@@ -67,18 +66,14 @@ public class GravityMovementState : IBehaviourState
                     break;
                 }
             }
-        }
 
         // Status aktualisieren
         _petWindow.debugLabel.Content = landed ? "Landed" : "Not landed";
         _brain.IsOnGround = landed;
-        
+
 
         // Optional: Reset, wenn Pet nicht mehr auf Plattform/Boden
-        if (!landed && _brain.IsOnGround)
-        {
-            _brain.IsOnGround = false;
-        }
+        if (!landed && _brain.IsOnGround) _brain.IsOnGround = false;
     }
 
     public void OnEnd()

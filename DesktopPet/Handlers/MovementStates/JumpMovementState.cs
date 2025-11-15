@@ -5,9 +5,9 @@ namespace DesktopPet.Handlers.MovementStates;
 
 public class JumpMovementState : IBehaviourState
 {
+    private readonly PetBrain _brain;
     private readonly int _jumpChance;
     private readonly PetWindow _petWindow;
-    private readonly PetBrain _brain;
     private readonly Random _random = new();
 
     public JumpMovementState(int jumpChance, PetBrain petBrain)

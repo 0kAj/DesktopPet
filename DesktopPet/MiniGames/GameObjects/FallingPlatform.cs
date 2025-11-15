@@ -6,10 +6,6 @@ namespace DesktopPet.MiniGames.GameObjects;
 
 public class FallingPlatform
 {
-    public Rect Rect { get; private set; }
-    public double VelocityY { get; private set; }
-    public Rectangle Visual { get; }
-
     public FallingPlatform(double x, double y, double width, double height, double velocityY)
     {
         Rect = new Rect(x, y, width, height);
@@ -23,11 +19,17 @@ public class FallingPlatform
         };
     }
 
+    public Rect Rect { get; private set; }
+    public double VelocityY { get; }
+    public Rectangle Visual { get; }
+
     public void Tick()
     {
         Rect = new Rect(Rect.X, Rect.Y + VelocityY, Rect.Width, Rect.Height);
     }
 
-    public Rect GetCollisionRect() => Rect;
+    public Rect GetCollisionRect()
+    {
+        return Rect;
+    }
 }
-

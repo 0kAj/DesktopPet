@@ -6,6 +6,7 @@ namespace DesktopPet.UI;
 public partial class PetWindow : VelocityWindow
 {
     private readonly PetBrain _brain;
+
     public PetWindow()
     {
         InitializeComponent();
@@ -19,6 +20,8 @@ public partial class PetWindow : VelocityWindow
         base.Tick();
         _brain.Tick();
     }
+
+    //todo add stats to the pet and save/ load them
 
     public override Rect GetCollisionRect()
     {

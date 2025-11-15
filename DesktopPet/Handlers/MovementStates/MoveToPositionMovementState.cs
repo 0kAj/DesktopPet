@@ -13,8 +13,9 @@ public class MoveToPositionMovementState : IBehaviourState
         Center
     }
 
-    private readonly PetWindow _petWindow;
     private readonly PetBrain _brain;
+
+    private readonly PetWindow _petWindow;
     private readonly PositionState _targetPositionState;
 
     public MoveToPositionMovementState(PositionState targetPositionState, PetBrain petBrain)

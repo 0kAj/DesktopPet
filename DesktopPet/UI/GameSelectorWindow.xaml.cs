@@ -5,10 +5,17 @@ namespace DesktopPet.UI;
 
 public partial class GameSelectorWindow : Window
 {
-    private PetBrain _brain;
+    public enum GameType //todo this enum should be external
+    {
+        FoodCollector,
+        PetJump
+    }
+
+    private readonly PetBrain _brain;
+
     public GameSelectorWindow(PetBrain petBrain)
     {
-        InitializeComponent();
+        InitializeComponent(); //todo improve the game-selector visually
         _brain = petBrain;
     }
 
@@ -18,24 +25,18 @@ public partial class GameSelectorWindow : Window
         StartGame(GameType.FoodCollector, _brain);
         Close();
     }
-    
-    public enum GameType
-    {
-        FoodCollector,
-        PetJump
-    }
 
-    public static void StartGame(GameType gameType, PetBrain petBrain)
+    public static void StartGame(GameType gameType, PetBrain petBrain) //todo this method should be external
     {
         switch (gameType)
         {
             case GameType.FoodCollector:
-                FoodCollectorMiniGameWindow foodCollectorMiniGameWindow = new FoodCollectorMiniGameWindow(petBrain);
+                var foodCollectorMiniGameWindow = new FoodCollectorMiniGameWindow(petBrain);
                 foodCollectorMiniGameWindow.Show();
                 foodCollectorMiniGameWindow.Start();
                 break;
             case GameType.PetJump:
-                PetJump petJump = new PetJump(petBrain);
+                var petJump = new PetJump(petBrain);
                 petJump.Show();
                 petJump.Start();
                 break;
@@ -43,6 +44,5 @@ public partial class GameSelectorWindow : Window
                 MessageBox.Show("Could not find Gametype: " + gameType);
                 break;
         }
-        
     }
 }

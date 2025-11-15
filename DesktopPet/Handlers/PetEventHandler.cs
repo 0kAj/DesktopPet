@@ -25,7 +25,7 @@ public class PetEventHandler
     public void ClearStates()
     {
         var toRemove = _activePetEvents.ToArray(); // copy
-       foreach (var petEvent in toRemove)
-           RemovePetEvent(petEvent);
+        foreach (var petEvent in toRemove)
+            RemovePetEvent(petEvent);
     }
 }

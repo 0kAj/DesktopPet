@@ -10,22 +10,21 @@ namespace DesktopPet.UI;
 
 public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
 {
-    private DispatcherTimer gameTimer;
-    private Random rand = new();
+    private readonly PetBrain _brain;
+    private readonly DispatcherTimer gameTimer;
+    private readonly Random rand = new();
     private double playerSpeed = 10;
-    private int score = 0;
-    
-    private PetBrain _brain;
+    private int score;
 
     public FoodCollectorMiniGameWindow(PetBrain petBrain)
     {
         InitializeComponent();
         WindowHelper.FitToScreen(this);
-        
+
         _brain = petBrain;
         // route all key events to petwindow
-        KeyDown += (sender, args) =>  _brain.PetWindow.RaiseEvent(args);
-        
+        KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
+
         // init gameloop
         gameTimer = new DispatcherTimer();
         gameTimer.Interval = TimeSpan.FromMilliseconds(20);
@@ -39,7 +38,14 @@ public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
 
         gameTimer.Start();
     }
-    
+
+    public void End()
+    {
+        gameTimer.Stop();
+        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
+        Close();
+    }
+
     private void GameLoop(object sender, EventArgs e)
     {
         // Zufällig neues Futter erzeugen
@@ -57,16 +63,15 @@ public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
         }
 
         // Bewegung & Kollision
-        for (int i = GameCanvas.Children.Count - 1; i >= 0; i--)
-        {
+        for (var i = GameCanvas.Children.Count - 1; i >= 0; i--)
             if (GameCanvas.Children[i] is Ellipse food)
             {
-                double top = Canvas.GetTop(food) + 5;
+                var top = Canvas.GetTop(food) + 5;
                 Canvas.SetTop(food, top);
 
-                Rect foodRect = new Rect(Canvas.GetLeft(food), top, food.Width, food.Height);
-                Rect playerRect = _brain.PetWindow.GetCollisionRect();
-                
+                var foodRect = new Rect(Canvas.GetLeft(food), top, food.Width, food.Height);
+                var playerRect = _brain.PetWindow.GetCollisionRect();
+
                 if (foodRect.IntersectsWith(playerRect))
                 {
                     GameCanvas.Children.Remove(food);
@@ -78,13 +83,5 @@ public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
                     GameCanvas.Children.Remove(food);
                 }
             }
-        }
-    }
-    
-    public void End()
-    {
-        gameTimer.Stop();
-        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        Close();
     }
 }

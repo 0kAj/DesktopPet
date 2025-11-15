@@ -6,12 +6,10 @@ namespace DesktopPet.Handlers.MovementStates;
 
 public class JumpControllerMovementState : IPetEvent
 {
-    public bool IsDone => false;
-
     private readonly bool _allowDoubleJump;
-    private int _jumpCounter = 0;
-    private readonly PetWindow _petWindow;
     private readonly PetBrain _brain;
+    private readonly PetWindow _petWindow;
+    private int _jumpCounter;
 
     public JumpControllerMovementState(bool allowDoubleJump, PetBrain petBrain)
     {
@@ -23,17 +21,19 @@ public class JumpControllerMovementState : IPetEvent
         _petWindow.KeyDown += Jump;
     }
 
+    public bool IsDone => false;
+
+    public void OnUnregister()
+    {
+        _petWindow.KeyDown -= Jump;
+    }
+
     // jump if on ground or jumped once when DoubleJump
     private bool CanJump()
     {
         if (_brain.IsOnGround) return true;
         if (!_allowDoubleJump) return false;
         return _jumpCounter < 1; // it's not a BUG it's a feature!
-    }
-
-    public void OnUnregister()
-    {
-        _petWindow.KeyDown -= Jump;
     }
 
     private void Jump(object sender, KeyEventArgs e)

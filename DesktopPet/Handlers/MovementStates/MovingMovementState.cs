@@ -6,8 +6,8 @@ namespace DesktopPet.Handlers.MovementStates;
 
 public class MovingMovementState : IBehaviourState
 {
-    private readonly PetWindow _petWindow;
     private readonly PetBrain _brain;
+    private readonly PetWindow _petWindow;
     private double _targetX;
 
     public MovingMovementState(PetBrain petBrain)

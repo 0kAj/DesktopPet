@@ -7,12 +7,13 @@ namespace DesktopPet.MiniGames;
 public class PlatformManager
 {
     private readonly Canvas _canvas;
-    public List<FallingPlatform> Platforms { get; } = new();
 
     public PlatformManager(Canvas canvas)
     {
         _canvas = canvas;
     }
+
+    public List<FallingPlatform> Platforms { get; } = new();
 
     public void Tick()
     {
@@ -25,14 +26,12 @@ public class PlatformManager
         }
 
         // remove platforms outside of screen
-        for (int i = Platforms.Count - 1; i >= 0; i--)
-        {
+        for (var i = Platforms.Count - 1; i >= 0; i--)
             if (Platforms[i].Rect.Top > SystemParameters.WorkArea.Bottom)
             {
                 _canvas.Children.Remove(Platforms[i].Visual);
                 Platforms.RemoveAt(i);
             }
-        }
     }
 
     public void SpawnPlatform(double x, double width, double height, double velocityY)
@@ -40,7 +39,7 @@ public class PlatformManager
         var p = new FallingPlatform(x, -height, width, height, velocityY);
         Platforms.Add(p);
         p.Visual.Visibility = Visibility.Hidden;
-        
+
         _canvas.Children.Add(p.Visual);
     }
 }

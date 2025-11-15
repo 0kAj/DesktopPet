@@ -1,4 +1,3 @@
-using System.Windows;
 using System.Windows.Controls;
 using DesktopPet.Interfaces;
 using DesktopPet.UI;
@@ -7,8 +6,8 @@ namespace DesktopPet.Handlers.Events;
 
 public class PetActionContextMenuPetEvent : IPetEvent
 {
-    private readonly PetWindow _petWindow;
     private readonly PetBrain _brain;
+    private readonly PetWindow _petWindow;
 
     public PetActionContextMenuPetEvent(PetBrain petBrain)
     {
@@ -36,18 +35,19 @@ public class PetActionContextMenuPetEvent : IPetEvent
         playMenuItem.Items.Add(gameSelectorMenuItem);
         playMenuItem.Items.Add(new Separator()); // ------------
 
-        foreach (var type in Enum.GetValues(typeof(GameSelectorWindow.GameType)).Cast<GameSelectorWindow.GameType>().ToList())
+        foreach (var type in Enum.GetValues(typeof(GameSelectorWindow.GameType)).Cast<GameSelectorWindow.GameType>()
+                     .ToList())
         {
             var gameTypeMenuItem = new MenuItem();
             gameTypeMenuItem.Header = type.ToString();
             gameTypeMenuItem.Click += (_, _) => GameSelectorWindow.StartGame(type, _brain);
             playMenuItem.Items.Add(gameTypeMenuItem);
         }
-        
+
         playMenuItem.Items.Add(new Separator()); // ------------
         var recentGamesMenuItem = new MenuItem();
         recentGamesMenuItem.Header = "Recent Games"; // Recent Games
-        playMenuItem.Items.Add(recentGamesMenuItem);
+        playMenuItem.Items.Add(recentGamesMenuItem); // todo add a Recent Games function to view recent played games
         cm.Items.Add(playMenuItem);
 
         var feedMenuItem = new MenuItem();
