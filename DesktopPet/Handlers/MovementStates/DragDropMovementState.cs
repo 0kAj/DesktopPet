@@ -8,16 +8,18 @@ namespace DesktopPet.Handlers.MovementStates;
 public class DragDropMovementState : IBehaviourState
 {
     private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
 
-    public DragDropMovementState(PetWindow petWindow)
+    public DragDropMovementState(PetBrain petBrain)
     {
-        _petWindow = petWindow;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
         // MouseDown="Pet_OnMouseDown"
         // MouseUp="Pet_OnMouseUp"
-        petWindow.MouseDown += Pet_OnMouseDown;
-        petWindow.MouseUp += Pet_OnMouseUp;
+        _petWindow.MouseDown += Pet_OnMouseDown;
+        _petWindow.MouseUp += Pet_OnMouseUp;
     }
 
     public bool IsDone => false; // always draggable
@@ -30,7 +32,7 @@ public class DragDropMovementState : IBehaviourState
 
     public void Tick()
     {
-        if (_petWindow.IsOnDragging)
+        if (_brain.IsOnDragging)
         {
             var dragPos = _petWindow.GetDPISaveGlobalMousePos();
             var dir = dragPos - _dragStartPos;
@@ -51,8 +53,8 @@ public class DragDropMovementState : IBehaviourState
         if (e.ChangedButton != MouseButton.Left) return;
 
         // drag start
-        _petWindow.IsOnDragging = true;
-        _petWindow.IsOnGround = false;
+        _brain.IsOnDragging = true;
+        _brain.IsOnGround = false;
         _petWindow.ResetVelocity();
         _dragStartPos = _petWindow.GetDPISaveGlobalMousePos();
         _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
@@ -65,7 +67,7 @@ public class DragDropMovementState : IBehaviourState
         // check if leftclick
         if (e.ChangedButton != MouseButton.Left) return;
         // drag end
-        _petWindow.IsOnDragging = false;
+        _brain.IsOnDragging = false;
         _petWindow.debugLabel.Content = "Mouse Up";
         _petWindow.ReleaseMouseCapture();
     }

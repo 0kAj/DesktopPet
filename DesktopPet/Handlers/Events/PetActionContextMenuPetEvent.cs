@@ -8,10 +8,12 @@ namespace DesktopPet.Handlers.Events;
 public class PetActionContextMenuPetEvent : IPetEvent
 {
     private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
 
-    public PetActionContextMenuPetEvent(PetWindow petWindow)
+    public PetActionContextMenuPetEvent(PetBrain petBrain)
     {
-        _petWindow = petWindow;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
 
         _petWindow.pet.ContextMenu = CreatePetActionContextMenu();
     }
@@ -28,51 +30,37 @@ public class PetActionContextMenuPetEvent : IPetEvent
 
         var playMenuItem = new MenuItem();
         playMenuItem.Header = "Play";
-        var game1MenuItem = new MenuItem();
-        game1MenuItem.Header = "Game Selector";
-        playMenuItem.Items.Add(game1MenuItem);
+        var gameSelectorMenuItem = new MenuItem();
+        gameSelectorMenuItem.Header = "Game Selector"; // Game Selector
+        gameSelectorMenuItem.Click += (_, _) => new GameSelectorWindow(_brain).Show();
+        playMenuItem.Items.Add(gameSelectorMenuItem);
+        playMenuItem.Items.Add(new Separator()); // ------------
+
+        foreach (var type in Enum.GetValues(typeof(GameSelectorWindow.GameType)).Cast<GameSelectorWindow.GameType>().ToList())
+        {
+            var gameTypeMenuItem = new MenuItem();
+            gameTypeMenuItem.Header = type.ToString();
+            gameTypeMenuItem.Click += (_, _) => GameSelectorWindow.StartGame(type, _brain);
+            playMenuItem.Items.Add(gameTypeMenuItem);
+        }
+        
+        playMenuItem.Items.Add(new Separator()); // ------------
         var recentGamesMenuItem = new MenuItem();
-        recentGamesMenuItem.Header = "Recent Games";
+        recentGamesMenuItem.Header = "Recent Games"; // Recent Games
         playMenuItem.Items.Add(recentGamesMenuItem);
-        playMenuItem.Click += PlayMenuItem_OnClick;
         cm.Items.Add(playMenuItem);
 
         var feedMenuItem = new MenuItem();
         feedMenuItem.Header = "Feed";
-        feedMenuItem.Click += FeedMenuItem_OnClick;
+        feedMenuItem.Click += (_, _) => GameSelectorWindow.StartGame(GameSelectorWindow.GameType.FoodCollector, _brain);
         cm.Items.Add(feedMenuItem);
         cm.Items.Add(new Separator());
 
         var backMenuItem = new MenuItem();
         backMenuItem.Header = "Back";
-        backMenuItem.Click += BackMenuItem_OnClick;
+        backMenuItem.Click += (_, _) => _petWindow.pet.ContextMenu!.IsOpen = false;
         cm.Items.Add(backMenuItem);
 
         return cm;
-    }
-
-    private void PlayMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        // TODO handle PlayMenuItem_OnClick
-        // Var. 1 OpenGameWindow
-        // Var. 2 ContextSubMenu with Games
-        _petWindow.debugLabel.Content = "Play";
-        
-        GameSelectorWindow gameSelectorWindow = new(_petWindow);
-        gameSelectorWindow.Show();
-    }
-
-    private void FeedMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        // Start FeedGame
-        _petWindow.debugLabel.Content = "Feed";
-        GameSelectorWindow.StartGame(GameSelectorWindow.GameType.FoodCollector, _petWindow);
-    }
-
-    private void BackMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        // close ContextMenu
-        if (_petWindow.pet.ContextMenu != null)
-            _petWindow.pet.ContextMenu.IsOpen = false;
     }
 }

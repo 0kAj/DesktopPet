@@ -9,40 +9,40 @@ public class VelocityWindow : TickingWindow
 
     protected override void Tick()
     {
-        Top += VelocityY;
+        Top  += VelocityY;
         Left += VelocityX;
 
-        // Bildschirmgröße holen
-        var screenWidth = SystemParameters.PrimaryScreenWidth;
+        var screenWidth  = SystemParameters.PrimaryScreenWidth;
         var screenHeight = SystemParameters.PrimaryScreenHeight;
 
-        var windowWidth = Width;
-        var windowHeight = Height;
+        var rect = GetCollisionRect();
 
-        // Begrenzung in X-Richtung
-        if (Left < 0)
+        // X-Collision
+        if (rect.Left < 0)
         {
-            Left = 0;
+            Left -= rect.Left; // rect.Left = 0
             VelocityX = 0;
         }
-        else if (Left + windowWidth > screenWidth)
+        else if (rect.Right > screenWidth)
         {
-            Left = screenWidth - windowWidth;
+            Left -= rect.Right - screenWidth;
             VelocityX = 0;
         }
-
-        // Begrenzung in Y-Richtung
-        if (Top < 0)
+        
+        // Y-Collision
+        if (rect.Top < 0)
         {
-            Top = 0;
+            Top -= rect.Top;
             VelocityY = 0;
         }
-        else if (Top + windowHeight > screenHeight)
+        else if (rect.Bottom > screenHeight)
         {
-            Top = screenHeight - windowHeight;
+            Top -= rect.Bottom - screenHeight;
             VelocityY = 0;
         }
     }
+
+    public virtual Rect GetCollisionRect() => new Rect(Left, Top, Width, Height);
 
     public void ResetVelocity()
     {

@@ -7,16 +7,18 @@ namespace DesktopPet.Handlers.MovementStates;
 public class JumpControllerMovementState : IPetEvent
 {
     public bool IsDone => false;
-    
-    private bool AllowDoubleJump;
-    private int _jumpCounter = 0;
-    private PetWindow _petWindow;
 
-    public JumpControllerMovementState(bool allowDoubleJump, PetWindow petWindow)
+    private readonly bool _allowDoubleJump;
+    private int _jumpCounter = 0;
+    private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
+
+    public JumpControllerMovementState(bool allowDoubleJump, PetBrain petBrain)
     {
-        AllowDoubleJump = allowDoubleJump;
-        _petWindow = petWindow;
-        
+        _allowDoubleJump = allowDoubleJump;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
+
         // add Event
         _petWindow.KeyDown += Jump;
     }
@@ -24,7 +26,9 @@ public class JumpControllerMovementState : IPetEvent
     // jump if on ground or jumped once when DoubleJump
     private bool CanJump()
     {
-        return _petWindow.IsOnGround || (AllowDoubleJump && _jumpCounter < 2);
+        if (_brain.IsOnGround) return true;
+        if (!_allowDoubleJump) return false;
+        return _jumpCounter < 1; // it's not a BUG it's a feature!
     }
 
     public void OnUnregister()
@@ -35,14 +39,15 @@ public class JumpControllerMovementState : IPetEvent
     private void Jump(object sender, KeyEventArgs e)
     {
         // _petWindow.debugLabel.Content = "Jump";
+        if (e.Key != Key.Space) return;
         if (!CanJump()) return;
-        
-        if (_petWindow.IsOnGround)
+
+        if (_brain.IsOnGround)
             _jumpCounter = 0;
         else
             _jumpCounter++;
-        
-        _petWindow.IsOnGround = false;
+
+        _brain.IsOnGround = false;
         _petWindow.VelocityY = -5;
     }
 }

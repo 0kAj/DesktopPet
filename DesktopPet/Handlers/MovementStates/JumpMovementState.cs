@@ -7,26 +7,28 @@ public class JumpMovementState : IBehaviourState
 {
     private readonly int _jumpChance;
     private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
     private readonly Random _random = new();
 
-    public JumpMovementState(int jumpChance, PetWindow petWindow)
+    public JumpMovementState(int jumpChance, PetBrain petBrain)
     {
         _jumpChance = jumpChance;
-        _petWindow = petWindow;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
     }
 
     public bool IsDone => false;
 
     public bool CanTick()
     {
-        return _petWindow.IsOnGround && _random.Next() % _jumpChance == 0;
+        return _brain.IsOnGround && _random.Next() % _jumpChance == 0;
     }
 
     public void Tick()
     {
-        if (_petWindow.IsOnGround)
+        if (_brain.IsOnGround)
         {
-            _petWindow.IsOnGround = false;
+            _brain.IsOnGround = false;
             _petWindow.VelocityY = -5;
         }
     }

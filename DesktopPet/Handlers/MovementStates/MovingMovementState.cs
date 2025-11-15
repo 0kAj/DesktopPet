@@ -7,11 +7,13 @@ namespace DesktopPet.Handlers.MovementStates;
 public class MovingMovementState : IBehaviourState
 {
     private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
     private double _targetX;
 
-    public MovingMovementState(PetWindow petWindow)
+    public MovingMovementState(PetBrain petBrain)
     {
-        _petWindow = petWindow;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
 
         GenerateRadomTargetX();
     }
@@ -20,7 +22,7 @@ public class MovingMovementState : IBehaviourState
 
     public bool CanTick()
     {
-        return !IsDone && _petWindow.IsOnGround;
+        return !IsDone && _brain.IsOnGround;
     }
 
     public void Tick()
@@ -32,7 +34,7 @@ public class MovingMovementState : IBehaviourState
         double direction = Math.Sign(distance);
 
         // _petWindow.Left += direction * Speed;
-        _petWindow.VelocityX = direction * _petWindow.Speed;
+        _petWindow.VelocityX = direction * _brain.Speed;
 
         if (Math.Abs(distance) < 5)
         {

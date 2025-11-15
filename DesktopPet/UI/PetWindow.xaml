@@ -12,9 +12,15 @@
                            WindowState="Normal"
                            ResizeMode="NoResize"
                            WindowStartupLocation="CenterScreen"
-                           Title="PetWindow" Height="77" Width="51">
-    <DockPanel>
+                           Title="PetWindow" Height="100" Width="150">
+    <DockPanel HorizontalAlignment="Center">
         <Label DockPanel.Dock="Top" Foreground="Beige" Name="debugLabel">DebugInfo</Label>
-        <Rectangle Name="pet" Height="50" Width="50" Fill="Aqua" />
+        <Image x:Name="pet" 
+               RenderOptions.BitmapScalingMode="NearestNeighbor" 
+               DockPanel.Dock="Bottom" 
+               VerticalAlignment="Bottom"
+               Height="50" 
+               Width="50" 
+               Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"/>
     </DockPanel>
 </desktopPet:VelocityWindow>

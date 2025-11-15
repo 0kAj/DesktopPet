@@ -14,26 +14,28 @@ public class MoveToPositionMovementState : IBehaviourState
     }
 
     private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
     private readonly PositionState _targetPositionState;
 
-    public MoveToPositionMovementState(PositionState targetPositionState, PetWindow petWindow)
+    public MoveToPositionMovementState(PositionState targetPositionState, PetBrain petBrain)
     {
         _targetPositionState = targetPositionState;
-        _petWindow = petWindow;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
     }
 
     public bool IsDone => Math.Abs((GetTargetPosition() - _petWindow.GetPositionVector()).Length) <= 10;
 
     public bool CanTick()
     {
-        return _petWindow.IsOnGround;
+        return _brain.IsOnGround;
     }
 
     public void Tick()
     {
         var direction = GetTargetPosition() - _petWindow.GetPositionVector();
         direction.Normalize();
-        direction *= _petWindow.Speed;
+        direction *= _brain.Speed;
         _petWindow.VelocityX = direction.X;
         _petWindow.VelocityY = direction.Y;
     }
@@ -47,7 +49,7 @@ public class MoveToPositionMovementState : IBehaviourState
     private Vector GetTargetPosition()
     {
         // target y = taskbar y
-        var targetY = SystemParameters.WorkArea.Bottom - _petWindow.Height;
+        var targetY = SystemParameters.WorkArea.Bottom - _petWindow.ActualHeight;
 
         // target x = CENTER, LEFT, RIGHT
         switch (_targetPositionState)

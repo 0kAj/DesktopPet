@@ -3,41 +3,40 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using DesktopPet.Handlers;
 using DesktopPet.Interfaces;
 
 namespace DesktopPet.UI;
 
 public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
 {
-    private Rectangle player;
     private DispatcherTimer gameTimer;
     private Random rand = new();
     private double playerSpeed = 10;
     private int score = 0;
     
-    private PetWindow _petWindow;
+    private PetBrain _brain;
 
-    public FoodCollectorMiniGameWindow(PetWindow petWindow)
+    public FoodCollectorMiniGameWindow(PetBrain petBrain)
     {
-        _petWindow = petWindow;
-        // route all key events to petwindow
-        KeyDown += (sender, args) =>  _petWindow.RaiseEvent(args);
         InitializeComponent();
+        WindowHelper.FitToScreen(this);
+        
+        _brain = petBrain;
+        // route all key events to petwindow
+        KeyDown += (sender, args) =>  _brain.PetWindow.RaiseEvent(args);
+        
+        // init gameloop
+        gameTimer = new DispatcherTimer();
+        gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+        gameTimer.Tick += GameLoop;
     }
 
     public void Start()
     {
         // init Pet as playable
-        _petWindow.InitFromTemplate(PetWindow.MovementTemplate.BasicPetController);
-        // Canvas.SetLeft(player, 400);
-        // Canvas.SetTop(player, 600);
-        // GameCanvas.Children.Add(player);
-        player = _petWindow.pet;
+        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
-        // Game-Loop
-        gameTimer = new DispatcherTimer();
-        gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-        gameTimer.Tick += GameLoop;
         gameTimer.Start();
     }
     
@@ -66,14 +65,13 @@ public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
                 Canvas.SetTop(food, top);
 
                 Rect foodRect = new Rect(Canvas.GetLeft(food), top, food.Width, food.Height);
-                // Rect playerRect = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height); // todo fix
-                Rect playerRect = _petWindow.GetPetRect();
+                Rect playerRect = _brain.PetWindow.GetCollisionRect();
                 
                 if (foodRect.IntersectsWith(playerRect))
                 {
                     GameCanvas.Children.Remove(food);
                     score++;
-                    _petWindow.debugLabel.Content = $"Score: {score}";
+                    _brain.PetWindow.debugLabel.Content = $"Score: {score}";
                 }
                 else if (top > GameCanvas.ActualHeight)
                 {
@@ -86,7 +84,7 @@ public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
     public void End()
     {
         gameTimer.Stop();
-        _petWindow.InitFromTemplate(PetWindow.MovementTemplate.DefaultPet);
+        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         Close();
     }
 }

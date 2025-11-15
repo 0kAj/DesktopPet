@@ -6,17 +6,19 @@ namespace DesktopPet.Handlers.MovementStates;
 
 public class MovementControllerMovementState : IBehaviourState
 {
-    private bool _requireOnGround;
-    private PetWindow _petWindow;
+    private readonly bool _allowAirControl;
+    private readonly PetWindow _petWindow;
+    private readonly PetBrain _brain;
 
-    public MovementControllerMovementState(bool requireOnGround, PetWindow petWindow)
+    public MovementControllerMovementState(bool allowAirControl, PetBrain petBrain)
     {
-        _requireOnGround = requireOnGround;
-        _petWindow = petWindow;
+        _allowAirControl = allowAirControl;
+        _brain = petBrain;
+        _petWindow = petBrain.PetWindow;
     }
 
     public bool IsDone => false;
-    public bool CanTick() => _requireOnGround ? _petWindow.IsOnGround : true;
+    public bool CanTick() => _allowAirControl ? true : _brain.IsOnGround;
 
     public void Tick()
     {
@@ -27,7 +29,7 @@ public class MovementControllerMovementState : IBehaviourState
         if (Math.Abs(distance) < 5)
             _petWindow.VelocityX = 0;
         else
-            _petWindow.VelocityX = Math.Sign(distance)* _petWindow.Speed;
+            _petWindow.VelocityX = Math.Sign(distance)* _brain.Speed;
     }
 
     public void OnEnd()

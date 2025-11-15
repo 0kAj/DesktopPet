@@ -9,8 +9,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Folder Include="Assets\Sprites\" />
         <Folder Include="exceptions\"/>
-        <Folder Include="MiniGames\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Sprites\DogFront2.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Sprites\Pets\Mouse.png" />
+      <Resource Include="Assets\Sprites\Pets\Mouse.png" />
     </ItemGroup>
 
 </Project>
