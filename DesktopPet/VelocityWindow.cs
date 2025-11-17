@@ -17,6 +17,7 @@ public class VelocityWindow : TickingWindow
 
         var rect = GetCollisionRect();
 
+        //todo work with clamp
         // X-Collision
         if (rect.Left < 0)
         {

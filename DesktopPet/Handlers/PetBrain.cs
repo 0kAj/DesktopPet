@@ -57,7 +57,6 @@ public class PetBrain
                 _petMovementHandler.AddState(new GravityMovementState(12, this));
                 _petMovementHandler.AddState(new MovementControllerMovementState(true, this));
                 _petEventHandler.AddPetEvent(new JumpControllerMovementState(true, this));
-                _petMovementHandler.AddState(new DragDropMovementState(this));
                 break;
         }
     }
