@@ -7,12 +7,14 @@ public partial class PetWindow : VelocityWindow
 {
     private readonly PetBrain _brain;
 
-    public PetWindow()
+    public PetWindow(string petName)
     {
         InitializeComponent();
         // give it a brain
-        _brain = new PetBrain(this);
+        _brain = new PetBrain(this) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
+        
+        debugLabel.Content = _brain.Name;
     }
 
     protected override void Tick()
@@ -20,9 +22,7 @@ public partial class PetWindow : VelocityWindow
         base.Tick();
         _brain.Tick();
     }
-
-    //todo add stats to the pet and save/ load them
-
+    
     public override Rect GetCollisionRect()
     {
         var res = pet.PointToScreen(new Point(0, 0));

@@ -1,4 +1,6 @@
 using System.Windows;
+using DesktopPet.Data.Attributes;
+using DesktopPet.Data.Pet;
 
 namespace DesktopPet.UI;
 
@@ -6,16 +8,36 @@ public partial class WelcomeWindow : Window
 {
     public WelcomeWindow()
     {
-        InitializeComponent();
-        //todo Check for stored pets
-        //todo load default stored pet
+        var defaultPet = PetManager.Instance.GetDefaultPet();
+        if (defaultPet != null)
+        {
+            ShowPetWindow(defaultPet.PetName);
+            Close();
+        }
+
+        InitializeComponent(); // only show if no default pet set
+    }
+
+    private PetWindow ShowPetWindow(string petName)
+    {
+        PetWindow petWindow = new PetWindow(petName);
+        petWindow.Show();
+        return petWindow;
     }
 
     private void OKButton_OnClick(object sender, RoutedEventArgs e)
     {
         //todo create new Pet
-        PetWindow petWindow = new PetWindow();
-        petWindow.Show();
+        var petName = name_tb.Text;
+        PetManager.Instance.SetAttribute(petName, new PetAttribute("thurst", "100"));
+        PetManager.Instance.SetAttribute(petName, new PetAttribute("hunger", "100"));
+        PetManager.Instance.SetDefaultPet(petName);
+
+        if (setAsDefaultPet_cb.IsChecked == true)
+            PetManager.Instance.SetDefaultPet(petName);
+
+        ShowPetWindow(petName);
+
         Close();
     }
 

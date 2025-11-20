@@ -14,7 +14,7 @@
                            WindowStartupLocation="CenterScreen"
                            Title="PetWindow" Height="100" Width="150">
     <DockPanel HorizontalAlignment="Center">
-        <Label DockPanel.Dock="Top" Foreground="Beige" Name="debugLabel">DebugInfo</Label>
+        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" Name="debugLabel">DebugInfo</Label>
         <Image x:Name="pet"
                RenderOptions.BitmapScalingMode="NearestNeighbor"
                DockPanel.Dock="Bottom"

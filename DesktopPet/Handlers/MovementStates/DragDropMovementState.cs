@@ -58,7 +58,7 @@ public class DragDropMovementState : IBehaviourState
         _petWindow.ResetVelocity();
         _dragStartPos = _petWindow.GetDPISaveGlobalMousePos();
         _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
-        _petWindow.debugLabel.Content = "Mouse Down";
+        // _petWindow.debugLabel.Content = "Mouse Down";
         _petWindow.CaptureMouse();
     }
 
@@ -68,7 +68,7 @@ public class DragDropMovementState : IBehaviourState
         if (e.ChangedButton != MouseButton.Left) return;
         // drag end
         _brain.IsOnDragging = false;
-        _petWindow.debugLabel.Content = "Mouse Up";
+        // _petWindow.debugLabel.Content = "Mouse Up";
         _petWindow.ReleaseMouseCapture();
     }
 }

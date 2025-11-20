@@ -1,4 +1,5 @@
 using System.Windows;
+using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 
 namespace DesktopPet.UI;
@@ -17,6 +18,9 @@ public partial class GameSelectorWindow : Window
     {
         InitializeComponent(); //todo improve the game-selector visually
         _brain = petBrain;
+
+        hungerbar.Value = Convert.ToDouble(PetManager.Instance.GetAttribute(petBrain.Name, "hunger"));
+        thirstbar.Value = Convert.ToDouble(PetManager.Instance.GetAttribute(petBrain.Name, "thurst"));
     }
 
     private void Feed_button_OnClick(object sender, RoutedEventArgs e)

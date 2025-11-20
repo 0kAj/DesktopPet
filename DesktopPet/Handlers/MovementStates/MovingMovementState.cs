@@ -57,7 +57,7 @@ public class MovingMovementState : IBehaviourState
         var random = new Random(DateTime.Now.Millisecond);
         _targetX = random.Next((int)screen.Left, (int)(screen.Right - _petWindow.Width));
 
-        _petWindow.debugLabel.Content = _targetX.ToString();
+        // _petWindow.debugLabel.Content = _targetX.ToString();
         IsDone = false;
     }
 }

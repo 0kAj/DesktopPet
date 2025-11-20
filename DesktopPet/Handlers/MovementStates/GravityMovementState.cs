@@ -68,7 +68,7 @@ public class GravityMovementState : IBehaviourState
             }
 
         // Status aktualisieren
-        _petWindow.debugLabel.Content = landed ? "Landed" : "Not landed";
+        // _petWindow.debugLabel.Content = landed ? "Landed" : "Not landed";
         _brain.IsOnGround = landed;
 
 

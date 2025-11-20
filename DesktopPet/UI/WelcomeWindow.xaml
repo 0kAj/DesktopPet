@@ -62,7 +62,12 @@
                         </Border.Effect>
                         <TextBox Background="Wheat" x:Name="name_tb" FontSize="16" BorderThickness="0" />
                     </Border>
-
+                    
+                    <CheckBox x:Name="setAsDefaultPet_cb" Margin="15"
+                              HorizontalAlignment="Center"
+                              IsChecked="True"
+                              VerticalAlignment="Center">Set as Default Pet</CheckBox>
+                    
                     <Button Grid.Row="2" Content="Let's pet!" Width="150" Height="40"
                             HorizontalAlignment="Center" Margin="0 25 0 0"
                             Background="Aqua" Foreground="DarkBlue" FontWeight="Bold"
