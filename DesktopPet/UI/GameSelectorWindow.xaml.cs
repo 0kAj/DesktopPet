@@ -18,9 +18,11 @@ public partial class GameSelectorWindow : Window
     {
         InitializeComponent(); //todo improve the game-selector visually
         _brain = petBrain;
+        Title += " - " + _brain.Name;
 
-        hungerbar.Value = Convert.ToDouble(PetManager.Instance.GetAttribute(petBrain.Name, "hunger"));
-        thirstbar.Value = Convert.ToDouble(PetManager.Instance.GetAttribute(petBrain.Name, "thurst"));
+        hungerbar.Value = Convert.ToDouble(PetManager.Instance.GetAttribute(_brain.Name, "hunger"));
+        thirstbar.Value = Convert.ToDouble(PetManager.Instance.GetAttribute(_brain.Name, "thurst"));
+        petName_tb.Text = _brain.Name;
     }
 
     private void Feed_button_OnClick(object sender, RoutedEventArgs e)

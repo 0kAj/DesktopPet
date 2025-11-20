@@ -5,6 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:desktopPet="clr-namespace:DesktopPet"
                            mc:Ignorable="d"
+                           Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                            WindowStyle="None"
                            AllowsTransparency="True"
                            Background="Transparent"
