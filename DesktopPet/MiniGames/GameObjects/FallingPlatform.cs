@@ -6,7 +6,7 @@ namespace DesktopPet.MiniGames.GameObjects;
 
 public class FallingPlatform
 {
-    public FallingPlatform(double x, double y, double width, double height, double velocityY)
+    public FallingPlatform(double x, double y, double width, double height, double velocityY) //todo Bindings???
     {
         Rect = new Rect(x, y, width, height);
         VelocityY = velocityY;

@@ -28,7 +28,11 @@
                         VerticalAlignment="Center"
                         Orientation="Vertical"
                         Margin="20">
-                <Rectangle Name="pet" Height="90" Width="90" Fill="Aqua" />
+                <Image x:Name="pet"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       Height="90"
+                       Width="90"
+                       Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png" />
                 <StackPanel Background="Beige"
                             Margin="10">
                     <Label FontWeight="Bold" Foreground="Brown">Hunger</Label>

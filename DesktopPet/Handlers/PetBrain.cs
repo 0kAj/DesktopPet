@@ -31,9 +31,11 @@ public class PetBrain
     public bool IsOnDragging { get; set; }
 
     public double Speed { get; set; }
+    
+    public string Name { get; set; } //todo require non null not empty string as name
 
     public PlatformManager? PlatformManager { get; set; }
-
+    
     public void InitFromMovementTemplate(MovementTemplate template)
     {
         // reset AI
