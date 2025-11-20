@@ -46,7 +46,7 @@
                                      Background="BurlyWood" />
                     </StackPanel>
                     <!-- Thirstbar -->
-                    <Label FontWeight="Bold" Foreground="DarkBlue">Thrist</Label>
+                    <Label FontWeight="Bold" Foreground="DarkBlue">Thirst</Label>
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
