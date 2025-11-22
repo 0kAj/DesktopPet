@@ -33,7 +33,7 @@
                            x:Name="petName_tb"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           Margin="10"/>
+                           Margin="10" />
                 <Image x:Name="pet"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        Height="90"

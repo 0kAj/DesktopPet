@@ -13,7 +13,7 @@ public partial class PetWindow : VelocityWindow
         // give it a brain
         _brain = new PetBrain(this) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        
+
         debugLabel.Content = _brain.Name;
     }
 
@@ -22,7 +22,7 @@ public partial class PetWindow : VelocityWindow
         base.Tick();
         _brain.Tick();
     }
-    
+
     public override Rect GetCollisionRect()
     {
         var res = pet.PointToScreen(new Point(0, 0));

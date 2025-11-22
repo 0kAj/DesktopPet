@@ -1,7 +1,6 @@
 using System.Windows;
 using DesktopPet.Attribute;
 using DesktopPet.Handlers;
-using DesktopPet.Interfaces;
 using DesktopPet.MiniGames;
 
 namespace DesktopPet.UI;
@@ -15,7 +14,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     private bool doTick; //todo rm it
 
     private int spawnInterval;
-    
+
 
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {

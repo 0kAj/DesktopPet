@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:DesktopPet.UI"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
         AllowsTransparency="True"
@@ -20,20 +19,19 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
+
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="20"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Welcome to your Desktop-Pet!"
                                FontSize="28"
                                FontWeight="Bold"
                                Foreground="DarkBlue"
                                HorizontalAlignment="Center"
-                               Margin="0 0 0 25">
-                    </TextBlock>
+                               Margin="0 0 0 25" />
                     <Button Grid.Column="3" Content="✕"
                             Width="30" Height="30"
                             FontSize="20"
@@ -52,15 +50,14 @@
                                FontSize="16"
                                FontWeight="Bold"
                                Margin="0 0 0 10"
-                               Foreground="DarkSlateGray">
-                    </TextBlock>
+                               Foreground="DarkSlateGray" />
                     <Border Background="Wheat"
                             CornerRadius="8"
                             Padding="10"
                             BorderBrush="Wheat"
                             BorderThickness="1">
                         <Border.Effect>
-                            <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2"></DropShadowEffect>
+                            <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
                         </Border.Effect>
                         <TextBox Background="Wheat" x:Name="name_tb" FontSize="16" BorderThickness="0" />
                     </Border>
@@ -69,15 +66,17 @@
                                HorizontalAlignment="Center"
                                Text="THIS IS AN ERROR!!!"
                                Visibility="Collapsed"
-                               Foreground="Red"/>
+                               Foreground="Red" />
 
-                    
+
                     <CheckBox x:Name="setAsDefaultPet_cb" Margin="10"
                               HorizontalAlignment="Center"
                               IsChecked="True"
-                              VerticalAlignment="Center">Set as Default Pet</CheckBox>
-                    
-                    <Button Grid.Row="2" Content="Let's pet!" Width="150" Height="40"
+                              VerticalAlignment="Center">
+                        Set as Default Pet
+                    </CheckBox>
+
+                    <Button Content="Let's pet!" Width="150" Height="40"
                             HorizontalAlignment="Center"
                             Background="Aqua" Foreground="DarkBlue" FontWeight="Bold"
                             BorderThickness="0" Cursor="Hand"

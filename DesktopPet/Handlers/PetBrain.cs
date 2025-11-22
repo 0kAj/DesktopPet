@@ -17,6 +17,8 @@ public class PetBrain
     private readonly PetEventHandler _petEventHandler;
     private readonly PetMovementHandler _petMovementHandler;
 
+    private string _name;
+
     public PetBrain(PetWindow petWindow)
     {
         PetWindow = petWindow;
@@ -33,9 +35,8 @@ public class PetBrain
 
     public double Speed { get; set; }
 
-    private string _name;
-    public string Name 
-    { 
+    public string Name
+    {
         get => _name;
         set
         {
@@ -45,7 +46,7 @@ public class PetBrain
     }
 
     public PlatformManager? PlatformManager { get; set; }
-    
+
     public void InitFromMovementTemplate(MovementTemplate template)
     {
         // reset AI

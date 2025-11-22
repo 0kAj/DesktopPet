@@ -56,7 +56,7 @@ public class PetActionContextMenuPetEvent : IPetEvent
             recentGameMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
             recentGamesMenuItem.Items.Add(recentGameMenuItem);
         }
-        
+
         playMenuItem.Items.Add(recentGamesMenuItem);
         cm.Items.Add(playMenuItem);
 

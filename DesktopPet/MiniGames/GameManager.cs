@@ -1,16 +1,16 @@
 using System.Windows;
 using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
-using DesktopPet.Interfaces;
-using DesktopPet.UI;
 
 namespace DesktopPet.MiniGames;
 
 public class GameManager
 {
-    public static GameManager Instance { get; } = new GameManager();
-    
-    private GameManager() { }
+    private GameManager()
+    {
+    }
+
+    public static GameManager Instance { get; } = new();
 
     public void StartGame(string name, PetBrain petBrain)
     {
@@ -31,5 +31,8 @@ public class GameManager
         return MiniGameRegistry.Create(name, brain);
     }
 
-    public IEnumerable<string> GetRegisteredGames() => MiniGameRegistry.GameNames;
+    public IEnumerable<string> GetRegisteredGames()
+    {
+        return MiniGameRegistry.GameNames;
+    }
 }

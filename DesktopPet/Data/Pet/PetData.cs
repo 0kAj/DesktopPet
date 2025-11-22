@@ -5,12 +5,6 @@ namespace DesktopPet.Data.Pet;
 
 public class PetData
 {
-    public string PetName { get; set; } = "";
-    public List<PetAttribute> Attributes { get; set; } = new List<PetAttribute>();
-    public bool IsDefault { get; set; } = false;
-
-    public List<string> LastPlayedGames { get; set; } = new List<string>();
-
     public PetData(string petName, bool isDefault = false)
     {
         PetName = petName;
@@ -28,4 +22,9 @@ public class PetData
         LastPlayedGames = lastPlayedGames;
     }
 
+    public string PetName { get; set; } = "";
+    public List<PetAttribute> Attributes { get; set; } = new();
+    public bool IsDefault { get; set; }
+
+    public List<string> LastPlayedGames { get; set; } = new();
 }

@@ -20,7 +20,7 @@ public partial class WelcomeWindow : Window
 
     private PetWindow ShowPetWindow(string petName)
     {
-        PetWindow petWindow = new PetWindow(petName);
+        var petWindow = new PetWindow(petName);
         petWindow.Show();
         return petWindow;
     }
@@ -35,7 +35,7 @@ public partial class WelcomeWindow : Window
             error_tb.Visibility = Visibility.Visible;
             return;
         }
-        
+
         PetManager.Instance.SetAttribute(petName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(petName, new PetAttribute("hunger", "100"));
         PetManager.Instance.SetDefaultPet(petName);

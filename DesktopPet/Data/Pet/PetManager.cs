@@ -1,33 +1,32 @@
 using System.Collections.ObjectModel;
 using DesktopPet.Data.Attributes;
-using DesktopPet.MiniGames;
 
 namespace DesktopPet.Data.Pet;
 
 public class PetManager
 {
     public static PetManager Instance = new();
+    private readonly Dictionary<string, PetData> _petCache = new();
 
-    private PetStorage _petStorage;
-    private Dictionary<string, PetData> _petCache = new();
-    
+    private readonly PetStorage _petStorage;
+
     public PetManager()
     {
         _petStorage = DataManager.Instance.GetData<PetStorage>();
         LoadFromStorage();
     }
-    
+
     private void LoadFromStorage()
     {
         _petCache.Clear();
-        
+
         foreach (var pet in _petStorage.Pets)
             _petCache[pet.PetName] = new PetData(
                 pet.PetName,
                 new List<PetAttribute>(pet.Attributes),
                 new List<string>(pet.LastPlayedGames),
                 pet.IsDefault
-                );
+            );
     }
 
     private void SaveToStorage()
@@ -49,9 +48,11 @@ public class PetManager
         return false;
     }
 
-    
+
     public Collection<PetAttribute> GetAttributes(string petName)
     {
+        //todo Multiple Pets:
+        //todo colorable pets
         //todo welcome window where to set the name
         //todo prohibit double names
         if (string.IsNullOrWhiteSpace(petName))
@@ -62,7 +63,7 @@ public class PetManager
 
         return new Collection<PetAttribute>();
     }
-    
+
     public void SetAttribute(string petName, PetAttribute attribute)
     {
         // create pet if not exist
@@ -71,7 +72,7 @@ public class PetManager
             pet = new PetData(petName);
             _petCache[petName] = pet;
         }
-        
+
         var list = pet.Attributes;
         var idx = list.FindIndex(a => a.Name == attribute.Name);
 
@@ -102,15 +103,13 @@ public class PetManager
         PetData? newDefaultPet = null;
         foreach (var pet in _petCache.Values)
         {
-            if (pet.PetName == petName)
-            {
-                newDefaultPet = pet;
-            }
+            if (pet.PetName == petName) newDefaultPet = pet;
             pet.IsDefault = false;
         }
+
         if (newDefaultPet != null)
             newDefaultPet.IsDefault = true;
-        
+
         SaveToStorage();
     }
 
@@ -148,15 +147,15 @@ public class PetManager
             pet = new PetData(petName);
             _petCache[petName] = pet;
         }
-        
+
         var list = pet.LastPlayedGames;
-        
+
         if (list.Contains(lastPlayedGameName))
             list.Remove(lastPlayedGameName);
 
         // add front
         list.Insert(0, lastPlayedGameName);
-        
+
         const int maxEntries = 3;
         if (list.Count > maxEntries)
             list.RemoveRange(maxEntries, list.Count - maxEntries);
@@ -168,7 +167,7 @@ public class PetManager
     {
         if (!_petCache.TryGetValue(petName, out var pet))
             return new Collection<string>();
-        
+
         return new Collection<string>(pet.LastPlayedGames);
     }
 }

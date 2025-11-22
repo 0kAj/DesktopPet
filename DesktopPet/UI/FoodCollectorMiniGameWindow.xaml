@@ -1,17 +1,16 @@
 <miniGames:MiniGameWindow x:Class="DesktopPet.UI.FoodCollectorMiniGameWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:desktopPet="clr-namespace:DesktopPet"
-        xmlns:miniGames="clr-namespace:DesktopPet.MiniGames"
-        mc:Ignorable="d"
-        Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
-        AllowsTransparency="True"
-        WindowStyle="None"
-        WindowState="Normal"
-        Topmost="True"
-        Title="FoodCollectorMiniGameWindow" Height="450" Width="800">
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                          xmlns:miniGames="clr-namespace:DesktopPet.MiniGames"
+                          mc:Ignorable="d"
+                          Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
+                          AllowsTransparency="True"
+                          WindowStyle="None"
+                          WindowState="Normal"
+                          Topmost="True"
+                          Title="FoodCollectorMiniGameWindow" Height="450" Width="800">
     <miniGames:MiniGameWindow.Background>
         <SolidColorBrush Color="AliceBlue" Opacity="0.002" />
     </miniGames:MiniGameWindow.Background>
