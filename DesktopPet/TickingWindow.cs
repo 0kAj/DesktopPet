@@ -16,7 +16,6 @@ public abstract class TickingWindow : Window
         _timer = new DispatcherTimer();
         SetDelta(0.01);
         _timer.Tick += (_, __) => Tick();
-        _timer.Start(); //Todo Start this at any window manually
     }
 
     private bool DoTick { get; set; }
@@ -45,12 +44,12 @@ public abstract class TickingWindow : Window
         return PointToScreen(Mouse.GetPosition(this));
     }
 
-    public Point GetDPISaveGlobalMousePos()
+    public Point GetDpiSaveGlobalMousePos()
     {
         var pos = GetGlobalMousePos();
-        var scale = GetWindowsScale(this); // z. B. 1.0 oder 1.25
+        var scale = GetWindowsScale(this); // windows-Scale-Fac 1.0, 1.25, ...
 
-        // physische Pixel → WPF Device-Independent Pixels (DIPs)
+        // pixelpos to dpi save pos
         return new Point(pos.X / scale, pos.Y / scale);
     }
 

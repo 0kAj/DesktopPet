@@ -35,12 +35,12 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         // init Pet as playable
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
-        // gameTimer.Start(); //todo gamewindow
+        StartTicking();
     }
 
     public override void End()
     {
-        // gameTimer.Stop(); //todo gamewindow
+        StopTicking();
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         Close();
     }

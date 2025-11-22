@@ -15,6 +15,8 @@ public partial class PetWindow : VelocityWindow
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
 
         debugLabel.Content = _brain.Name;
+        
+        StartTicking();
     }
 
     protected override void Tick()

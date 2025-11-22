@@ -8,7 +8,7 @@ namespace DesktopPet.Handlers;
 
 public class PetBrain
 {
-    public enum MovementTemplate
+    public enum MovementTemplate //todo YOU can do this better!!!
     {
         DefaultPet,
         BasicPetController
@@ -47,7 +47,7 @@ public class PetBrain
 
     public PlatformManager? PlatformManager { get; set; }
 
-    public void InitFromMovementTemplate(MovementTemplate template)
+    public void InitFromMovementTemplate(MovementTemplate template) //todo YOU can do this better!!!
     {
         // reset AI
         _petMovementHandler.ClearStates();

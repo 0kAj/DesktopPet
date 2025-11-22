@@ -10,9 +10,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 {
     private readonly PlatformManager _platformManager;
     private readonly Random random;
-
-    private bool doTick; //todo rm it
-
+    
     private int spawnInterval;
 
 
@@ -37,12 +35,12 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
     public override void Start()
     {
-        doTick = true;
+        StartTicking();
     }
 
     public override void End()
     {
-        doTick = false;
+        StopTicking();
         //Todo Game Result
         Close();
     }

@@ -34,7 +34,7 @@ public class DragDropMovementState : IBehaviourState
     {
         if (_brain.IsOnDragging)
         {
-            var dragPos = _petWindow.GetDPISaveGlobalMousePos();
+            var dragPos = _petWindow.GetDpiSaveGlobalMousePos();
             var dir = dragPos - _dragStartPos;
             var targetpos = _dragStartWindowPos + dir;
             _petWindow.Left = targetpos.X;
@@ -56,7 +56,7 @@ public class DragDropMovementState : IBehaviourState
         _brain.IsOnDragging = true;
         _brain.IsOnGround = false;
         _petWindow.ResetVelocity();
-        _dragStartPos = _petWindow.GetDPISaveGlobalMousePos();
+        _dragStartPos = _petWindow.GetDpiSaveGlobalMousePos();
         _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
         // _petWindow.debugLabel.Content = "Mouse Down";
         _petWindow.CaptureMouse();
