@@ -52,9 +52,9 @@ public class PetManager
     public Collection<PetAttribute> GetAttributes(string petName)
     {
         //todo Multiple Pets:
-        //todo colorable pets
-        //todo welcome window where to set the name
-        //todo prohibit double names
+        // colorable pets
+        // welcome window where to set the name
+        // prohibit double names
         if (string.IsNullOrWhiteSpace(petName))
             return new Collection<PetAttribute>();
 
