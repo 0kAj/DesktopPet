@@ -28,7 +28,14 @@ public partial class WelcomeWindow : Window
     private void OKButton_OnClick(object sender, RoutedEventArgs e)
     {
         // create new Pet
-        var petName = name_tb.Text; //todo check tb of empty and null string
+        var petName = name_tb.Text;
+        if (string.IsNullOrWhiteSpace(petName))
+        {
+            error_tb.Text = "Pet name cannot be empty.";
+            error_tb.Visibility = Visibility.Visible;
+            return;
+        }
+        
         PetManager.Instance.SetAttribute(petName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(petName, new PetAttribute("hunger", "100"));
         PetManager.Instance.SetDefaultPet(petName);

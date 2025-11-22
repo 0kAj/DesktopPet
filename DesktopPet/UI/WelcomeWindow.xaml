@@ -46,6 +46,7 @@
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
+                            FocusManager.FocusedElement="{ Binding ElementName=name_tb}"
                             Width="350">
                     <TextBlock Text="What is the name of your pet?"
                                FontSize="16"
@@ -63,14 +64,21 @@
                         </Border.Effect>
                         <TextBox Background="Wheat" x:Name="name_tb" FontSize="16" BorderThickness="0" />
                     </Border>
+                    <TextBlock x:Name="error_tb"
+                               Padding="0 10 0 5"
+                               HorizontalAlignment="Center"
+                               Text="THIS IS AN ERROR!!!"
+                               Visibility="Collapsed"
+                               Foreground="Red"/>
+
                     
-                    <CheckBox x:Name="setAsDefaultPet_cb" Margin="15"
+                    <CheckBox x:Name="setAsDefaultPet_cb" Margin="10"
                               HorizontalAlignment="Center"
                               IsChecked="True"
                               VerticalAlignment="Center">Set as Default Pet</CheckBox>
                     
                     <Button Grid.Row="2" Content="Let's pet!" Width="150" Height="40"
-                            HorizontalAlignment="Center" Margin="0 25 0 0"
+                            HorizontalAlignment="Center"
                             Background="Aqua" Foreground="DarkBlue" FontWeight="Bold"
                             BorderThickness="0" Cursor="Hand"
                             IsDefault="True"

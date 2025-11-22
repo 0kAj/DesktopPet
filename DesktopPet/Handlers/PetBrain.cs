@@ -1,3 +1,4 @@
+using CommunityToolkit.Diagnostics;
 using DesktopPet.Handlers.Events;
 using DesktopPet.Handlers.MovementStates;
 using DesktopPet.MiniGames;
@@ -31,8 +32,17 @@ public class PetBrain
     public bool IsOnDragging { get; set; }
 
     public double Speed { get; set; }
-    
-    public string Name { get; set; } //todo require non null not empty string as name
+
+    private string _name;
+    public string Name 
+    { 
+        get => _name;
+        set
+        {
+            Guard.IsNotNullOrWhiteSpace(value);
+            _name = value;
+        }
+    }
 
     public PlatformManager? PlatformManager { get; set; }
     

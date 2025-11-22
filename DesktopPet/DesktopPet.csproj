@@ -22,4 +22,8 @@
         <Resource Include="Assets\Sprites\Pets\Mouse.png"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.0" />
+    </ItemGroup>
+
 </Project>
