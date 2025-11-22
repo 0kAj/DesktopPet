@@ -6,7 +6,7 @@ using DesktopPet.Attribute;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 
-namespace DesktopPet.UI;
+namespace DesktopPet.UI.GameWindows;
 
 [MiniGame("Food Collector")]
 public partial class FoodCollectorMiniGameWindow : MiniGameWindow
@@ -18,17 +18,16 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
-        WindowHelper.FitToScreen(this);
+        SizingHelper.FitToScreen(this);
 
         // route all key events to petwindow
         KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
-
-        // gameTimer = new DispatcherTimer();
-        // gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-        // gameTimer.Tick += GameLoop; //todo fix the slow down when pet moves
+        
+        SetDelta(20);
     }
 
     public override string GameName => "Food Collector";
+    protected override Canvas MiniGameCanvas => GameCanvas;
 
     public override void Start()
     {

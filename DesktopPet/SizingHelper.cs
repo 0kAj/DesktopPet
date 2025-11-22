@@ -1,8 +1,9 @@
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopPet;
 
-public static class WindowHelper
+public static class SizingHelper
 {
     public static void FitToScreen(Window window)
     {
@@ -11,5 +12,12 @@ public static class WindowHelper
         window.Top = workArea.Top;
         window.Width = workArea.Width;
         window.Height = workArea.Height;
+    }
+    
+    public static void FitToScreen(UserControl control)
+    {
+        var workArea = SystemParameters.WorkArea;
+        control.Width = workArea.Width;
+        control.Height = workArea.Height;
     }
 }

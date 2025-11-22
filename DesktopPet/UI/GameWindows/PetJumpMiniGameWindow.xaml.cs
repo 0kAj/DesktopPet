@@ -1,9 +1,10 @@
 using System.Windows;
+using System.Windows.Controls;
 using DesktopPet.Attribute;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 
-namespace DesktopPet.UI;
+namespace DesktopPet.UI.GameWindows;
 
 [MiniGame("Pet Jump")]
 public partial class PetJumpMiniGameWindow : MiniGameWindow
@@ -17,13 +18,13 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
-        WindowHelper.FitToScreen(this);
+        SizingHelper.FitToScreen(this);
 
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
         KeyDown += (_, e) => petBrain.PetWindow.RaiseEvent(e);
 
-        _platformManager = new PlatformManager(gameCanvas);
+        _platformManager = new PlatformManager(GameCanvas);
         _brain.PlatformManager = _platformManager;
 
         random = new Random();
@@ -32,6 +33,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     }
 
     public override string GameName => "Pet Jump";
+    protected override Canvas MiniGameCanvas => GameCanvas;
 
     public override void Start()
     {

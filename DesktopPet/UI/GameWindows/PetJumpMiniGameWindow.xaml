@@ -1,4 +1,4 @@
-<miniGames:MiniGameWindow x:Class="DesktopPet.UI.PetJumpMiniGameWindow"
+<miniGames:MiniGameWindow x:Class="DesktopPet.UI.GameWindows.PetJumpMiniGameWindow"
                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,9 +10,10 @@
                           WindowStyle="None"
                           WindowState="Normal"
                           Topmost="True"
+                          ShowInTaskbar="False"
                           Title="PetJump" Height="450" Width="800">
     <miniGames:MiniGameWindow.Background>
         <SolidColorBrush Color="AliceBlue" Opacity="0.002" />
     </miniGames:MiniGameWindow.Background>
-    <Canvas x:Name="gameCanvas" Background="Transparent" />
+    <Canvas x:Name="GameCanvas" Background="Transparent" />
 </miniGames:MiniGameWindow>

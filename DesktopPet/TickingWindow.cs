@@ -14,7 +14,7 @@ public abstract class TickingWindow : Window
         DoTick = true;
 
         _timer = new DispatcherTimer();
-        SetDelta(0.01);
+        SetDelta(10);
         _timer.Tick += (_, __) => Tick();
     }
 
@@ -24,15 +24,15 @@ public abstract class TickingWindow : Window
 
     protected void SetDelta(double delta)
     {
-        _timer.Interval = TimeSpan.FromSeconds(delta);
+        _timer.Interval = TimeSpan.FromMilliseconds(delta);
     }
 
-    protected void StartTicking()
+    public void StartTicking()
     {
         _timer.Start();
     }
 
-    protected void StopTicking()
+    public void StopTicking()
     {
         _timer.Stop();
     }

@@ -1,0 +1,167 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ==============================
+         Farbdefinitionen
+         ============================== -->
+    <Color x:Key="PrimaryColor">#FF00008B</Color> <!-- DarkBlue -->
+    <Color x:Key="SecondaryColor">#FF2F4F4F</Color> <!-- DarkSlateGray -->
+    <Color x:Key="AccentColor">#FF00FFFF</Color> <!-- Aqua -->
+    <Color x:Key="ErrorColor">#FFFF0000</Color> <!-- Red -->
+    <Color x:Key="TextBoxBackgroundColor">#FFF5DEB3</Color> <!-- Wheat -->
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}" />
+    <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="{StaticResource TextBoxBackgroundColor}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="White" />
+
+    <!-- ==============================
+         TextBlock Styles
+         ============================== -->
+    <Style x:Key="HeaderTextBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="LabelTextBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryBrush}" />
+    </Style>
+
+    <Style x:Key="ErrorTextBlock" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource ErrorBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Visibility" Value="Collapsed" />
+    </Style>
+
+    <!-- ==============================
+         Button Style
+         ============================== -->
+    <Style x:Key="AccentButtonAqua" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#FF00CCCC" />
+                            <!-- darker accent -->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#FF009999" /> <!-- even darker -->
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="#FFAAAAAA" />
+                            <Setter Property="Foreground" Value="#FF666666" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AccentButtonRed" TargetType="Button">
+        <Setter Property="Background" Value="Red" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#CC0000" /> <!-- dunkleres Rot -->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#990000" /> <!-- noch dunkler -->
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="#FFAAAAAA" />
+                            <Setter Property="Foreground" Value="#FF666666" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="CloseButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <!-- ==============================
+         TextBox Style
+         ============================== -->
+    <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+
+    <!-- ==============================
+         Border Style
+         ============================== -->
+    <Style x:Key="CardBorder" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Margin" Value="40" />
+    </Style>
+
+</ResourceDictionary>

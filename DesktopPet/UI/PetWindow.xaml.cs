@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using DesktopPet.Handlers;
+using DesktopPet.MiniGames;
 
 namespace DesktopPet.UI;
 
@@ -17,6 +18,7 @@ public partial class PetWindow : VelocityWindow
         debugLabel.Content = _brain.Name;
         
         StartTicking();
+        GameManager.Instance.StartGame("Food Collector", _brain);
     }
 
     protected override void Tick()

@@ -26,4 +26,22 @@
         <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Update="UI\GameWindows\FoodCollectorMiniGameWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="UI\GameWindows\PetJumpMiniGameWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="UI\ResourceDictionaries\MiniGameResources.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>

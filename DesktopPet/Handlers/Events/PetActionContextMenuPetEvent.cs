@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Controls;
 using DesktopPet.Data.Pet;
 using DesktopPet.Interfaces;
@@ -70,6 +71,13 @@ public class PetActionContextMenuPetEvent : IPetEvent
         backMenuItem.Header = "Back";
         backMenuItem.Click += (_, _) => _petWindow.pet.ContextMenu!.IsOpen = false;
         cm.Items.Add(backMenuItem);
+        
+        cm.Items.Add(new Separator()); // -----------------
+        
+        var closeMenuItem = new MenuItem();
+        closeMenuItem.Header = "Close";
+        closeMenuItem.Click += (_, _) => Application.Current.Shutdown();
+        cm.Items.Add(closeMenuItem);
 
         return cm;
     }

@@ -12,6 +12,7 @@
                            Topmost="True"
                            WindowState="Normal"
                            ResizeMode="NoResize"
+                           ShowInTaskbar="False"
                            WindowStartupLocation="CenterScreen"
                            Title="PetWindow" Height="100" Width="150">
     <DockPanel HorizontalAlignment="Center">

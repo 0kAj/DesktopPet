@@ -1,18 +1,23 @@
-<miniGames:MiniGameWindow x:Class="DesktopPet.UI.FoodCollectorMiniGameWindow"
+<miniGames:MiniGameWindow x:Class="DesktopPet.UI.GameWindows.FoodCollectorMiniGameWindow"
                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                           xmlns:miniGames="clr-namespace:DesktopPet.MiniGames"
+                          xmlns:gameWindows="clr-namespace:DesktopPet.UI.GameWindows"
                           mc:Ignorable="d"
                           Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                           AllowsTransparency="True"
                           WindowStyle="None"
                           WindowState="Normal"
                           Topmost="True"
+                          ShowInTaskbar="False"
                           Title="FoodCollectorMiniGameWindow" Height="450" Width="800">
     <miniGames:MiniGameWindow.Background>
         <SolidColorBrush Color="AliceBlue" Opacity="0.002" />
     </miniGames:MiniGameWindow.Background>
+    <Window.Resources>
+        <ResourceDictionary Source="../ResourceDictionaries/MiniGameResources.xaml"/>
+    </Window.Resources>
     <Canvas x:Name="GameCanvas" Background="Transparent" />
 </miniGames:MiniGameWindow>

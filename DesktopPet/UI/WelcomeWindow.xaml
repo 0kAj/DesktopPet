@@ -10,9 +10,11 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Title="WelcomeWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary Source="/UI/ResourceDictionaries/DesktopPetTheme.xaml"/>
+    </Window.Resources>
     <Viewbox Stretch="Uniform">
-        <Border BorderBrush="DarkBlue" BorderThickness="5" CornerRadius="50" Padding="20" Margin="40"
-                Background="White">
+        <Border Style="{StaticResource CardBorder}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -27,17 +29,9 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Welcome to your Desktop-Pet!"
-                               FontSize="28"
-                               FontWeight="Bold"
-                               Foreground="DarkBlue"
-                               HorizontalAlignment="Center"
-                               Margin="0 0 0 25" />
-                    <Button Grid.Column="3" Content="✕"
-                            Width="30" Height="30"
-                            FontSize="20"
-                            HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Background="Transparent" Foreground="DarkBlue"
-                            BorderThickness="0" FontWeight="Bold"
+                               Style="{ StaticResource HeaderTextBlock}" />
+                    <Button Grid.Column="2" Content="✕"
+                            Style="{StaticResource CloseButton}"
                             Click="CloseButton_OnClick" />
                 </Grid>
 
@@ -47,14 +41,11 @@
                             FocusManager.FocusedElement="{ Binding ElementName=name_tb}"
                             Width="350">
                     <TextBlock Text="What is the name of your pet?"
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Margin="0 0 0 10"
-                               Foreground="DarkSlateGray" />
-                    <Border Background="Wheat"
+                               Margin="0 5 0 5"
+                               Style="{StaticResource LabelTextBlock}" />
+                    <Border Background="{StaticResource TextBoxBackgroundBrush}"
                             CornerRadius="8"
                             Padding="10"
-                            BorderBrush="Wheat"
                             BorderThickness="1">
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
@@ -62,10 +53,9 @@
                         <TextBox Background="Wheat" x:Name="name_tb" FontSize="16" BorderThickness="0" />
                     </Border>
                     <TextBlock x:Name="error_tb"
+                               Style="{StaticResource ErrorTextBlock}"
                                Padding="0 10 0 5"
-                               HorizontalAlignment="Center"
                                Text="THIS IS AN ERROR!!!"
-                               Visibility="Collapsed"
                                Foreground="Red" />
 
 
@@ -76,15 +66,11 @@
                         Set as Default Pet
                     </CheckBox>
 
-                    <Button Content="Let's pet!" Width="150" Height="40"
-                            HorizontalAlignment="Center"
-                            Background="Aqua" Foreground="DarkBlue" FontWeight="Bold"
-                            BorderThickness="0" Cursor="Hand"
+                    <Button Content="Let's pet!"
+                            Style="{StaticResource AccentButtonAqua}"
+                            Background="Aqua" Foreground="DarkBlue"
                             IsDefault="True"
                             Click="OKButton_OnClick">
-                        <Button.Effect>
-                            <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
-                        </Button.Effect>
                     </Button>
                 </StackPanel>
             </Grid>
