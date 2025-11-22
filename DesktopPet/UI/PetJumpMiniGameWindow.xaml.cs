@@ -1,26 +1,27 @@
 using System.Windows;
+using DesktopPet.Attribute;
 using DesktopPet.Handlers;
 using DesktopPet.Interfaces;
 using DesktopPet.MiniGames;
 
 namespace DesktopPet.UI;
 
-public partial class PetJump : TickingWindow, IMiniGame
+[MiniGame("Pet Jump")]
+public partial class PetJumpMiniGameWindow : MiniGameWindow
 {
-    private readonly PetBrain _brain;
     private readonly PlatformManager _platformManager;
     private readonly Random random;
 
-    private bool doTick;
+    private bool doTick; //todo rm it
 
     private int spawnInterval;
+    
 
-    public PetJump(PetBrain petBrain)
+    public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
         WindowHelper.FitToScreen(this);
 
-        _brain = petBrain;
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
         KeyDown += (_, e) => petBrain.PetWindow.RaiseEvent(e);
@@ -33,12 +34,14 @@ public partial class PetJump : TickingWindow, IMiniGame
         spawnInterval = random.Next(10, 50);
     }
 
-    public void Start()
+    public override string GameName => "Pet Jump";
+
+    public override void Start()
     {
         doTick = true;
     }
 
-    public void End()
+    public override void End()
     {
         doTick = false;
         //Todo Game Result

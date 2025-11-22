@@ -27,8 +27,8 @@ public partial class WelcomeWindow : Window
 
     private void OKButton_OnClick(object sender, RoutedEventArgs e)
     {
-        //todo create new Pet
-        var petName = name_tb.Text;
+        // create new Pet
+        var petName = name_tb.Text; //todo check tb of empty and null string
         PetManager.Instance.SetAttribute(petName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(petName, new PetAttribute("hunger", "100"));
         PetManager.Instance.SetDefaultPet(petName);

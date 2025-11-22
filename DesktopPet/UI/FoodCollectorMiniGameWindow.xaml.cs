@@ -3,50 +3,51 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using DesktopPet.Attribute;
 using DesktopPet.Handlers;
 using DesktopPet.Interfaces;
+using DesktopPet.MiniGames;
 
 namespace DesktopPet.UI;
 
-public partial class FoodCollectorMiniGameWindow : Window, IMiniGame
+[MiniGame("Food Collector")]
+public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
-    private readonly PetBrain _brain;
-    private readonly DispatcherTimer gameTimer;
     private readonly Random rand = new();
     private double playerSpeed = 10;
     private int score;
 
-    public FoodCollectorMiniGameWindow(PetBrain petBrain)
+    public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
         WindowHelper.FitToScreen(this);
 
-        _brain = petBrain;
         // route all key events to petwindow
         KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
 
-        // init gameloop
-        gameTimer = new DispatcherTimer();
-        gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-        gameTimer.Tick += GameLoop;
+        // gameTimer = new DispatcherTimer();
+        // gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+        // gameTimer.Tick += GameLoop; //todo fix the slow down when pet moves
     }
 
-    public void Start()
+    public override string GameName => "Food Collector";
+
+    public override void Start()
     {
         // init Pet as playable
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
-        gameTimer.Start();
+        // gameTimer.Start(); //todo gamewindow
     }
 
-    public void End()
+    public override void End()
     {
-        gameTimer.Stop();
+        // gameTimer.Stop(); //todo gamewindow
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         Close();
     }
 
-    private void GameLoop(object sender, EventArgs e)
+    protected override void Tick() //todo fix the slow down when pet moves
     {
         // Zufällig neues Futter erzeugen
         if (rand.Next(0, 30) == 1)

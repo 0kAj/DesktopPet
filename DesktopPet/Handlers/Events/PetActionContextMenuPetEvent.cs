@@ -1,5 +1,7 @@
 using System.Windows.Controls;
+using DesktopPet.Data.Pet;
 using DesktopPet.Interfaces;
+using DesktopPet.MiniGames;
 using DesktopPet.UI;
 
 namespace DesktopPet.Handlers.Events;
@@ -35,24 +37,32 @@ public class PetActionContextMenuPetEvent : IPetEvent
         playMenuItem.Items.Add(gameSelectorMenuItem);
         playMenuItem.Items.Add(new Separator()); // ------------
 
-        foreach (var type in Enum.GetValues(typeof(GameSelectorWindow.GameType)).Cast<GameSelectorWindow.GameType>()
-                     .ToList())
+        foreach (var game in GameManager.Instance.GetRegisteredGames())
         {
             var gameTypeMenuItem = new MenuItem();
-            gameTypeMenuItem.Header = type.ToString();
-            gameTypeMenuItem.Click += (_, _) => GameSelectorWindow.StartGame(type, _brain);
+            gameTypeMenuItem.Header = game;
+            gameTypeMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
             playMenuItem.Items.Add(gameTypeMenuItem);
         }
 
         playMenuItem.Items.Add(new Separator()); // ------------
         var recentGamesMenuItem = new MenuItem();
         recentGamesMenuItem.Header = "Recent Games"; // Recent Games
-        playMenuItem.Items.Add(recentGamesMenuItem); // todo add a Recent Games function to view recent played games
+
+        foreach (var game in PetManager.Instance.GetLastPlayedGames(_brain.Name))
+        {
+            var recentGameMenuItem = new MenuItem();
+            recentGameMenuItem.Header = game;
+            recentGameMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
+            recentGamesMenuItem.Items.Add(recentGameMenuItem);
+        }
+        
+        playMenuItem.Items.Add(recentGamesMenuItem);
         cm.Items.Add(playMenuItem);
 
         var feedMenuItem = new MenuItem();
         feedMenuItem.Header = "Feed";
-        feedMenuItem.Click += (_, _) => GameSelectorWindow.StartGame(GameSelectorWindow.GameType.FoodCollector, _brain);
+        feedMenuItem.Click += (_, _) => GameManager.Instance.StartGame("Food Collector", _brain);
         cm.Items.Add(feedMenuItem);
         cm.Items.Add(new Separator());
 

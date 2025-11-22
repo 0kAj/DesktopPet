@@ -16,7 +16,7 @@ public abstract class TickingWindow : Window
         _timer = new DispatcherTimer();
         SetDelta(0.01);
         _timer.Tick += (_, __) => Tick();
-        _timer.Start();
+        _timer.Start(); //Todo Start this at any window manually
     }
 
     private bool DoTick { get; set; }
