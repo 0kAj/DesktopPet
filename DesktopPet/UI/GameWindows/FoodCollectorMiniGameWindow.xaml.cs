@@ -4,7 +4,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DesktopPet.Attribute;
-using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 
@@ -13,9 +12,8 @@ namespace DesktopPet.UI.GameWindows;
 [MiniGame("Food Collector")]
 public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
-    private readonly Random rand = new();
-    private double playerSpeed = 10;
-    private int score;
+    private readonly Random _rand = new();
+    private int _foodScore;
 
     public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
@@ -27,9 +25,9 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         
         SetDelta(20);
         
-        UpdateUi();
+        UpdateCollectableDisplay();
         
-        TDisplay.Timer.Set(30);
+        TDisplay.Timer.Set(3);
         TDisplay.Timer.Timeout += () => End();
         
         TickStart += () => TDisplay.Timer.Start();
@@ -50,15 +48,18 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     public override void End()
     {
         base.End();
+        CollectedFood += _foodScore;
         StopTicking();
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
+        RewardsWindow rewardsWindow = new RewardsWindow(_foodScore, 0);
+        rewardsWindow.Show();
         Close();
     }
 
     protected override void Tick() //todo fix the slow down when pet moves
     {
-        // Zufällig neues Futter erzeugen
-        if (rand.Next(0, 30) == 1)
+        // create food at random pos
+        if (_rand.Next(0, 30) == 1)
         {
             var food = new Ellipse
             {
@@ -70,12 +71,12 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                         new Uri("pack://application:,,,/Assets/Sprites/Food/apple.png"))
                 }
             }; 
-            Canvas.SetLeft(food, rand.Next(0, (int)GameCanvas.ActualWidth - 20));
+            Canvas.SetLeft(food, _rand.Next(0, (int)GameCanvas.ActualWidth - 20));
             Canvas.SetTop(food, 0);
             GameCanvas.Children.Add(food);
         }
 
-        // Bewegung & Kollision
+        // food collision
         for (var i = GameCanvas.Children.Count - 1; i >= 0; i--)
             if (GameCanvas.Children[i] is Ellipse food)
             {
@@ -88,11 +89,10 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                 if (foodRect.IntersectsWith(playerRect))
                 {
                     GameCanvas.Children.Remove(food);
-                    score++;
-                    _brain.PetWindow.debugLabel.Content = $"Score: {score}";
-                    CollectedFood += 1;
+                    _foodScore++;
+                    // _brain.PetWindow.debugLabel.Content = $"foodScore: {_foodScore}";
                     TDisplay.Timer.AddRemaining(2);
-                    UpdateUi();
+                    UpdateCollectableDisplay();
                 }
                 else if (top > GameCanvas.ActualHeight)
                 {
@@ -101,11 +101,11 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
             }
     }
 
-    private void UpdateUi()
+    private void UpdateCollectableDisplay()
     {
         //update score
-        CDisplay.Thirst_tb.Text = PetManager.Instance.GetAttribute(_brain.Name, "collectedThirst", "0");
+        CDisplay.Thirst_tb.Text = "0";
         
-        CDisplay.Food_tb.Text = PetManager.Instance.GetAttribute(_brain.Name, "collectedFood", "0");
+        CDisplay.Food_tb.Text = _foodScore.ToString();
     }
 }

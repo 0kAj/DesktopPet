@@ -15,14 +15,17 @@ public partial class TimerDisplay : UserControl
         Timer = new TimerViewModel();
         DataContext = Timer;
         Timer.PropertyChanged += ViewModelOnPropertyChanged;
-        Timer.Tick += () => AnimateBounce();
+        Timer.Tick += () =>
+        {
+            if (Timer.Remaining > 10) return;
+            AnimateBounce();
+        };
         InitializeComponent();
     }
 
     private void ViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         AnimateFontSize(Timer.TimerFontSize);
-        AnimateBounce();
     }
 
     private void AnimateFontSize(double target)

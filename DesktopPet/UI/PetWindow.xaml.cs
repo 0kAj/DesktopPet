@@ -18,7 +18,7 @@ public partial class PetWindow : VelocityWindow
         debugLabel.Content = _brain.Name;
         
         StartTicking();
-        GameManager.Instance.StartGame("Food Collector", _brain);
+        GameManager.Instance.StartGame("Pet Jump", _brain);
     }
 
     protected override void Tick()
