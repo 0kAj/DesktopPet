@@ -21,7 +21,7 @@ public class GravityMovementState : IBehaviourState
 
     public bool IsDone => _brain.IsOnGround;
 
-    public bool CanTick() //todo BUG: can stop gravity by holding right-clicked mouse over pet
+    public bool CanTick()
     {
         return !_brain.IsOnDragging;
     }
@@ -77,6 +77,10 @@ public class GravityMovementState : IBehaviourState
     }
 
     public void OnEnd()
+    {
+    }
+
+    public void UnRegister()
     {
     }
 }

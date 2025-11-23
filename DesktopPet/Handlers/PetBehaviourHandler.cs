@@ -29,6 +29,7 @@ public class PetMovementHandler
 
     public void RemoveState(IBehaviourState state)
     {
+        state.UnRegister();
         _behaviourStates.Remove(state);
     }
 

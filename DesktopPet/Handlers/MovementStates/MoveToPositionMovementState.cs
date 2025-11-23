@@ -47,6 +47,10 @@ public class MoveToPositionMovementState : IBehaviourState
         _petWindow.ResetVelocity();
     }
 
+    public void UnRegister()
+    {
+    }
+
     private Vector GetTargetPosition()
     {
         // target y = taskbar y

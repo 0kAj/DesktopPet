@@ -6,13 +6,13 @@ public partial class PauseMenu : UserControl
 {
     public event Action ResumeClicked;
     // public event Action RestartClicked;
-    public event Action QuitClicked;
+    public event Action LeaveClicked;
 
     public PauseMenu()
     {
         InitializeComponent();
         ResumeButton.Click += (_,_) => ResumeClicked!.Invoke();
         // RestartButton.Click += (_,_) => RestartClicked!.Invoke();
-        QuitButton.Click += (_,_) => QuitClicked!.Invoke();
+        LeaveButton.Click += (_,_) => LeaveClicked!.Invoke();
     }
 }

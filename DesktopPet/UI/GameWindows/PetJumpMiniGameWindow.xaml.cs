@@ -58,7 +58,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         base.End();
         CollectedFood += _foodScore;
         StopTicking();
-        //Todo Game Result
+        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         RewardsWindow rewardsWindow = new RewardsWindow(_foodScore, _thirstScore);
         rewardsWindow.Show();
         Close();
@@ -72,7 +72,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
         if (spawnInterval == 0)
         {
-            // todo make special platforms that spawn with special items like coins/hunger or bottles
+            // todo make special platforms that spawn with special items like coins/hunger or bottles:
             // platform type for red == food; blue == thirst; yellow == high jump;
             // on collision change platform color to gray
             var platformWidth = 150;

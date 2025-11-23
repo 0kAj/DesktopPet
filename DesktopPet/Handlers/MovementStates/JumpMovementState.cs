@@ -36,4 +36,8 @@ public class JumpMovementState : IBehaviourState
     public void OnEnd()
     {
     }
+
+    public void UnRegister()
+    {
+    }
 }

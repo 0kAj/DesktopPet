@@ -27,7 +27,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         
         UpdateCollectableDisplay();
         
-        TDisplay.Timer.Set(3);
+        TDisplay.Timer.Set(30);
         TDisplay.Timer.Timeout += () => End();
         
         TickStart += () => TDisplay.Timer.Start();

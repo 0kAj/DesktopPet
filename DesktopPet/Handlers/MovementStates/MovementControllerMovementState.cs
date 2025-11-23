@@ -38,4 +38,8 @@ public class MovementControllerMovementState : IBehaviourState
     public void OnEnd()
     {
     }
+
+    public void UnRegister()
+    {
+    }
 }

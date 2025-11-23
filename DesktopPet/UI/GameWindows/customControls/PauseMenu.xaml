@@ -16,7 +16,7 @@
                 <TextBlock Text="Pause" FontSize="50" FontWeight="Bold" HorizontalAlignment="Center" />
                 <Button Style="{StaticResource AccentButtonAqua}" FontSize="20" Content="Resume" Name="ResumeButton" Margin="5" />
                 <!-- <Button Content="Restart" Name="RestartButton" Margin="5" /> -->
-                <Button Style="{StaticResource AccentButtonRed}" Foreground="Wheat" Background="Red" FontSize="20" Content="Quit" Name="QuitButton" Margin="5" />
+                <Button Style="{StaticResource AccentButtonRed}" Foreground="Wheat" Background="Red" FontSize="20" Content="Leave" Name="LeaveButton" Margin="5" />
             </StackPanel>
         </Border>
     </Grid>

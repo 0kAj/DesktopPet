@@ -46,6 +46,12 @@ public class DragDropMovementState : IBehaviourState
     {
     }
 
+    public void UnRegister()
+    {
+        _petWindow.MouseDown -= Pet_OnMouseDown;
+        _petWindow.MouseUp -= Pet_OnMouseUp;
+    }
+
 
     private void Pet_OnMouseDown(object sender, MouseButtonEventArgs e)
     {

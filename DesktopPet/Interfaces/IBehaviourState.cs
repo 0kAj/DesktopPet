@@ -6,4 +6,5 @@ public interface IBehaviourState
     bool CanTick();
     void Tick();
     void OnEnd();
+    void UnRegister();
 }

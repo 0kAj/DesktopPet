@@ -49,6 +49,10 @@ public class MovingMovementState : IBehaviourState
     {
     }
 
+    public void UnRegister()
+    {
+    }
+
     private void GenerateRadomTargetX()
     {
         var screen = SystemParameters.WorkArea;

@@ -50,7 +50,11 @@ public abstract class MiniGameWindow : TickingWindow
         {
             _pauseMenu = (PauseMenu)FindResource("PauseMenuControl");
             _pauseMenu.ResumeClicked += HidePauseMenu;
-            _pauseMenu.QuitClicked += () => Application.Current.Shutdown();
+            _pauseMenu.LeaveClicked += () =>
+            {
+                _brain.PetWindow.StartTicking();
+                End();
+            };
             MiniGameUiCanvas.Children.Add(_pauseMenu);
             
             SizingHelper.FitToScreen(_pauseMenu);
