@@ -15,5 +15,11 @@
     <miniGames:MiniGameWindow.Background>
         <SolidColorBrush Color="AliceBlue" Opacity="0.002" />
     </miniGames:MiniGameWindow.Background>
-    <Canvas x:Name="GameCanvas" Background="Transparent" />
+    <Window.Resources>
+        <ResourceDictionary Source="../ResourceDictionaries/MiniGameResources.xaml"/>
+    </Window.Resources>
+    <Canvas>
+        <Canvas x:Name="GameCanvas" Background="Transparent"/>
+        <Canvas x:Name="UiCanvas" Background="Transparent"/>
+    </Canvas>
 </miniGames:MiniGameWindow>

@@ -1,8 +1,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DesktopPet.Attribute;
+using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 
@@ -24,21 +26,30 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
         
         SetDelta(20);
+        
+        UpdateUi();
+        
+        TDisplay.Timer.Set(30);
+        TDisplay.Timer.Timeout += () => End();
+        
+        TickStart += () => TDisplay.Timer.Start();
+        TickStop += () => TDisplay.Timer.Stop();
     }
 
     public override string GameName => "Food Collector";
-    protected override Canvas MiniGameCanvas => GameCanvas;
+    protected override Canvas MiniGameUiCanvas => UiCanvas;
 
     public override void Start()
     {
         // init Pet as playable
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
-
+        
         StartTicking();
     }
 
     public override void End()
     {
+        base.End();
         StopTicking();
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         Close();
@@ -53,8 +64,12 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
             {
                 Width = 20,
                 Height = 20,
-                Fill = Brushes.Gold
-            };
+                Fill = new ImageBrush
+                {
+                    ImageSource = new BitmapImage(
+                        new Uri("pack://application:,,,/Assets/Sprites/Food/apple.png"))
+                }
+            }; 
             Canvas.SetLeft(food, rand.Next(0, (int)GameCanvas.ActualWidth - 20));
             Canvas.SetTop(food, 0);
             GameCanvas.Children.Add(food);
@@ -75,11 +90,22 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                     GameCanvas.Children.Remove(food);
                     score++;
                     _brain.PetWindow.debugLabel.Content = $"Score: {score}";
+                    CollectedFood += 1;
+                    TDisplay.Timer.AddRemaining(2);
+                    UpdateUi();
                 }
                 else if (top > GameCanvas.ActualHeight)
                 {
                     GameCanvas.Children.Remove(food);
                 }
             }
+    }
+
+    private void UpdateUi()
+    {
+        //update score
+        CDisplay.Thirst_tb.Text = PetManager.Instance.GetAttribute(_brain.Name, "collectedThirst", "0");
+        
+        CDisplay.Food_tb.Text = PetManager.Instance.GetAttribute(_brain.Name, "collectedFood", "0");
     }
 }

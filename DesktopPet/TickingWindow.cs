@@ -9,6 +9,10 @@ public abstract class TickingWindow : Window
 {
     private readonly DispatcherTimer _timer;
 
+    protected event Action TickStop;
+    protected event Action TickStart;
+    
+    //todo fix fps
     protected TickingWindow()
     {
         DoTick = true;
@@ -30,11 +34,13 @@ public abstract class TickingWindow : Window
     public void StartTicking()
     {
         _timer.Start();
+        TickStart?.Invoke();
     }
 
     public void StopTicking()
     {
         _timer.Stop();
+        TickStop?.Invoke();
     }
 
     protected abstract void Tick();

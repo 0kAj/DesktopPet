@@ -33,7 +33,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     }
 
     public override string GameName => "Pet Jump";
-    protected override Canvas MiniGameCanvas => GameCanvas;
+    protected override Canvas MiniGameUiCanvas => UiCanvas;
 
     public override void Start()
     {
@@ -42,6 +42,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
     public override void End()
     {
+        base.End();
         StopTicking();
         //Todo Game Result
         Close();

@@ -121,17 +121,17 @@ public class PetManager
         return null;
     }
 
-    public string GetAttribute(string petName, string attributeName)
+    public string GetAttribute(string petName, string attributeName, string defaultValue = "")
     {
         if (!_petCache.TryGetValue(petName, out var pet))
-            return "";
+            return defaultValue;
 
         var list = pet.Attributes;
         var idx = list.FindIndex(a => a.Name == attributeName);
 
         if (idx >= 0)
             return list[idx].Value;
-        return "";
+        return defaultValue;
     }
 
     public void SetAttribute(string petName, string attributeName, string attributeValue)

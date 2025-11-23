@@ -5,6 +5,7 @@
                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                           xmlns:miniGames="clr-namespace:DesktopPet.MiniGames"
                           xmlns:gameWindows="clr-namespace:DesktopPet.UI.GameWindows"
+                          xmlns:customControls="clr-namespace:DesktopPet.UI.GameWindows.customControls"
                           mc:Ignorable="d"
                           Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                           AllowsTransparency="True"
@@ -19,5 +20,10 @@
     <Window.Resources>
         <ResourceDictionary Source="../ResourceDictionaries/MiniGameResources.xaml"/>
     </Window.Resources>
-    <Canvas x:Name="GameCanvas" Background="Transparent" />
+    <Grid>
+        <Canvas x:Name="GameCanvas" Background="Transparent"/>
+        <Canvas x:Name="UiCanvas" Background="Transparent"/>
+        <customControls:CollectablesDisplay x:Name="CDisplay"/>
+        <customControls:TimerDisplay x:Name="TDisplay"/>
+    </Grid>
 </miniGames:MiniGameWindow>
