@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using DesktopPet.Handlers;
-using DesktopPet.MiniGames;
 
 namespace DesktopPet.UI;
 
@@ -17,7 +16,7 @@ public partial class PetWindow : VelocityWindow
 
         debugLabel.Content = _brain.Name;
         
-        StartTicking();
+        ContentRendered += (_, _) => StartTicking();
         // GameManager.Instance.StartGame("Pet Jump", _brain);
     }
 
@@ -25,6 +24,11 @@ public partial class PetWindow : VelocityWindow
     {
         base.Tick();
         _brain.Tick();
+    }
+
+    protected override void Tick(float delta)
+    {
+        // debugLabel.Content = delta;
     }
 
     public override Rect GetCollisionRect()

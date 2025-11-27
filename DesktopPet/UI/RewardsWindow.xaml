@@ -1,10 +1,11 @@
-<Window x:Class="DesktopPet.UI.RewardsWindow"
+<desktopPet:Window x:Class="DesktopPet.UI.RewardsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DesktopPet.UI"
         xmlns:customControls="clr-namespace:DesktopPet.UI.GameWindows.customControls"
+        xmlns:desktopPet="clr-namespace:DesktopPet"
         mc:Ignorable="d"
         AllowsTransparency="True"
         Background="Transparent"
@@ -12,9 +13,9 @@
         Topmost="True"
         WindowStartupLocation="CenterScreen"
         Title="RewardsWindow" Height="450" Width="800">
-    <Window.Resources>
+    <desktopPet:Window.Resources>
         <ResourceDictionary Source="/UI/ResourceDictionaries/DesktopPetTheme.xaml"/>
-    </Window.Resources>
+    </desktopPet:Window.Resources>
     <Viewbox Stretch="Uniform">
         <Border Style="{StaticResource CardBorder}">
             <Grid>
@@ -65,4 +66,4 @@
             </Grid>
         </Border>
     </Viewbox>
-</Window>
+</desktopPet:Window>

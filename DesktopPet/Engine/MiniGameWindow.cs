@@ -1,20 +1,52 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.UI.GameWindows.customControls;
 
-namespace DesktopPet.MiniGames;
+namespace DesktopPet;
 
-public abstract class MiniGameWindow : TickingWindow
+public abstract class MiniGameWindow : HighPrecisionTickingWindow
 {
     protected readonly PetBrain _brain;
+
+    private Label fpsDisplay;
 
     protected MiniGameWindow(PetBrain brain)
     {
         _brain = brain;
         brain.PetWindow.KeyDown += TogglePauseMenu;
+
+        Loaded += (_, _) =>
+        {
+            // create FPS-display
+            fpsDisplay = new Label();
+            fpsDisplay.FontSize = 50;
+            fpsDisplay.FontWeight = FontWeights.Bold;
+            fpsDisplay.Foreground = Brushes.Chartreuse;
+            fpsDisplay.Visibility = Visibility.Hidden;
+            fpsDisplay.ContentStringFormat = "FPS: {0:F0}";
+            MiniGameUiCanvas.Children.Add(fpsDisplay);
+        };
+        
+        KeyDown += (_, e) =>
+        {
+            //toggable debug fps
+            if (e.Key == Key.Tab)
+            {
+                var vis = fpsDisplay.Visibility switch
+                {
+                    Visibility.Visible => Visibility.Hidden,
+                    Visibility.Hidden => Visibility.Visible,
+                    _ => Visibility.Visible
+                };
+
+                fpsDisplay.Visibility = vis;
+            }
+        };
+
     }
 
     public abstract string GameName { get; }
@@ -40,6 +72,13 @@ public abstract class MiniGameWindow : TickingWindow
             ShowPauseMenu();
     }
     
+    protected override void Tick(float delta)
+    {
+        if (fpsDisplay == null) return;
+        
+        fpsDisplay.Content = 1000f / delta;
+    }
+
     private void ShowPauseMenu()
     {
         StopTicking();

@@ -56,7 +56,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         Close();
     }
 
-    protected override void Tick() //todo fix the slow down when pet moves
+    protected override void Tick()
     {
         // create food at random pos
         if (_rand.Next(0, 30) == 1)

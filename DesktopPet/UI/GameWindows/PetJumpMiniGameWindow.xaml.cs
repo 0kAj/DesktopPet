@@ -84,7 +84,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
             spawnInterval = random.Next(50, 120);
         }
     }
-    
+
     private void UpdateCollectableDisplay()
     {
         //update score
