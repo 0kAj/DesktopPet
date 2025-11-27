@@ -27,7 +27,7 @@ public partial class GameSelectorWindow : Window
         CollectedThirstAttribute = collectedThirst;
 
         DataContext = this;
-        
+
         SizingHelper.FitToScreen(this);
     }
 
