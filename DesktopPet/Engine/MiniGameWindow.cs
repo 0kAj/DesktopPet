@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using DesktopPet.Data.Attributes;
 using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.UI.GameWindows.customControls;
@@ -51,26 +52,45 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
                 fpsDisplay.Visibility = vis;
             }
         };
+        
+        
+        var pet = PetManager.Instance.GetPet(_brain.Name);
+        
+        FoodAttribute = pet.Attributes.FirstOrDefault(attr => attr.Name == CollectedFoodAttributeName) 
+                        ?? new PetAttribute(CollectedFoodAttributeName, "0"); //default value
+        
+        ThirstAttribute = pet.Attributes.FirstOrDefault(attr => attr.Name == CollectedThirstAttributeName)
+                          ?? new PetAttribute(CollectedThirstAttributeName, "0");
+
+        // save defaults if required
+        PetManager.Instance.SetAttribute(_brain.Name, FoodAttribute);
+        PetManager.Instance.SetAttribute(_brain.Name, ThirstAttribute);
+        
+        DataContext = this;
     }
 
     public abstract string GameName { get; }
     protected abstract Canvas MiniGameUiCanvas { get; }
 
-    public int CollectedThirst
-    {
-        get => Convert.ToInt32(PetManager.Instance.GetAttribute(_brain.Name, CollectedThirstAttributeName, "0"));
-        set => PetManager.Instance.SetAttribute(_brain.Name, CollectedThirstAttributeName, value.ToString());
-    }
-
+    public PetAttribute FoodAttribute { get; }
+    public PetAttribute ThirstAttribute { get; }
+    
     public int CollectedFood
     {
-        get => Convert.ToInt32(PetManager.Instance.GetAttribute(_brain.Name, CollectedFoodAttributeName, "0"));
-        set => PetManager.Instance.SetAttribute(_brain.Name, CollectedFoodAttributeName, value.ToString());
+        get => int.TryParse(FoodAttribute.Value, out var val) ? val : 0;
+        set => FoodAttribute.Value = value.ToString();
     }
+
+    public int CollectedThirst
+    {
+        get => int.TryParse(ThirstAttribute.Value, out var val) ? val : 0;
+        set => ThirstAttribute.Value = value.ToString();
+    }
+
 
     public abstract void Start();
 
-    public virtual void End()
+    protected virtual void End()
     {
         _brain.PetWindow.KeyDown -= TogglePauseMenu;
     }

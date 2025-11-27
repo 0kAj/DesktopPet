@@ -54,7 +54,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         StartTicking();
     }
 
-    public override void End()
+    protected override void End()
     {
         base.End();
         CollectedFood += _foodScore;

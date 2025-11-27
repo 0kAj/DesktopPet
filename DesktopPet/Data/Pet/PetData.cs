@@ -1,30 +1,67 @@
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using DesktopPet.Data.Attributes;
 
 namespace DesktopPet.Data.Pet;
 
-public class PetData
+public class PetData : INotifyPropertyChanged
 {
     public PetData(string petName, bool isDefault = false)
     {
         PetName = petName;
         IsDefault = isDefault;
-        Attributes = new List<PetAttribute>();
-        LastPlayedGames = new List<string>();
+        Attributes = new ObservableCollection<PetAttribute>();
+        LastPlayedGames = new ObservableCollection<string>();
     }
 
     [JsonConstructor]
-    public PetData(string petName, List<PetAttribute> attributes, List<string> lastPlayedGames, bool isDefault = false)
+    public PetData(string petName, ObservableCollection<PetAttribute> attributes, ObservableCollection<string> lastPlayedGames, bool isDefault = false)
     {
         PetName = petName;
-        Attributes = attributes;
+        Attributes = new ObservableCollection<PetAttribute>(attributes);
         IsDefault = isDefault;
-        LastPlayedGames = lastPlayedGames;
+        LastPlayedGames = new ObservableCollection<string>(lastPlayedGames);
     }
 
-    public string PetName { get; set; } = "";
-    public List<PetAttribute> Attributes { get; set; } = new();
-    public bool IsDefault { get; set; }
+    private string _petName;
 
-    public List<string> LastPlayedGames { get; set; } = new();
+    public string PetName
+    {
+        get => _petName;
+        set
+        {
+            if (_petName != value)
+            {
+                _petName = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public ObservableCollection<PetAttribute> Attributes { get; set; }
+
+    private bool _isDefault;
+
+    public bool IsDefault
+    {
+        get => _isDefault;
+        set
+        {
+            if (_isDefault != value)
+            {
+                _isDefault = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public ObservableCollection<string> LastPlayedGames { get; set; }
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

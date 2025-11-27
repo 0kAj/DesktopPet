@@ -23,8 +23,8 @@ public class PetManager
         foreach (var pet in _petStorage.Pets)
             _petCache[pet.PetName] = new PetData(
                 pet.PetName,
-                new List<PetAttribute>(pet.Attributes),
-                new List<string>(pet.LastPlayedGames),
+                new ObservableCollection<PetAttribute>(pet.Attributes),
+                new ObservableCollection<string>(pet.LastPlayedGames),
                 pet.IsDefault
             );
     }
@@ -35,8 +35,8 @@ public class PetManager
         _petStorage.Pets = _petCache.Values
             .Select(p => new PetData(
                 p.PetName,
-                new List<PetAttribute>(p.Attributes),
-                new List<string>(p.LastPlayedGames),
+                new ObservableCollection<PetAttribute>(p.Attributes),
+                new ObservableCollection<string>(p.LastPlayedGames),
                 p.IsDefault
             ))
             .ToList();
@@ -74,13 +74,20 @@ public class PetManager
         }
 
         var list = pet.Attributes;
-        var idx = list.FindIndex(a => a.Name == attribute.Name);
+        
+        // change existing attrributes value && add new ones
+        PetAttribute? existing = pet.Attributes.FirstOrDefault(a => a.Name == attribute.Name);
 
-        if (idx >= 0)
-            list[idx] = attribute;
+
+        if (existing != null)
+        {
+            existing.Value = attribute.Value;
+        }
         else
-            list.Add(attribute);
-
+        {
+            pet.Attributes.Add(attribute);
+        }
+        
         SaveToStorage();
     }
 
@@ -90,8 +97,16 @@ public class PetManager
             return;
 
         var list = pet.Attributes;
-        var idx = list.FindIndex(a => a.Name == attributeName);
-
+        int idx = -1;
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].Name == attributeName)
+            {
+                idx = i;
+                break;
+            }
+        }
+        
         if (idx >= 0)
             list.RemoveAt(idx);
 
@@ -121,16 +136,24 @@ public class PetManager
         return null;
     }
 
+    public PetData? GetPet(string petName)
+    {
+        foreach (var pet in _petCache.Values)
+            if (pet.PetName == petName)
+                return pet;
+        return null;
+    }
+
     public string GetAttribute(string petName, string attributeName, string defaultValue = "")
     {
         if (!_petCache.TryGetValue(petName, out var pet))
             return defaultValue;
 
         var list = pet.Attributes;
-        var idx = list.FindIndex(a => a.Name == attributeName);
-
-        if (idx >= 0)
-            return list[idx].Value;
+        foreach (var a in pet.Attributes)
+            if (a.Name == attributeName)
+                return a.Value;
+        
         return defaultValue;
     }
 
@@ -158,7 +181,7 @@ public class PetManager
 
         const int maxEntries = 3;
         if (list.Count > maxEntries)
-            list.RemoveRange(maxEntries, list.Count - maxEntries);
+            list.ToList().RemoveRange(maxEntries, list.Count - maxEntries);
 
         SaveToStorage();
     }

@@ -4,11 +4,16 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:engine="clr-namespace:DesktopPet.Engine"
+               xmlns:customControls="clr-namespace:DesktopPet.UI.GameWindows.customControls"
+               xmlns:converter="clr-namespace:DesktopPet.UI.Converter"
                mc:Ignorable="d"
                Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                WindowStartupLocation="CenterScreen"
                Title="GameSelectorWindow" Height="450" Width="800">
-    <Viewbox Stretch="Uniform">
+    <!-- <Viewbox Stretch="Uniform"> -->
+    <engine:Window.Resources>
+        <converter:StringToIntConverter x:Key="StrToInt" />
+    </engine:Window.Resources>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*" />
@@ -25,51 +30,63 @@
                     <Rectangle Margin="5" Name="Game3" Height="200" Width="200" Fill="Beige" />
                 </WrapPanel>
             </ScrollViewer>
-            <StackPanel Grid.Column="1" Grid.Row="0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Orientation="Vertical"
-                        Margin="20">
-                <TextBlock Text="PETNAME"
-                           x:Name="petName_tb"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="10" />
-                <Image x:Name="pet"
-                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                       Height="90"
-                       Width="90"
-                       Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png" />
-                <StackPanel Background="Beige"
-                            Margin="10">
-                    <Label FontWeight="Bold" Foreground="Brown">Hunger</Label>
-                    <!-- Hungerbar -->
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Margin="10 0 10 0">
-                        <Ellipse Margin="0 0 5 0" Height="10" Width="10" Fill="Brown" VerticalAlignment="Center" />
-                        <ProgressBar x:Name="hungerbar" Height="10" Value="90" Width="80" Foreground="Coral"
-                                     Background="BurlyWood" />
-                    </StackPanel>
-                    <!-- Thirstbar -->
-                    <Label FontWeight="Bold" Foreground="DarkBlue">Thirst</Label>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Margin="10 0 10 0">
-                        <Ellipse Margin="0 0 5 0" Height="10" Width="10" Fill="DarkBlue" VerticalAlignment="Center" />
-                        <ProgressBar x:Name="thirstbar" Height="10" Value="90" Width="80" Foreground="Blue"
-                                     Background="CornflowerBlue" />
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Center"
-                                Orientation="Horizontal"
+            <DockPanel Grid.Column="1" Grid.Row="0">
+                <customControls:CollectablesDisplay
+                    Food="{ Binding FoodAttribute.Value, Converter={StaticResource StrToInt} }"
+                    Thirst="{ Binding ThirstAttribute.Value, Converter={StaticResource StrToInt} }"
+                    Size="30"
+                    DockPanel.Dock="Top"/>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical"
+                            Margin="20">
+                    <TextBlock Text="PETNAME"
+                               x:Name="petName_tb"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="10" />
+                    <Image x:Name="pet"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Height="90"
+                           Width="90"
+                           Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png" />
+                    <StackPanel Background="Beige"
                                 Margin="10">
-                        <Button Click="Feed_button_OnClick" Margin="5" x:Name="feed_button">Feed</Button>
-                        <Button Margin="5" x:Name="thirst_button">Thirst</Button>
+                        <Label FontWeight="Bold" Foreground="Brown">Hunger</Label>
+                        <!-- Hungerbar -->
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 10 0">
+                            <Image Margin="0 0 5 0"
+                                   Height="10" Width="10"
+                                   Source="pack://application:,,,/Assets/Sprites/Food/apple.png"
+                                   VerticalAlignment="Center" />
+                            <ProgressBar x:Name="hungerbar" Height="10" Value="90" Width="80" Foreground="Coral"
+                                         Background="BurlyWood" />
+                        </StackPanel>
+                        <!-- Thirstbar -->
+                        <Label FontWeight="Bold" Foreground="DarkBlue">Thirst</Label>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 10 0">
+                            <Image Margin="0 0 5 0"
+                                   Height="10" Width="10"
+                                   Source="pack://application:,,,/Assets/Sprites/Food/Waterbottle.png"
+                                   VerticalAlignment="Center" />
+                            <ProgressBar x:Name="thirstbar" Height="10" Value="90" Width="80" Foreground="Blue"
+                                         Background="CornflowerBlue" />
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Margin="10">
+                            <Button Click="Feed_button_OnClick" Margin="5" x:Name="feed_button">Feed</Button>
+                            <Button Margin="5" x:Name="thirst_button">Thirst</Button>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </DockPanel>
         </Grid>
-    </Viewbox>
+    <!-- </Viewbox> -->
 </engine:Window>

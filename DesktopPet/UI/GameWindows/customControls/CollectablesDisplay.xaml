@@ -15,23 +15,27 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Image Grid.Row="0" Grid.Column="0"
+               Stretch="Uniform"
+               Height="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
                RenderOptions.BitmapScalingMode="NearestNeighbor"
                Source="pack://application:,,,/Assets/Sprites/Food/apple.png" />
         <TextBlock x:Name="Food_tb"
                    Grid.Row="0" Grid.Column="1"
-                   Text="123456"
-                   FontSize="50"
+                   Text="{ Binding Food, RelativeSource={RelativeSource AncestorType=UserControl} }"
+                   FontSize="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
                    FontWeight="Bold"
                    Foreground="#ac3231"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center" />
         <Image Grid.Row="1" Grid.Column="0"
                RenderOptions.BitmapScalingMode="NearestNeighbor"
+               Stretch="Uniform"
+               Height="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
                Source="pack://application:,,,/Assets/Sprites/Food/WaterBottle.png" />
         <TextBlock x:Name="Thirst_tb"
                    Grid.Row="1" Grid.Column="1"
-                   Text="123456"
-                   FontSize="50"
+                   Text="{ Binding Thirst, RelativeSource={RelativeSource AncestorType=UserControl} }"
+                   FontSize="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
                    FontWeight="Bold"
                    Foreground="#413e73"
                    HorizontalAlignment="Right"
