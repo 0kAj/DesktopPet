@@ -24,6 +24,10 @@
         <Resource Include="Assets\Sprites\Food\apple.png"/>
         <None Remove="Assets\Sprites\Food\WaterBottle.png"/>
         <Resource Include="Assets\Sprites\Food\WaterBottle.png"/>
+        <None Remove="Assets\Sprites\Games\FoodCollector.png" />
+        <Resource Include="Assets\Sprites\Games\FoodCollector.png" />
+        <None Remove="Assets\Sprites\Games\PetJump.png" />
+        <Resource Include="Assets\Sprites\Games\PetJump.png" />
     </ItemGroup>
 
     <ItemGroup>

@@ -27,6 +27,8 @@ public partial class GameSelectorWindow : Window
         CollectedThirstAttribute = collectedThirst;
 
         DataContext = this;
+        
+        SizingHelper.FitToScreen(this);
     }
 
     public PetAttribute PetHungerAttribute { get; }
@@ -38,6 +40,23 @@ public partial class GameSelectorWindow : Window
     {
         //start FeedGame
         GameManager.Instance.StartGame("Food Collector", _brain);
+        Close();
+    }
+
+    private void CloseButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
+
+    private void FoodCollector_Click(object sender, RoutedEventArgs e)
+    {
+        GameManager.Instance.StartGame("Food Collector", _brain);
+        Close();
+    }
+
+    private void PetJump_Click(object sender, RoutedEventArgs e)
+    {
+        GameManager.Instance.StartGame("Pet Jump", _brain);
         Close();
     }
 }
