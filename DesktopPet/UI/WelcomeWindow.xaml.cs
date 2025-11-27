@@ -29,11 +29,11 @@ public partial class WelcomeWindow : Window
     private void OKButton_OnClick(object sender, RoutedEventArgs e)
     {
         // create new Pet
-        var petName = name_tb.Text;
+        var petName = NameTb.Text;
         if (string.IsNullOrWhiteSpace(petName))
         {
-            error_tb.Text = "Pet name cannot be empty.";
-            error_tb.Visibility = Visibility.Visible;
+            ErrorTb.Text = "Pet name cannot be empty.";
+            ErrorTb.Visibility = Visibility.Visible;
             return;
         }
 
@@ -41,7 +41,7 @@ public partial class WelcomeWindow : Window
         PetManager.Instance.SetAttribute(petName, new PetAttribute("hunger", "100"));
         PetManager.Instance.SetDefaultPet(petName);
 
-        if (setAsDefaultPet_cb.IsChecked == true)
+        if (SetAsDefaultPetCb.IsChecked == true)
             PetManager.Instance.SetDefaultPet(petName);
 
         ShowPetWindow(petName);

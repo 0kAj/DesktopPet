@@ -39,7 +39,6 @@
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            FocusManager.FocusedElement="{ Binding ElementName=name_tb}"
                             Width="350">
                     <TextBlock Text="You collected:"
                                Margin="0 5 0 5"

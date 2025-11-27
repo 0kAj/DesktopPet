@@ -13,11 +13,11 @@
         <Border Style="{StaticResource CardBorder}" Width="400" Height="300" CornerRadius="10">
             <StackPanel Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
                 <TextBlock Text="Pause" FontSize="50" FontWeight="Bold" HorizontalAlignment="Center" />
-                <Button Style="{StaticResource AccentButtonAqua}" FontSize="20" Content="Resume" Name="ResumeButton"
+                <Button Style="{StaticResource AccentButtonAqua}" FontSize="20" Content="Resume" x:Name="ResumeButton"
                         Margin="5" />
                 <!-- <Button Content="Restart" Name="RestartButton" Margin="5" /> -->
                 <Button Style="{StaticResource AccentButtonRed}" Foreground="Wheat" FontSize="20" Content="Leave"
-                        Name="LeaveButton" Margin="5" />
+                        x:Name="LeaveButton" Margin="5" />
             </StackPanel>
         </Border>
     </Grid>

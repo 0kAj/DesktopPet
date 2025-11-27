@@ -89,8 +89,8 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     private void UpdateCollectableDisplay()
     {
         //update score
-        CDisplay.Thirst_tb.Text = _thirstScore.ToString();
+        CDisplay.ThirstTb.Text = _thirstScore.ToString();
 
-        CDisplay.Food_tb.Text = _foodScore.ToString();
+        CDisplay.FoodTb.Text = _foodScore.ToString();
     }
 }

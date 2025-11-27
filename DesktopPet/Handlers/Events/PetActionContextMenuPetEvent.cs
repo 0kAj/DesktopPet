@@ -17,13 +17,13 @@ public class PetActionContextMenuPetEvent : IPetEvent
         _brain = petBrain;
         _petWindow = petBrain.PetWindow;
 
-        _petWindow.pet.ContextMenu = CreatePetActionContextMenu();
+        _petWindow.Pet.ContextMenu = CreatePetActionContextMenu();
     }
 
     public void OnUnregister()
     {
         // Remove PetActionContextMenu
-        _petWindow.pet.ContextMenu = null;
+        _petWindow.Pet.ContextMenu = null;
     }
 
     private ContextMenu CreatePetActionContextMenu()
@@ -69,7 +69,7 @@ public class PetActionContextMenuPetEvent : IPetEvent
 
         var backMenuItem = new MenuItem();
         backMenuItem.Header = "Back";
-        backMenuItem.Click += (_, _) => _petWindow.pet.ContextMenu!.IsOpen = false;
+        backMenuItem.Click += (_, _) => _petWindow.Pet.ContextMenu!.IsOpen = false;
         cm.Items.Add(backMenuItem);
 
         cm.Items.Add(new Separator()); // -----------------

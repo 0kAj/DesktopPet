@@ -16,7 +16,7 @@ public partial class PetWindow : VelocityWindow
         _brain = new PetBrain(this) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
 
-        debugLabel.Content = _brain.Name;
+        DebugLabel.Content = _brain.Name;
 
         ContentRendered += (_, _) => StartTicking();
         // GameManager.Instance.StartGame("Pet Jump", _brain);
@@ -37,7 +37,7 @@ public partial class PetWindow : VelocityWindow
 
     public override Rect GetCollisionRect()
     {
-        var res = pet.PointToScreen(new Point(0, 0));
-        return new Rect(res.X, res.Y, pet.ActualWidth, pet.ActualHeight);
+        var res = Pet.PointToScreen(new Point(0, 0));
+        return new Rect(res.X, res.Y, Pet.ActualWidth, Pet.ActualHeight);
     }
 }

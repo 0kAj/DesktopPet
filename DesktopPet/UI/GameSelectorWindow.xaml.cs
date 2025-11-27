@@ -17,7 +17,7 @@ public partial class GameSelectorWindow : Window
         _brain = petBrain;
         Title += " - " + _brain.Name;
 
-        petName_tb.Text = _brain.Name;
+        PetNameTb.Text = _brain.Name;
 
         PetAttributeHelper.InitAttributes(_brain, out var hunger, out var thirst, out var collectedFood,
             out var collectedThirst);

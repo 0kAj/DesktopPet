@@ -40,7 +40,7 @@
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            FocusManager.FocusedElement="{ Binding ElementName=name_tb}"
+                            FocusManager.FocusedElement="{ Binding ElementName=NameTb}"
                             Width="350">
                     <TextBlock Text="What is the name of your pet?"
                                Margin="0 5 0 5"
@@ -52,16 +52,16 @@
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
                         </Border.Effect>
-                        <TextBox Background="Wheat" x:Name="name_tb" FontSize="16" BorderThickness="0" />
+                        <TextBox Background="Wheat" x:Name="NameTb" FontSize="16" BorderThickness="0" />
                     </Border>
-                    <TextBlock x:Name="error_tb"
+                    <TextBlock x:Name="ErrorTb"
                                Style="{StaticResource ErrorTextBlock}"
                                Padding="0 10 0 5"
                                Text="THIS IS AN ERROR!!!"
                                Foreground="Red" />
 
 
-                    <CheckBox x:Name="setAsDefaultPet_cb" Margin="10"
+                    <CheckBox x:Name="SetAsDefaultPetCb" Margin="10"
                               HorizontalAlignment="Center"
                               IsChecked="True"
                               VerticalAlignment="Center">

@@ -19,7 +19,7 @@
                Height="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
                RenderOptions.BitmapScalingMode="NearestNeighbor"
                Source="pack://application:,,,/Assets/Sprites/Food/apple.png" />
-        <TextBlock x:Name="Food_tb"
+        <TextBlock x:Name="FoodTb"
                    Grid.Row="0" Grid.Column="1"
                    Text="{ Binding Food, RelativeSource={RelativeSource AncestorType=UserControl} }"
                    FontSize="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
@@ -32,7 +32,7 @@
                Stretch="Uniform"
                Height="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"
                Source="pack://application:,,,/Assets/Sprites/Food/WaterBottle.png" />
-        <TextBlock x:Name="Thirst_tb"
+        <TextBlock x:Name="ThirstTb"
                    Grid.Row="1" Grid.Column="1"
                    Text="{ Binding Thirst, RelativeSource={RelativeSource AncestorType=UserControl} }"
                    FontSize="{ Binding Size, RelativeSource={RelativeSource AncestorType=UserControl} }"

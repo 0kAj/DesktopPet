@@ -9,8 +9,8 @@ public partial class RewardsWindow : Window
     {
         InitializeComponent();
 
-        CDisplay.Food_tb.Text = foodScore.ToString();
-        CDisplay.Thirst_tb.Text = thirstScore.ToString();
+        CDisplay.FoodTb.Text = foodScore.ToString();
+        CDisplay.ThirstTb.Text = thirstScore.ToString();
         CDisplay.HorizontalAlignment = HorizontalAlignment.Center;
     }
 

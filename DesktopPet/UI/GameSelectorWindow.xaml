@@ -42,11 +42,11 @@
                         Orientation="Vertical"
                         Margin="20">
                 <TextBlock Text="PETNAME"
-                           x:Name="petName_tb"
+                           x:Name="PetNameTb"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Margin="10" />
-                <Image x:Name="pet"
+                <Image x:Name="Pet"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        Height="90"
                        Width="90"
@@ -63,7 +63,7 @@
                                Height="10" Width="10"
                                Source="pack://application:,,,/Assets/Sprites/Food/apple.png"
                                VerticalAlignment="Center" />
-                        <ProgressBar x:Name="hungerbar" Height="10"
+                        <ProgressBar Height="10"
                                      Value="{ Binding Path=PetHungerAttribute.Value, Converter={ StaticResource StrToDouble } }"
                                      Width="80" Foreground="Coral"
                                      Background="BurlyWood" />
@@ -78,7 +78,7 @@
                                Height="10" Width="10"
                                Source="pack://application:,,,/Assets/Sprites/Food/Waterbottle.png"
                                VerticalAlignment="Center" />
-                        <ProgressBar x:Name="thirstbar" Height="10"
+                        <ProgressBar Height="10"
                                      Value="{ Binding Path=PetThirstAttribute.Value, Converter={ StaticResource StrToDouble } }"
                                      Width="80" Foreground="Blue"
                                      Background="CornflowerBlue" />
@@ -86,8 +86,8 @@
                     <StackPanel HorizontalAlignment="Center"
                                 Orientation="Horizontal"
                                 Margin="10">
-                        <Button Click="Feed_button_OnClick" Margin="5" x:Name="feed_button">Feed</Button>
-                        <Button Margin="5" x:Name="thirst_button">Thirst</Button>
+                        <Button Click="Feed_button_OnClick" Margin="5">Feed</Button>
+                        <Button Margin="5">Thirst</Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

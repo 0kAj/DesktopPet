@@ -37,7 +37,7 @@ public partial class TimerDisplay : UserControl
             EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
         };
 
-        Timer_Tb.BeginAnimation(TextBlock.FontSizeProperty, anim);
+        TimerTb.BeginAnimation(TextBlock.FontSizeProperty, anim);
     }
 
     private void AnimateBounce()
