@@ -74,20 +74,16 @@ public class PetManager
         }
 
         var list = pet.Attributes;
-        
+
         // change existing attrributes value && add new ones
-        PetAttribute? existing = pet.Attributes.FirstOrDefault(a => a.Name == attribute.Name);
+        var existing = pet.Attributes.FirstOrDefault(a => a.Name == attribute.Name);
 
 
         if (existing != null)
-        {
             existing.Value = attribute.Value;
-        }
         else
-        {
             pet.Attributes.Add(attribute);
-        }
-        
+
         SaveToStorage();
     }
 
@@ -97,16 +93,14 @@ public class PetManager
             return;
 
         var list = pet.Attributes;
-        int idx = -1;
-        for (int i = 0; i < list.Count; i++)
-        {
+        var idx = -1;
+        for (var i = 0; i < list.Count; i++)
             if (list[i].Name == attributeName)
             {
                 idx = i;
                 break;
             }
-        }
-        
+
         if (idx >= 0)
             list.RemoveAt(idx);
 
@@ -153,7 +147,7 @@ public class PetManager
         foreach (var a in pet.Attributes)
             if (a.Name == attributeName)
                 return a.Value;
-        
+
         return defaultValue;
     }
 

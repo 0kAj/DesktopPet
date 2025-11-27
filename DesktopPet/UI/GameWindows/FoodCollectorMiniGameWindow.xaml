@@ -24,7 +24,7 @@
         <Canvas x:Name="UiCanvas" Background="Transparent" />
         <customControls:CollectablesDisplay x:Name="CDisplay"
                                             Food="{ Binding CollectedFoodAttribute.Value }"
-                                            Thirst="{ Binding CollectedThirstAttribute.Value }"/>
+                                            Thirst="{ Binding CollectedThirstAttribute.Value }" />
         <customControls:TimerDisplay x:Name="TDisplay" />
     </Grid>
 </engine:MiniGameWindow>

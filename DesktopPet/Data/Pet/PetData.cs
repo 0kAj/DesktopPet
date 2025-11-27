@@ -8,6 +8,10 @@ namespace DesktopPet.Data.Pet;
 
 public class PetData : INotifyPropertyChanged
 {
+    private bool _isDefault;
+
+    private string _petName;
+
     public PetData(string petName, bool isDefault = false)
     {
         PetName = petName;
@@ -17,15 +21,14 @@ public class PetData : INotifyPropertyChanged
     }
 
     [JsonConstructor]
-    public PetData(string petName, ObservableCollection<PetAttribute> attributes, ObservableCollection<string> lastPlayedGames, bool isDefault = false)
+    public PetData(string petName, ObservableCollection<PetAttribute> attributes,
+        ObservableCollection<string> lastPlayedGames, bool isDefault = false)
     {
         PetName = petName;
         Attributes = new ObservableCollection<PetAttribute>(attributes);
         IsDefault = isDefault;
         LastPlayedGames = new ObservableCollection<string>(lastPlayedGames);
     }
-
-    private string _petName;
 
     public string PetName
     {
@@ -41,8 +44,6 @@ public class PetData : INotifyPropertyChanged
     }
 
     public ObservableCollection<PetAttribute> Attributes { get; set; }
-
-    private bool _isDefault;
 
     public bool IsDefault
     {

@@ -24,7 +24,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
 
         SetDelta(20);
-        
+
         TDisplay.Timer.Set(30);
         TDisplay.Timer.Timeout += () => End();
 

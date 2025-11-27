@@ -5,12 +5,6 @@ namespace DesktopPet.UI.GameWindows.customControls;
 
 public partial class CollectablesDisplay : UserControl
 {
-    public int Food
-    {
-        get => (int)GetValue(FoodProperty);
-        set => SetValue(FoodProperty, value);
-    }
-
     public static readonly DependencyProperty FoodProperty = // for binding compatibility
         DependencyProperty.Register(
             nameof(Food),
@@ -18,25 +12,12 @@ public partial class CollectablesDisplay : UserControl
             typeof(CollectablesDisplay),
             new PropertyMetadata(0));
 
-    public int Thirst
-    {
-        get => (int)GetValue(ThirstProperty);
-        set => SetValue(ThirstProperty, value);
-    }
-
     public static readonly DependencyProperty ThirstProperty = // for binding compatibility
         DependencyProperty.Register(
             nameof(Thirst),
             typeof(int),
             typeof(CollectablesDisplay),
             new PropertyMetadata(0));
-
-
-    public int Size
-    {
-        get => (int)GetValue(SizeProperty);
-        set => SetValue(SizeProperty, value);
-    }
 
     public static readonly DependencyProperty SizeProperty = // for binding compatibility
         DependencyProperty.Register(
@@ -48,5 +29,24 @@ public partial class CollectablesDisplay : UserControl
     public CollectablesDisplay()
     {
         InitializeComponent();
+    }
+
+    public int Food
+    {
+        get => (int)GetValue(FoodProperty);
+        set => SetValue(FoodProperty, value);
+    }
+
+    public int Thirst
+    {
+        get => (int)GetValue(ThirstProperty);
+        set => SetValue(ThirstProperty, value);
+    }
+
+
+    public int Size
+    {
+        get => (int)GetValue(SizeProperty);
+        set => SetValue(SizeProperty, value);
     }
 }

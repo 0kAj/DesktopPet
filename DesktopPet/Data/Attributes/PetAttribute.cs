@@ -5,13 +5,15 @@ namespace DesktopPet.Data.Attributes;
 
 public class PetAttribute : INotifyPropertyChanged
 {
+    private string _name;
+
+    private string _value;
+
     public PetAttribute(string name, string value)
     {
         _name = name;
         _value = value;
     }
-
-    private string _name;
 
     public string Name
     {
@@ -25,8 +27,6 @@ public class PetAttribute : INotifyPropertyChanged
             }
         }
     }
-
-    private string _value;
 
     public string Value
     {

@@ -37,7 +37,7 @@ public static class PetAttributeHelper
         PetManager.Instance.SetAttribute(brain.Name, collectedFood);
         PetManager.Instance.SetAttribute(brain.Name, collectedThirst);
     }
-    
+
     public static void InitAttributes(PetBrain brain,
         out PetAttribute collectedFood,
         out PetAttribute collectedThirst)

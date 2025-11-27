@@ -10,28 +10,29 @@ namespace DesktopPet.UI;
 public partial class GameSelectorWindow : Window
 {
     private readonly PetBrain _brain;
-    
-    public PetAttribute PetHungerAttribute { get; }
-    public PetAttribute PetThirstAttribute { get; }
-    public PetAttribute CollectedFoodAttribute { get; }
-    public PetAttribute CollectedThirstAttribute { get; }
 
     public GameSelectorWindow(PetBrain petBrain)
     {
         InitializeComponent(); //todo improve the game-selector visually
         _brain = petBrain;
         Title += " - " + _brain.Name;
-        
+
         petName_tb.Text = _brain.Name;
-        
-        PetAttributeHelper.InitAttributes(_brain, out PetAttribute hunger, out PetAttribute thirst, out PetAttribute collectedFood, out PetAttribute collectedThirst);
+
+        PetAttributeHelper.InitAttributes(_brain, out var hunger, out var thirst, out var collectedFood,
+            out var collectedThirst);
         PetHungerAttribute = hunger;
         PetThirstAttribute = thirst;
         CollectedFoodAttribute = collectedFood;
         CollectedThirstAttribute = collectedThirst;
-        
+
         DataContext = this;
     }
+
+    public PetAttribute PetHungerAttribute { get; }
+    public PetAttribute PetThirstAttribute { get; }
+    public PetAttribute CollectedFoodAttribute { get; }
+    public PetAttribute CollectedThirstAttribute { get; }
 
     private void Feed_button_OnClick(object sender, RoutedEventArgs e)
     {

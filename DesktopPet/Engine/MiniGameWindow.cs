@@ -50,12 +50,12 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
                 fpsDisplay.Visibility = vis;
             }
         };
-        
-        
-        PetAttributeHelper.InitAttributes(brain, out PetAttribute collectedFood, out PetAttribute collectedThirst);
+
+
+        PetAttributeHelper.InitAttributes(brain, out var collectedFood, out var collectedThirst);
         CollectedFoodAttribute = collectedFood;
         CollectedThirstAttribute = collectedThirst;
-        
+
         DataContext = this;
     }
 
