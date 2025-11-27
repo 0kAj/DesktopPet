@@ -5,14 +5,36 @@ using System.Windows.Threading;
 
 namespace DesktopPet.MiniGames;
 
-
 public class TimerViewModel : INotifyPropertyChanged
 {
     private readonly DispatcherTimer _timer;
     private int _remaining;
+    public Action Tick;
 
     public Action Timeout;
-    public Action Tick;
+
+    public TimerViewModel(int startSeconds = 30)
+    {
+        Remaining = startSeconds;
+
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+
+        _timer.Tick += (_, _) =>
+        {
+            Tick?.Invoke();
+            if (Remaining == 0)
+            {
+                _timer.Stop();
+                Timeout?.Invoke();
+                return;
+            }
+
+            Remaining--;
+        };
+    }
 
     public int Remaining
     {
@@ -58,38 +80,22 @@ public class TimerViewModel : INotifyPropertyChanged
     public string DisplayTime =>
         TimeSpan.FromSeconds(Remaining).ToString(@"mm\:ss");
 
-    public TimerViewModel(int startSeconds = 30)
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public void Start()
     {
-        Remaining = startSeconds;
-
-        _timer = new DispatcherTimer
-        {
-            Interval = TimeSpan.FromSeconds(1)
-        };
-
-        _timer.Tick += (_, _) =>
-        {
-            Tick?.Invoke();
-            if (Remaining == 0)
-            {
-                _timer.Stop();
-                Timeout?.Invoke();
-                return;
-            }
-
-            Remaining--;
-        };
+        _timer.Start();
     }
 
-    public void Start() => _timer.Start();
-    public void Stop() => _timer.Stop();
+    public void Stop()
+    {
+        _timer.Stop();
+    }
 
     public void Set(int seconds)
     {
         Remaining = seconds;
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

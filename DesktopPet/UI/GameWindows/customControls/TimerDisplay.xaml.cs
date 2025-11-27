@@ -8,8 +8,6 @@ namespace DesktopPet.UI.GameWindows.customControls;
 
 public partial class TimerDisplay : UserControl
 {
-    public TimerViewModel Timer { get; }
-
     public TimerDisplay()
     {
         Timer = new TimerViewModel();
@@ -22,6 +20,8 @@ public partial class TimerDisplay : UserControl
         };
         InitializeComponent();
     }
+
+    public TimerViewModel Timer { get; }
 
     private void ViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
@@ -61,7 +61,7 @@ public partial class TimerDisplay : UserControl
             ScaleT.BeginAnimation(ScaleTransform.ScaleXProperty, bounceDown);
             ScaleT.BeginAnimation(ScaleTransform.ScaleYProperty, bounceDown);
         };
-        
+
         ScaleT.BeginAnimation(ScaleTransform.ScaleXProperty, bounceUp);
         ScaleT.BeginAnimation(ScaleTransform.ScaleYProperty, bounceUp);
     }

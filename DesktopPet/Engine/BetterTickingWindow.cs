@@ -2,21 +2,21 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
 public abstract class BetterTickingWindow : TimedWindow
 {
     private const float TARGET_MS = 10f; // 100 FPS
     private const int MAX_STEPS = 5; // Catch-up max
 
-    private float _accumulator;
+    // Fallback-Timer
+    private readonly DispatcherTimer _backupTimer;
     private readonly Stopwatch _sw = new();
+
+    private float _accumulator;
     private long _last;
 
     private bool _running;
-
-    // Fallback-Timer
-    private readonly DispatcherTimer _backupTimer;
 
     protected BetterTickingWindow()
     {
@@ -28,7 +28,7 @@ public abstract class BetterTickingWindow : TimedWindow
             Interval = TimeSpan.FromMilliseconds(TARGET_MS)
         };
         _backupTimer.Tick += (_, _) => ProcessTicks();
-        
+
         // dispatcher events as Clock helper
         Dispatcher.Hooks.OperationPosted += (_, _) =>
         {
@@ -61,9 +61,9 @@ public abstract class BetterTickingWindow : TimedWindow
 
         // init timers
         CompositionTarget.Rendering += OnRender; // primary Clock
-        
+
         _backupTimer.Start(); // backup Clock
-        
+
         OnTickStart();
     }
 
@@ -87,13 +87,13 @@ public abstract class BetterTickingWindow : TimedWindow
 
     private void ProcessTicks()
     {
-        long now = _sw.ElapsedTicks;
-        float deltaMs = (now - _last) * 1000f / Stopwatch.Frequency;
+        var now = _sw.ElapsedTicks;
+        var deltaMs = (now - _last) * 1000f / Stopwatch.Frequency;
         _last = now;
 
         _accumulator += deltaMs;
 
-        int steps = 0;
+        var steps = 0;
 
         while (_accumulator >= TARGET_MS && steps < MAX_STEPS)
         {

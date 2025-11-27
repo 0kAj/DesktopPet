@@ -1,12 +1,12 @@
 using System.Windows;
 
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
 public abstract class VelocityWindow : HighPrecisionTickingWindow
 {
     public double VelocityX { get; set; }
     public double VelocityY { get; set; }
-    
+
     protected override void Tick()
     {
         Top += VelocityY;

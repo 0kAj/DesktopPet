@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DesktopPet.Attribute;
+using DesktopPet.Engine;
 using DesktopPet.Handlers;
 
 namespace DesktopPet.UI.GameWindows;
@@ -21,14 +22,14 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 
         // route all key events to petwindow
         KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
-        
+
         SetDelta(20);
-        
+
         UpdateCollectableDisplay();
-        
+
         TDisplay.Timer.Set(30);
         TDisplay.Timer.Timeout += () => End();
-        
+
         TickStart += () => TDisplay.Timer.Start();
         TickStop += () => TDisplay.Timer.Stop();
     }
@@ -40,7 +41,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     {
         // init Pet as playable
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
-        
+
         StartTicking();
     }
 
@@ -50,7 +51,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         CollectedFood += _foodScore;
         StopTicking();
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        RewardsWindow rewardsWindow = new RewardsWindow(_foodScore, 0);
+        var rewardsWindow = new RewardsWindow(_foodScore, 0);
         rewardsWindow.Show();
         Close();
     }
@@ -69,7 +70,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                     ImageSource = new BitmapImage(
                         new Uri("pack://application:,,,/Assets/Sprites/Food/apple.png"))
                 }
-            }; 
+            };
             Canvas.SetLeft(food, _rand.Next(0, (int)GameCanvas.ActualWidth - 20));
             Canvas.SetTop(food, 0);
             GameCanvas.Children.Add(food);
@@ -104,7 +105,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     {
         //update score
         CDisplay.Thirst_tb.Text = "0";
-        
+
         CDisplay.Food_tb.Text = _foodScore.ToString();
     }
 }

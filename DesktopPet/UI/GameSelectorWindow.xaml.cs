@@ -2,6 +2,7 @@ using System.Windows;
 using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
+using Window = DesktopPet.Engine.Window;
 
 namespace DesktopPet.UI;
 

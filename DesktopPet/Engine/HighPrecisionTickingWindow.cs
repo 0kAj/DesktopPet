@@ -1,15 +1,14 @@
 using System.Windows;
 
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
 public abstract class HighPrecisionTickingWindow : TimedWindow
 {
-    HighPrecisionTimer _timer;
-    
     private uint _timeMillis = 10;
+    private HighPrecisionTimer _timer;
 
     public override bool IsTicking => _timer == null ? false : _timer.IsTicking;
-    
+
     public void SetDelta(uint deltaMillis)
     {
         StopTicking();
@@ -24,7 +23,7 @@ public abstract class HighPrecisionTickingWindow : TimedWindow
             _timer = new HighPrecisionTimer();
             _timer.Tick += TimerTick;
         }
-        
+
         _timer.Interval = _timeMillis;
 
         try
@@ -49,7 +48,7 @@ public abstract class HighPrecisionTickingWindow : TimedWindow
     {
         if (_timer == null)
             return;
-        
+
         _timer.StopTicking();
 
         OnTickStop();

@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using DesktopPet.Attribute;
+using DesktopPet.Engine;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 
@@ -11,11 +12,11 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 {
     private readonly PlatformManager _platformManager;
     private readonly Random random;
-    
-    private int spawnInterval;
 
     private int _foodScore;
     private int _thirstScore;
+
+    private int spawnInterval;
 
 
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
@@ -33,14 +34,14 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         random = new Random();
 
         spawnInterval = random.Next(10, 50);
-        
+
         SetDelta(20);
-        
+
         UpdateCollectableDisplay();
-        
+
         TDisplay.Timer.Set(30 * 3);
         TDisplay.Timer.Timeout += () => End();
-        
+
         TickStart += () => TDisplay.Timer.Start();
         TickStop += () => TDisplay.Timer.Stop();
     }
@@ -59,7 +60,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         CollectedFood += _foodScore;
         StopTicking();
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        RewardsWindow rewardsWindow = new RewardsWindow(_foodScore, _thirstScore);
+        var rewardsWindow = new RewardsWindow(_foodScore, _thirstScore);
         rewardsWindow.Show();
         Close();
     }
@@ -89,7 +90,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     {
         //update score
         CDisplay.Thirst_tb.Text = _thirstScore.ToString();
-        
+
         CDisplay.Food_tb.Text = _foodScore.ToString();
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System.Windows.Threading;
 
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
-[Obsolete("DispatcherTimer is tied to the UI message queue, which delays ticks and cannot provide stable or high-precision timing. Use BetterTickingWindow instead.", false)]
+[Obsolete(
+    "DispatcherTimer is tied to the UI message queue, which delays ticks and cannot provide stable or high-precision timing. Use BetterTickingWindow instead.",
+    false)]
 public abstract class TickingWindow : TimedWindow
 {
     private readonly DispatcherTimer _timer;
-    
+
     protected TickingWindow()
     {
         DoTick = true;

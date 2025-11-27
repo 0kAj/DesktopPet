@@ -1,20 +1,20 @@
-﻿<desktopPet:VelocityWindow x:Class="DesktopPet.UI.PetWindow"
-                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:desktopPet="clr-namespace:DesktopPet"
-                           mc:Ignorable="d"
-                           Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
-                           WindowStyle="None"
-                           AllowsTransparency="True"
-                           Background="Transparent"
-                           Topmost="True"
-                           WindowState="Normal"
-                           ResizeMode="NoResize"
-                           ShowInTaskbar="False"
-                           WindowStartupLocation="CenterScreen"
-                           Title="PetWindow" Height="100" Width="150">
+﻿<engine:VelocityWindow x:Class="DesktopPet.UI.PetWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:engine="clr-namespace:DesktopPet.Engine"
+                       mc:Ignorable="d"
+                       Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
+                       WindowStyle="None"
+                       AllowsTransparency="True"
+                       Background="Transparent"
+                       Topmost="True"
+                       WindowState="Normal"
+                       ResizeMode="NoResize"
+                       ShowInTaskbar="False"
+                       WindowStartupLocation="CenterScreen"
+                       Title="PetWindow" Height="100" Width="150">
     <DockPanel HorizontalAlignment="Center">
         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" Name="debugLabel">DebugInfo</Label>
         <Image x:Name="pet"
@@ -25,4 +25,4 @@
                Width="50"
                Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png" />
     </DockPanel>
-</desktopPet:VelocityWindow>
+</engine:VelocityWindow>

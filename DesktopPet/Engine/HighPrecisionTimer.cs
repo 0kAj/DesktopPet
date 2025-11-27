@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
 //help: https://stackoverflow.com/questions/79252139/c-sharp-unity-high-precision-timer-using-timerqueuetimer
 //help: https://learn.microsoft.com/de-de/windows/win32/api/threadpoollegacyapiset/nf-threadpoollegacyapiset-createtimerqueuetimer
@@ -9,15 +9,17 @@ namespace DesktopPet;
 //help: https://learn.microsoft.com/de-de/dotnet/api/system.runtime.interopservices.gchandle?view=net-8.0
 public class HighPrecisionTimer
 {
+    public delegate void HighPrecisionTimerTick(float deltaMillis);
+
     private GCHandle _callbackHandle;
 
     private long _lastTicks;
 
     private Stopwatch _stopwatch;
-    private IntPtr _timerHandle = IntPtr.Zero;
 
     private uint _timeMillis;
-    
+    private IntPtr _timerHandle = IntPtr.Zero;
+
     public uint Interval
     {
         get => _timeMillis;
@@ -31,8 +33,6 @@ public class HighPrecisionTimer
     public bool IsTicking => _timerHandle != IntPtr.Zero;
 
     public event HighPrecisionTimerTick Tick;
-
-    public delegate void HighPrecisionTimerTick(float deltaMillis);
 
     [DllImport("kernel32.dll")]
     private static extern bool CreateTimerQueueTimer(
@@ -49,7 +49,7 @@ public class HighPrecisionTimer
         IntPtr TimerQueue,
         IntPtr Timer,
         IntPtr CompletionEvent);
-    
+
     public void StartTicking()
     {
         if (_timerHandle != IntPtr.Zero)
@@ -71,12 +71,9 @@ public class HighPrecisionTimer
             _timeMillis,
             0);
 
-        if (!ok)
-        {
-            throw new Exception("Failed to create high precision Win32 timer");
-        }
+        if (!ok) throw new Exception("Failed to create high precision Win32 timer");
     }
-    
+
     public void StopTicking()
     {
         if (_timerHandle == IntPtr.Zero)
@@ -98,7 +95,6 @@ public class HighPrecisionTimer
 
         Tick?.Invoke(deltaMillis);
     }
-    
-    private delegate void TimerCallback(IntPtr param, bool timerOrWaitFired);
 
+    private delegate void TimerCallback(IntPtr param, bool timerOrWaitFired);
 }

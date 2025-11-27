@@ -1,12 +1,11 @@
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
 public abstract class TimedWindow : Window
 {
+    public abstract bool IsTicking { get; }
     protected event Action TickStart;
     protected event Action TickStop;
-    
-    public abstract bool IsTicking { get; }
-    
+
     public abstract void StartTicking();
     public abstract void StopTicking();
 
@@ -19,7 +18,7 @@ public abstract class TimedWindow : Window
     {
         TickStop?.Invoke();
     }
-    
+
     protected abstract void Tick();
     protected abstract void Tick(float delta);
 }

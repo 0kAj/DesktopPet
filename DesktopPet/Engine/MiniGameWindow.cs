@@ -6,11 +6,16 @@ using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.UI.GameWindows.customControls;
 
-namespace DesktopPet;
+namespace DesktopPet.Engine;
 
 public abstract class MiniGameWindow : HighPrecisionTickingWindow
 {
+    private const string CollectedThirstAttributeName = "collectedThirst";
+    private const string CollectedFoodAttributeName = "collectedFood";
     protected readonly PetBrain _brain;
+    private bool _isPaused;
+
+    private PauseMenu _pauseMenu;
 
     private Label fpsDisplay;
 
@@ -30,7 +35,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
             fpsDisplay.ContentStringFormat = "FPS: {0:F0}";
             MiniGameUiCanvas.Children.Add(fpsDisplay);
         };
-        
+
         KeyDown += (_, e) =>
         {
             //toggable debug fps
@@ -46,11 +51,22 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
                 fpsDisplay.Visibility = vis;
             }
         };
-
     }
 
     public abstract string GameName { get; }
     protected abstract Canvas MiniGameUiCanvas { get; }
+
+    public int CollectedThirst
+    {
+        get => Convert.ToInt32(PetManager.Instance.GetAttribute(_brain.Name, CollectedThirstAttributeName, "0"));
+        set => PetManager.Instance.SetAttribute(_brain.Name, CollectedThirstAttributeName, value.ToString());
+    }
+
+    public int CollectedFood
+    {
+        get => Convert.ToInt32(PetManager.Instance.GetAttribute(_brain.Name, CollectedFoodAttributeName, "0"));
+        set => PetManager.Instance.SetAttribute(_brain.Name, CollectedFoodAttributeName, value.ToString());
+    }
 
     public abstract void Start();
 
@@ -58,24 +74,21 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     {
         _brain.PetWindow.KeyDown -= TogglePauseMenu;
     }
-    
-    private PauseMenu _pauseMenu;
-    private bool _isPaused;
 
     private void TogglePauseMenu(object sender, KeyEventArgs e)
     {
         if (e.Key != Key.Escape) return;
-            
+
         if (_isPaused)
             HidePauseMenu();
         else
             ShowPauseMenu();
     }
-    
+
     protected override void Tick(float delta)
     {
         if (fpsDisplay == null) return;
-        
+
         fpsDisplay.Content = 1000f / delta;
     }
 
@@ -84,7 +97,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         StopTicking();
         _brain.PetWindow.StopTicking();
         _isPaused = true;
-        
+
         if (_pauseMenu == null)
         {
             _pauseMenu = (PauseMenu)FindResource("PauseMenuControl");
@@ -95,11 +108,11 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
                 End();
             };
             MiniGameUiCanvas.Children.Add(_pauseMenu);
-            
+
             SizingHelper.FitToScreen(_pauseMenu);
-            
-            Canvas.SetLeft(_pauseMenu, (MiniGameUiCanvas.ActualWidth - _pauseMenu.Width)/2);
-            Canvas.SetTop(_pauseMenu, (MiniGameUiCanvas.ActualHeight - _pauseMenu.Height)/2);
+
+            Canvas.SetLeft(_pauseMenu, (MiniGameUiCanvas.ActualWidth - _pauseMenu.Width) / 2);
+            Canvas.SetTop(_pauseMenu, (MiniGameUiCanvas.ActualHeight - _pauseMenu.Height) / 2);
         }
 
         _pauseMenu.Visibility = Visibility.Visible;
@@ -112,19 +125,5 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         StartTicking();
         _brain.PetWindow.StartTicking();
         _isPaused = false;
-    }
-    
-    private const string CollectedThirstAttributeName = "collectedThirst";
-    private const string CollectedFoodAttributeName = "collectedFood";
-
-    public int CollectedThirst
-    {
-        get => Convert.ToInt32(PetManager.Instance.GetAttribute(_brain.Name, CollectedThirstAttributeName, "0"));
-        set => PetManager.Instance.SetAttribute(_brain.Name, CollectedThirstAttributeName, value.ToString());
-    } 
-    public int CollectedFood
-    {
-        get => Convert.ToInt32(PetManager.Instance.GetAttribute(_brain.Name, CollectedFoodAttributeName, "0"));
-        set => PetManager.Instance.SetAttribute(_brain.Name, CollectedFoodAttributeName, value.ToString());
     }
 }

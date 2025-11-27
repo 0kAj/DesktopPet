@@ -20,10 +20,10 @@
     <ItemGroup>
         <None Remove="Assets\Sprites\Pets\Mouse.png"/>
         <Resource Include="Assets\Sprites\Pets\Mouse.png"/>
-        <None Remove="Assets\Sprites\Food\apple.png" />
-        <Resource Include="Assets\Sprites\Food\apple.png" />
-        <None Remove="Assets\Sprites\Food\WaterBottle.png" />
-        <Resource Include="Assets\Sprites\Food\WaterBottle.png" />
+        <None Remove="Assets\Sprites\Food\apple.png"/>
+        <Resource Include="Assets\Sprites\Food\apple.png"/>
+        <None Remove="Assets\Sprites\Food\WaterBottle.png"/>
+        <Resource Include="Assets\Sprites\Food\WaterBottle.png"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -31,21 +31,21 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Page Update="UI\GameWindows\FoodCollectorMiniGameWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="UI\GameWindows\PetJumpMiniGameWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="UI\ResourceDictionaries\MiniGameResources.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
+        <Page Update="UI\GameWindows\FoodCollectorMiniGameWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="UI\GameWindows\PetJumpMiniGameWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="UI\ResourceDictionaries\MiniGameResources.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
 
 </Project>

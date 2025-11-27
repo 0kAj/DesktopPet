@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using DesktopPet.Engine;
 using DesktopPet.Handlers;
 
 namespace DesktopPet.UI;
@@ -15,7 +16,7 @@ public partial class PetWindow : VelocityWindow
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
 
         debugLabel.Content = _brain.Name;
-        
+
         ContentRendered += (_, _) => StartTicking();
         // GameManager.Instance.StartGame("Pet Jump", _brain);
     }

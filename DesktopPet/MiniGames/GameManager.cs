@@ -1,5 +1,6 @@
 using System.Windows;
 using DesktopPet.Data.Pet;
+using DesktopPet.Engine;
 using DesktopPet.Handlers;
 
 namespace DesktopPet.MiniGames;
