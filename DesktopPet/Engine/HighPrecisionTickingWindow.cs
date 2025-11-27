@@ -1,42 +1,15 @@
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
-
-//help: https://stackoverflow.com/questions/79252139/c-sharp-unity-high-precision-timer-using-timerqueuetimer
-//help: https://learn.microsoft.com/de-de/windows/win32/api/threadpoollegacyapiset/nf-threadpoollegacyapiset-createtimerqueuetimer
-//help: https://learn.microsoft.com/de-de/windows/win32/api/threadpoollegacyapiset/nf-threadpoollegacyapiset-deletetimerqueuetimer
-//help: https://learn.microsoft.com/de-de/dotnet/api/system.runtime.interopservices.gchandle?view=net-8.0
 
 namespace DesktopPet;
 
 public abstract class HighPrecisionTickingWindow : TimedWindow
 {
-    private GCHandle _callbackHandle;
-
-    private long _lastTicks;
-
-    private Stopwatch _stopwatch;
-    private IntPtr _timerHandle = IntPtr.Zero;
+    HighPrecisionTimer _timer;
+    
     private uint _timeMillis = 10;
 
-    public override bool IsTicking => _timerHandle != IntPtr.Zero;
-
-    [DllImport("kernel32.dll")]
-    private static extern bool CreateTimerQueueTimer(
-        out IntPtr phNewTimer,
-        IntPtr TimerQueue,
-        TimerCallback Callback,
-        IntPtr Parameter,
-        uint DueTime,
-        uint Period,
-        uint Flags);
-
-    [DllImport("kernel32.dll")]
-    private static extern bool DeleteTimerQueueTimer(
-        IntPtr TimerQueue,
-        IntPtr Timer,
-        IntPtr CompletionEvent);
-
+    public override bool IsTicking => _timer == null ? false : _timer.IsTicking;
+    
     public void SetDelta(uint deltaMillis)
     {
         StopTicking();
@@ -46,28 +19,21 @@ public abstract class HighPrecisionTickingWindow : TimedWindow
 
     public override void StartTicking()
     {
-        if (_timerHandle != IntPtr.Zero)
-            return;
-
-        // self handled Garbage Collection, so it cannot get terminated by accident
-        var cb = new TimerCallback(TimerTick);
-        _callbackHandle = GCHandle.Alloc(cb);
-
-        _stopwatch = new Stopwatch();
-        _stopwatch.Start();
-
-        var ok = CreateTimerQueueTimer(
-            out _timerHandle,
-            IntPtr.Zero,
-            cb,
-            IntPtr.Zero,
-            0,
-            _timeMillis,
-            0);
-
-        if (!ok)
+        if (_timer == null)
         {
-            var result = MessageBox.Show("\"Failed to create high precision Win32 timer\"",
+            _timer = new HighPrecisionTimer();
+            _timer.Tick += TimerTick;
+        }
+        
+        _timer.Interval = _timeMillis;
+
+        try
+        {
+            _timer.StartTicking();
+        }
+        catch (Exception e)
+        {
+            var result = MessageBox.Show(e.Message,
                 "Fatal-Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error,
@@ -81,31 +47,20 @@ public abstract class HighPrecisionTickingWindow : TimedWindow
 
     public override void StopTicking()
     {
-        if (_timerHandle == IntPtr.Zero)
+        if (_timer == null)
             return;
-
-        DeleteTimerQueueTimer(IntPtr.Zero, _timerHandle, IntPtr.Zero);
-        _timerHandle = IntPtr.Zero;
-
-        if (_callbackHandle.IsAllocated) // Garbage collect
-            _callbackHandle.Free();
+        
+        _timer.StopTicking();
 
         OnTickStop();
     }
 
-    private void TimerTick(IntPtr _, bool __)
+    private void TimerTick(float deltaMillis)
     {
-        var now = _stopwatch.ElapsedTicks;
-
-        var deltaMillis = (now - _lastTicks) * 1000f / Stopwatch.Frequency;
-        _lastTicks = now;
-
         Dispatcher.BeginInvoke(() =>
         {
             Tick(deltaMillis);
             Tick();
         });
     }
-
-    private delegate void TimerCallback(IntPtr param, bool timerOrWaitFired);
 }
