@@ -3,16 +3,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using DesktopPet.Data.Attributes;
-using DesktopPet.Data.Pet;
 using DesktopPet.Handlers;
 using DesktopPet.UI.GameWindows.customControls;
+using DesktopPet.Utils;
 
 namespace DesktopPet.Engine;
 
 public abstract class MiniGameWindow : HighPrecisionTickingWindow
 {
-    private const string CollectedThirstAttributeName = "collectedThirst";
-    private const string CollectedFoodAttributeName = "collectedFood";
     protected readonly PetBrain _brain;
     private bool _isPaused;
 
@@ -54,17 +52,9 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         };
         
         
-        var pet = PetManager.Instance.GetPet(_brain.Name);
-        
-        FoodAttribute = pet.Attributes.FirstOrDefault(attr => attr.Name == CollectedFoodAttributeName) 
-                        ?? new PetAttribute(CollectedFoodAttributeName, "0"); //default value
-        
-        ThirstAttribute = pet.Attributes.FirstOrDefault(attr => attr.Name == CollectedThirstAttributeName)
-                          ?? new PetAttribute(CollectedThirstAttributeName, "0");
-
-        // save defaults if required
-        PetManager.Instance.SetAttribute(_brain.Name, FoodAttribute);
-        PetManager.Instance.SetAttribute(_brain.Name, ThirstAttribute);
+        PetAttributeHelper.InitAttributes(brain, out PetAttribute collectedFood, out PetAttribute collectedThirst);
+        CollectedFoodAttribute = collectedFood;
+        CollectedThirstAttribute = collectedThirst;
         
         DataContext = this;
     }
@@ -72,19 +62,19 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     public abstract string GameName { get; }
     protected abstract Canvas MiniGameUiCanvas { get; }
 
-    public PetAttribute FoodAttribute { get; }
-    public PetAttribute ThirstAttribute { get; }
-    
-    public int CollectedFood
+    public PetAttribute CollectedFoodAttribute { get; }
+    public PetAttribute CollectedThirstAttribute { get; }
+
+    protected int CollectedFood
     {
-        get => int.TryParse(FoodAttribute.Value, out var val) ? val : 0;
-        set => FoodAttribute.Value = value.ToString();
+        get => int.TryParse(CollectedFoodAttribute.Value, out var val) ? val : 0;
+        set => CollectedFoodAttribute.Value = value.ToString();
     }
 
-    public int CollectedThirst
+    protected int CollectedThirst
     {
-        get => int.TryParse(ThirstAttribute.Value, out var val) ? val : 0;
-        set => ThirstAttribute.Value = value.ToString();
+        get => int.TryParse(CollectedThirstAttribute.Value, out var val) ? val : 0;
+        set => CollectedThirstAttribute.Value = value.ToString();
     }
 
 

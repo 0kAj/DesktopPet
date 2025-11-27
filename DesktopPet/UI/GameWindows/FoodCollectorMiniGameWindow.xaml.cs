@@ -24,9 +24,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
 
         SetDelta(20);
-
-        // UpdateCollectableDisplay();
-
+        
         TDisplay.Timer.Set(30);
         TDisplay.Timer.Timeout += () => End();
 
@@ -48,7 +46,6 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     protected override void End()
     {
         base.End();
-        // CollectedFood += _foodScore;
         StopTicking();
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         var rewardsWindow = new RewardsWindow(_foodScore, 0);
@@ -92,8 +89,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                     _foodScore++;
                     CollectedFood += 1;
                     // _brain.PetWindow.debugLabel.Content = $"foodScore: {_foodScore}";
-                    TDisplay.Timer.AddRemaining(2);
-                    // UpdateCollectableDisplay();
+                    TDisplay.Timer.AddRemaining(1);
                 }
                 else if (top > GameCanvas.ActualHeight)
                 {
@@ -101,12 +97,4 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                 }
             }
     }
-    //
-    // private void UpdateCollectableDisplay()
-    // {
-    //     //update score
-    //     CDisplay.Thirst_tb.Text = "0";
-    //
-    //     CDisplay.Food_tb.Text = _foodScore.ToString();
-    // }
 }

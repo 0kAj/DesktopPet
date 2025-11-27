@@ -13,6 +13,7 @@
     <!-- <Viewbox Stretch="Uniform"> -->
     <engine:Window.Resources>
         <converter:StringToIntConverter x:Key="StrToInt" />
+        <converter:StringToDoubleConverter x:Key="StrToDouble"></converter:StringToDoubleConverter>
     </engine:Window.Resources>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -32,8 +33,8 @@
             </ScrollViewer>
             <DockPanel Grid.Column="1" Grid.Row="0">
                 <customControls:CollectablesDisplay
-                    Food="{ Binding FoodAttribute.Value, Converter={StaticResource StrToInt} }"
-                    Thirst="{ Binding ThirstAttribute.Value, Converter={StaticResource StrToInt} }"
+                    Food="{ Binding CollectedFoodAttribute.Value, Converter={StaticResource StrToInt} }"
+                    Thirst="{ Binding CollectedThirstAttribute.Value, Converter={StaticResource StrToInt} }"
                     Size="30"
                     DockPanel.Dock="Top"/>
                 <StackPanel HorizontalAlignment="Center"
@@ -62,7 +63,9 @@
                                    Height="10" Width="10"
                                    Source="pack://application:,,,/Assets/Sprites/Food/apple.png"
                                    VerticalAlignment="Center" />
-                            <ProgressBar x:Name="hungerbar" Height="10" Value="90" Width="80" Foreground="Coral"
+                            <ProgressBar x:Name="hungerbar" Height="10"
+                                         Value="{ Binding Path=PetHungerAttribute.Value, Converter={ StaticResource StrToDouble } }"
+                                         Width="80" Foreground="Coral"
                                          Background="BurlyWood" />
                         </StackPanel>
                         <!-- Thirstbar -->
@@ -75,7 +78,9 @@
                                    Height="10" Width="10"
                                    Source="pack://application:,,,/Assets/Sprites/Food/Waterbottle.png"
                                    VerticalAlignment="Center" />
-                            <ProgressBar x:Name="thirstbar" Height="10" Value="90" Width="80" Foreground="Blue"
+                            <ProgressBar x:Name="thirstbar" Height="10" 
+                                         Value="{ Binding Path=PetThirstAttribute.Value, Converter={ StaticResource StrToDouble } }"
+                                         Width="80" Foreground="Blue"
                                          Background="CornflowerBlue" />
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Center"
