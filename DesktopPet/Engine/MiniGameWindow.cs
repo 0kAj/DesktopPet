@@ -4,8 +4,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Handlers;
-using DesktopPet.UI.GameWindows.customControls;
 using DesktopPet.Utils;
+using PauseMenu = DesktopPet.WPF.GameWindows.customControls.UI.PauseMenu;
 
 namespace DesktopPet.Engine;
 

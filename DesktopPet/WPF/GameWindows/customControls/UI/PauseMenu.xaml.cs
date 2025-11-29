@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace DesktopPet.UI.GameWindows.customControls;
+namespace DesktopPet.WPF.GameWindows.customControls.UI;
 
 public partial class PauseMenu : UserControl
 {

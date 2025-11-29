@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using DesktopPet.Interfaces;
-using DesktopPet.UI;
+using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.MovementStates;
 

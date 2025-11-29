@@ -7,7 +7,7 @@ using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
 
-namespace DesktopPet.UI.GameWindows;
+namespace DesktopPet.WPF.GameWindows;
 
 [MiniGame("Food Collector")]
 public partial class FoodCollectorMiniGameWindow : MiniGameWindow

@@ -2,7 +2,7 @@ using CommunityToolkit.Diagnostics;
 using DesktopPet.Handlers.Events;
 using DesktopPet.Handlers.MovementStates;
 using DesktopPet.MiniGames;
-using DesktopPet.UI;
+using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers;
 

@@ -1,6 +1,9 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using DesktopPet.MiniGames.GameObjects;
+using DesktopPet.MiniGames.GameObjects.Platforms;
+using DesktopPet.WPF.GameWindows.customControls.gameobjects;
 
 namespace DesktopPet.MiniGames;
 
@@ -20,26 +23,36 @@ public class PlatformManager
         foreach (var p in Platforms)
         {
             p.Tick();
-            Canvas.SetLeft(p.Visual, p.Rect.X);
-            Canvas.SetTop(p.Visual, p.Rect.Y);
-            p.Visual.Visibility = Visibility.Visible;
         }
 
         // remove platforms outside of screen
-        for (var i = Platforms.Count - 1; i >= 0; i--)
-            if (Platforms[i].Rect.Top > SystemParameters.WorkArea.Bottom)
+        for (var i = 0; i < Platforms.Count; i++)
+        {
+            var fallingPlatform = Platforms[i];
+            if (fallingPlatform.GetCollisionRect().Top > SystemParameters.WorkArea.Bottom)
             {
-                _canvas.Children.Remove(Platforms[i].Visual);
+                _canvas.Children.Remove(fallingPlatform.View);
                 Platforms.RemoveAt(i);
             }
+        }
     }
 
     public void SpawnPlatform(double x, double width, double height, double velocityY)
     {
         var p = new FallingPlatform(x, -height, width, height, velocityY);
         Platforms.Add(p);
-        p.Visual.Visibility = Visibility.Hidden;
 
-        _canvas.Children.Add(p.Visual);
+        var view = new PlatformView()
+        {
+            DataContext = p,
+            Width = width,
+            Height = height
+        };
+        
+        // Position via Binding
+        view.SetBinding(Canvas.LeftProperty, new Binding("X"));
+        view.SetBinding(Canvas.TopProperty, new Binding("Y"));
+        
+        _canvas.Children.Add(view);
     }
 }

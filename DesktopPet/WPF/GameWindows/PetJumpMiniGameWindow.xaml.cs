@@ -5,7 +5,7 @@ using DesktopPet.Engine;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 
-namespace DesktopPet.UI.GameWindows;
+namespace DesktopPet.WPF.GameWindows;
 
 [MiniGame("Pet Jump")]
 public partial class PetJumpMiniGameWindow : MiniGameWindow
@@ -59,6 +59,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         base.End();
         CollectedFood += _foodScore;
         StopTicking();
+        _brain.PlatformManager = null;
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         var rewardsWindow = new RewardsWindow(_foodScore, _thirstScore);
         rewardsWindow.Show();

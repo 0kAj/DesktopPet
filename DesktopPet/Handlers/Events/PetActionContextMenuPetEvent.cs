@@ -3,7 +3,8 @@ using System.Windows.Controls;
 using DesktopPet.Data.Pet;
 using DesktopPet.Interfaces;
 using DesktopPet.MiniGames;
-using DesktopPet.UI;
+using GameSelectorWindow = DesktopPet.WPF.GameSelectorWindow;
+using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.Events;
 

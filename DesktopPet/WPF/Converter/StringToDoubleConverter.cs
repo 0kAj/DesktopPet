@@ -1,13 +1,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace DesktopPet.UI.Converter;
+namespace DesktopPet.WPF.Converter;
 
-public class StringToIntConverter : IValueConverter
+public class StringToDoubleConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return int.TryParse(value?.ToString(), out var result) ? result : 0;
+        return double.TryParse(value?.ToString(), out var d) ? d : 0.0;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

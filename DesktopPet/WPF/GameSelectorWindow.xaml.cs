@@ -5,7 +5,7 @@ using DesktopPet.MiniGames;
 using DesktopPet.Utils;
 using Window = DesktopPet.Engine.Window;
 
-namespace DesktopPet.UI;
+namespace DesktopPet.WPF;
 
 public partial class GameSelectorWindow : Window
 {

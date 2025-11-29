@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using DesktopPet.MiniGames;
 
-namespace DesktopPet.UI.GameWindows.customControls;
+namespace DesktopPet.WPF.GameWindows.customControls.UI;
 
 public partial class TimerDisplay : UserControl
 {

@@ -1,10 +1,10 @@
-<engine:MiniGameWindow x:Class="DesktopPet.UI.GameWindows.PetJumpMiniGameWindow"
+<engine:MiniGameWindow x:Class="DesktopPet.WPF.GameWindows.FoodCollectorMiniGameWindow"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:customControls="clr-namespace:DesktopPet.UI.GameWindows.customControls"
                        xmlns:engine="clr-namespace:DesktopPet.Engine"
+                       xmlns:ui="clr-namespace:DesktopPet.WPF.GameWindows.customControls.UI"
                        mc:Ignorable="d"
                        Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                        AllowsTransparency="True"
@@ -12,7 +12,7 @@
                        WindowState="Normal"
                        Topmost="True"
                        ShowInTaskbar="False"
-                       Title="PetJump" Height="450" Width="800">
+                       Title="FoodCollectorMiniGameWindow" Height="450" Width="800">
     <engine:MiniGameWindow.Background>
         <SolidColorBrush Color="AliceBlue" Opacity="0.002" />
     </engine:MiniGameWindow.Background>
@@ -22,7 +22,9 @@
     <Grid>
         <Canvas x:Name="GameCanvas" Background="Transparent" />
         <Canvas x:Name="UiCanvas" Background="Transparent" />
-        <customControls:CollectablesDisplay x:Name="CDisplay" />
-        <customControls:TimerDisplay x:Name="TDisplay" />
+        <ui:CollectablesDisplay x:Name="CDisplay"
+                                            Food="{ Binding CollectedFoodAttribute.Value }"
+                                            Thirst="{ Binding CollectedThirstAttribute.Value }" />
+        <ui:TimerDisplay x:Name="TDisplay" />
     </Grid>
 </engine:MiniGameWindow>
