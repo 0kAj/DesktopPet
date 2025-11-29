@@ -6,6 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="30" d:DesignWidth="120">
     <Rectangle Fill="{ Binding Color }"
-               Width="{ Binding Width }"
-               Height="{ Binding Height }" />
+               Width="{ Binding PlatformWidth }"
+               Height="{ Binding PlatformHeight }"/>
 </UserControl>

@@ -17,7 +17,10 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     private int _thirstScore;
 
     private int spawnInterval;
-
+    private int _tickCounter;
+    
+    private const int MaxTicksForSpeedMultiplier = 250;
+    private const int SpeedMultiplier = 5;
 
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
@@ -28,7 +31,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
         KeyDown += (_, e) => petBrain.PetWindow.RaiseEvent(e);
 
-        _platformManager = new PlatformManager(GameCanvas);
+        _platformManager = new PlatformManager(GameCanvas, MaxTicksForSpeedMultiplier, SpeedMultiplier);
         _brain.PlatformManager = _platformManager;
 
         random = new Random();
@@ -70,7 +73,11 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     {
         _platformManager.Tick();
 
+        _tickCounter++;
         spawnInterval--;
+        
+        // SpeedMultiplier * velocity for first MaxTicksForSpeedMultiplier ticks
+        var speedFactor = _tickCounter <= MaxTicksForSpeedMultiplier ? 1.0/SpeedMultiplier : 1.0;
 
         if (spawnInterval == 0)
         {
@@ -79,11 +86,11 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
             // on collision change platform color to gray
             var platformWidth = 150;
             _platformManager
-                .SpawnPlatform(
+                .SpawnRandomPlatform(
                     random.NextDouble() * (SystemParameters.FullPrimaryScreenWidth - platformWidth),
                     platformWidth, 30,
                     1);
-            spawnInterval = random.Next(50, 120);
+            spawnInterval = (int)(random.Next(50, 120) * speedFactor);
         }
     }
 

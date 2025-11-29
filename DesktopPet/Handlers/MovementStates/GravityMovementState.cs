@@ -61,18 +61,16 @@ public class GravityMovementState : IBehaviourState
                 {
                     // collision with platform
                     _petWindow.Top -= overlap;
-                    _petWindow.VelocityY = platform.VelocityY;
+                    _petWindow.VelocityY = platform.DefaultVelocityY;
                     landed = true;
+                    platform.OnPlayerContact(_brain);
                     break;
                 }
             }
 
-        // Status aktualisieren
         // _petWindow.debugLabel.Content = landed ? "Landed" : "Not landed";
         _brain.IsOnGround = landed;
 
-
-        // Optional: Reset, wenn Pet nicht mehr auf Plattform/Boden
         if (!landed && _brain.IsOnGround) _brain.IsOnGround = false;
     }
 
