@@ -1,4 +1,5 @@
 using System.Windows;
+using DesktopPet.WPF.WindowViewModels;
 using Window = DesktopPet.Engine.Window;
 
 namespace DesktopPet.WPF;
@@ -9,13 +10,8 @@ public partial class RewardsWindow : Window
     {
         InitializeComponent();
 
-        CDisplay.FoodTb.Text = foodScore.ToString();
-        CDisplay.ThirstTb.Text = thirstScore.ToString();
-        CDisplay.HorizontalAlignment = HorizontalAlignment.Center;
-    }
-
-    private void CloseWindow(object sender, RoutedEventArgs e)
-    {
-        Close();
+        var vm = new RewardsWindowViewModel(foodScore, thirstScore);
+        DataContext = vm;
+        vm.RequestClose += Close;
     }
 }

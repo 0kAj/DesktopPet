@@ -33,7 +33,7 @@
                                Style="{ StaticResource HeaderTextBlock}" />
                     <Button Grid.Column="1" Content="✕"
                             Style="{StaticResource CloseButton}"
-                            Click="CloseWindow" />
+                            Command="{ Binding CloseCommand }" />
                 </Grid>
 
                 <StackPanel Grid.Row="1"
@@ -50,7 +50,9 @@
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
                         </Border.Effect>
-                        <ui:CollectablesDisplay x:Name="CDisplay" />
+                        <ui:CollectablesDisplay Food="{ Binding FoodScore }"
+                                                Thirst="{ Binding ThirstScore }"
+                                                HorizontalAlignment="Center"/>
                     </Border>
 
                     <Button Content="OK"
@@ -58,7 +60,7 @@
                             Style="{StaticResource AccentButtonAqua}"
                             Background="Aqua" Foreground="DarkBlue"
                             IsDefault="True"
-                            Click="CloseWindow" />
+                            Command="{ Binding CloseCommand }" />
                 </StackPanel>
             </Grid>
         </Border>
