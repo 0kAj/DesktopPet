@@ -1,16 +1,15 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DesktopPet.Data.Attributes;
 
 namespace DesktopPet.Data.Pet;
 
-public class PetData : INotifyPropertyChanged
+public partial class PetData : ObservableObject
 {
-    private bool _isDefault;
+    [ObservableProperty] private bool _isDefault;
 
-    private string _petName;
+    [ObservableProperty] private string _petName;
 
     public PetData(string petName, bool isDefault = false)
     {
@@ -30,39 +29,7 @@ public class PetData : INotifyPropertyChanged
         LastPlayedGames = new ObservableCollection<string>(lastPlayedGames);
     }
 
-    public string PetName
-    {
-        get => _petName;
-        set
-        {
-            if (_petName != value)
-            {
-                _petName = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
     public ObservableCollection<PetAttribute> Attributes { get; set; }
 
-    public bool IsDefault
-    {
-        get => _isDefault;
-        set
-        {
-            if (_isDefault != value)
-            {
-                _isDefault = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
     public ObservableCollection<string> LastPlayedGames { get; set; }
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

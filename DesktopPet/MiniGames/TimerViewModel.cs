@@ -1,14 +1,19 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DesktopPet.MiniGames;
 
-public class TimerViewModel : INotifyPropertyChanged
+public partial class TimerViewModel : ObservableObject
 {
     private readonly DispatcherTimer _timer;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DisplayTime))]
+    [NotifyPropertyChangedFor(nameof(TimerColor))]
+    [NotifyPropertyChangedFor(nameof(TimerFontSize))]
     private int _remaining;
+
     public Action Tick;
 
     public Action Timeout;
@@ -36,51 +41,24 @@ public class TimerViewModel : INotifyPropertyChanged
         };
     }
 
-    public int Remaining
+    public int TimerFontSize => Remaining switch
     {
-        get => _remaining;
-        set
-        {
-            _remaining = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(DisplayTime));
-            OnPropertyChanged(nameof(TimerColor));
-            OnPropertyChanged(nameof(TimerFontSize));
-        }
-    }
+        <= 5 => 80,
+        <= 10 => 70,
+        <= 20 => 60,
+        _ => 50
+    };
 
-    public int TimerFontSize
+    public Brush TimerColor => Remaining switch
     {
-        get
-        {
-            return Remaining switch
-            {
-                <= 5 => 80,
-                <= 10 => 70,
-                <= 20 => 60,
-                _ => 50
-            };
-        }
-    }
-
-    public Brush TimerColor
-    {
-        get
-        {
-            return Remaining switch
-            {
-                <= 5 => Brushes.Red,
-                <= 10 => Brushes.OrangeRed,
-                <= 20 => Brushes.Orange,
-                _ => Brushes.White
-            };
-        }
-    }
+        <= 5 => Brushes.Red,
+        <= 10 => Brushes.OrangeRed,
+        <= 20 => Brushes.Orange,
+        _ => Brushes.White
+    };
 
     public string DisplayTime =>
         TimeSpan.FromSeconds(Remaining).ToString(@"mm\:ss");
-
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     public void Start()
     {
@@ -95,11 +73,6 @@ public class TimerViewModel : INotifyPropertyChanged
     public void Set(int seconds)
     {
         Remaining = seconds;
-    }
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public void AddRemaining(int seconds)

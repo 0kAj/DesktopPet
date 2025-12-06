@@ -10,17 +10,16 @@ namespace DesktopPet.WPF.GameWindows;
 [MiniGame("Pet Jump")]
 public partial class PetJumpMiniGameWindow : MiniGameWindow
 {
+    private const int MaxTicksForSpeedMultiplier = 200;
+    private const int SpeedMultiplier = 5;
     private readonly PlatformManager _platformManager;
     private readonly Random random;
 
     private int _foodScore;
     private int _thirstScore;
+    private int _tickCounter;
 
     private int spawnInterval;
-    private int _tickCounter;
-    
-    private const int MaxTicksForSpeedMultiplier = 200;
-    private const int SpeedMultiplier = 5;
 
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
@@ -75,9 +74,9 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
         _tickCounter++;
         spawnInterval--;
-        
+
         // SpeedMultiplier * velocity for first MaxTicksForSpeedMultiplier ticks
-        var speedFactor = _tickCounter <= MaxTicksForSpeedMultiplier ? 1.0/SpeedMultiplier : 1.0;
+        var speedFactor = _tickCounter <= MaxTicksForSpeedMultiplier ? 1.0 / SpeedMultiplier : 1.0;
 
         if (spawnInterval == 0)
         {

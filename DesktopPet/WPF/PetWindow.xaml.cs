@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
-using DesktopPet.MiniGames;
 
 namespace DesktopPet.WPF;
 

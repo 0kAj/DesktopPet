@@ -23,8 +23,8 @@
         <Canvas x:Name="GameCanvas" Background="Transparent" />
         <Canvas x:Name="UiCanvas" Background="Transparent" />
         <ui:CollectablesDisplay x:Name="CDisplay"
-                                            Food="{ Binding CollectedFoodAttribute.Value }"
-                                            Thirst="{ Binding CollectedThirstAttribute.Value }" />
+                                Food="{ Binding CollectedFoodAttribute.Value }"
+                                Thirst="{ Binding CollectedThirstAttribute.Value }" />
         <ui:TimerDisplay x:Name="TDisplay" />
     </Grid>
 </engine:MiniGameWindow>

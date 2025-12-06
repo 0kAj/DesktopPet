@@ -1,28 +1,10 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DesktopPet.MiniGames.GameObjects;
 
-public class GameObject : INotifyPropertyChanged
+public partial class GameObject : ObservableObject
 {
-    private double _x;
-    public double X
-    {
-        get => _x;
-        set { _x = value; OnPropertyChanged(); }
-    }
+    [ObservableProperty] private double _x;
 
-    private double _y;
-    public double Y
-    {
-        get => _y;
-        set { _y = value; OnPropertyChanged(); }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+    [ObservableProperty] private double _y;
 }

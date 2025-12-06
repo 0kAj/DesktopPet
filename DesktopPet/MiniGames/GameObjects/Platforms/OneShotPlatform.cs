@@ -5,9 +5,9 @@ namespace DesktopPet.MiniGames.GameObjects.Platforms;
 
 public class OneShotPlatform : FallingPlatform
 {
-    private bool _used = false;
+    private bool _used;
 
-    public OneShotPlatform(double x, double y, double width, double height, double velocityY) : 
+    public OneShotPlatform(double x, double y, double width, double height, double velocityY) :
         this(x, y, width, height, velocityY, Colors.DarkGreen)
     {
     }

@@ -9,11 +9,11 @@ namespace DesktopPet.MiniGames;
 public class PlatformManager
 {
     private readonly Canvas _canvas;
+    private readonly int _maxTicksForSpeedMultiplier;
     private readonly Random _random;
-    
+    private readonly int _speedMultiplier;
+
     private int _tickCounter;
-    private int _maxTicksForSpeedMultiplier;
-    private int _speedMultiplier;
 
     public PlatformManager(Canvas canvas)
     {
@@ -36,35 +36,28 @@ public class PlatformManager
     public void Tick()
     {
         _tickCounter++;
-        
-        for (int i = 0; i < Platforms.Count; i++)
+
+        for (var i = 0; i < Platforms.Count; i++)
         {
             var p = Platforms[i];
-            
+
             if (_tickCounter < _maxTicksForSpeedMultiplier)
-            {
                 // _speedMultiplier * velocity for first _maxTicksForSpeedMultiplier ticks
                 p.CurrentVelocityY = p.DefaultVelocityY * _speedMultiplier;
-            }
             else if (_tickCounter == _maxTicksForSpeedMultiplier)
-            {
                 // after reset to their default velocityY
                 p.CurrentVelocityY = p.DefaultVelocityY;
-            }
-            
+
 
             // Tick
             p.Tick();
 
             // Offscreen?
-            if (p.Y > SystemParameters.WorkArea.Bottom)
-            {
-                Remove(i);
-            }
+            if (p.Y > SystemParameters.WorkArea.Bottom) Remove(i);
         }
     }
 
-    void Remove(int i)
+    private void Remove(int i)
     {
         _canvas.Children.Remove(Platforms[i].View);
         Platforms.RemoveAt(i);
@@ -74,13 +67,15 @@ public class PlatformManager
     {
         switch (_random.Next(4)) //todo create Platform-registry
         {
-            case 0: SpawnPlatform(x, width, height, velocityY); break; //todo add Collectables Random, Bindings for Food Collectables, also in Foodcollector
+            case 0:
+                SpawnPlatform(x, width, height, velocityY);
+                break; //todo add Collectables Random, Bindings for Food Collectables, also in Foodcollector
             case 1: SpawnOneShotPlatform(x, width, height, velocityY); break;
             case 2: SpawnStretchingPlatform(x, width, height, velocityY); break;
             case 3: SpawnJumpPlatform(x, width, height, velocityY); break;
         }
     }
-    
+
     public void SpawnPlatform(double x, double width, double height, double velocityY)
     {
         var p = new FallingPlatform(x, -height, width, height, velocityY);
@@ -111,14 +106,14 @@ public class PlatformManager
 
         var view = new PlatformView
         {
-            DataContext = p,
+            DataContext = p
         };
 
         view.SetBinding(Canvas.LeftProperty, new Binding("X"));
         view.SetBinding(Canvas.TopProperty, new Binding("Y"));
-        
+
         p.View = view;
-        
+
         _canvas.Children.Add(view);
     }
 }
