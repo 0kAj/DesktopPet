@@ -5,7 +5,7 @@ namespace DesktopPet.WPF.WindowViewModels;
 
 public partial class RewardsWindowViewModel: ObservableObject
 {
-    public Action? RequestClose;
+    public event Action? RequestClose;
     
     public RewardsWindowViewModel(int foodScore, int thirstScore)
     {

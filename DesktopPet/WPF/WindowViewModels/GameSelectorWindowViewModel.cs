@@ -10,7 +10,7 @@ public partial class GameSelectorWindowViewModel
 {
     private readonly PetBrain _brain;
 
-    public Action? RequestClose;
+    public event Action? RequestClose;
 
     public GameSelectorWindowViewModel(PetBrain brain)
     {
