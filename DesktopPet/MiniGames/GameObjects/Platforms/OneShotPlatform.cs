@@ -23,6 +23,6 @@ public class OneShotPlatform : FallingPlatform
         if (_used) return;
 
         _used = true;
-        CurrentVelocityY = 8; // falldown
+        CurrentVelocityY = 10; // falldown
     }
 }

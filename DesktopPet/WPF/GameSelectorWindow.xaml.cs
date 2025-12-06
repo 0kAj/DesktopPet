@@ -13,7 +13,7 @@ public partial class GameSelectorWindow : Window
 
     public GameSelectorWindow(PetBrain petBrain)
     {
-        InitializeComponent(); //todo improve the game-selector visually
+        InitializeComponent();
         _brain = petBrain;
         Title += " - " + _brain.Name;
 

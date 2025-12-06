@@ -19,7 +19,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     private int spawnInterval;
     private int _tickCounter;
     
-    private const int MaxTicksForSpeedMultiplier = 250;
+    private const int MaxTicksForSpeedMultiplier = 200;
     private const int SpeedMultiplier = 5;
 
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
@@ -81,9 +81,8 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
         if (spawnInterval == 0)
         {
-            // todo make special platforms that spawn with special items like coins/hunger or bottles:
-            // platform type for red == food; blue == thirst; yellow == high jump;
-            // on collision change platform color to gray
+            // todo make special platforms that spawn with special items like coins/hunger or bottles
+
             var platformWidth = 150;
             _platformManager
                 .SpawnRandomPlatform(

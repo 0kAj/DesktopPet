@@ -41,16 +41,15 @@ public class PlatformManager
         {
             var p = Platforms[i];
             
-            if (_tickCounter <= _maxTicksForSpeedMultiplier)
+            if (_tickCounter < _maxTicksForSpeedMultiplier)
             {
                 // _speedMultiplier * velocity for first _maxTicksForSpeedMultiplier ticks
                 p.CurrentVelocityY = p.DefaultVelocityY * _speedMultiplier;
             }
-            else
+            else if (_tickCounter == _maxTicksForSpeedMultiplier)
             {
                 // after reset to their default velocityY
-                // p.CurrentVelocityY = p.DefaultVelocityY;
-                p.CurrentVelocityY = 0;
+                p.CurrentVelocityY = p.DefaultVelocityY;
             }
             
 
@@ -75,7 +74,7 @@ public class PlatformManager
     {
         switch (_random.Next(4)) //todo create Platform-registry
         {
-            case 0: SpawnPlatform(x, width, height, velocityY); break;
+            case 0: SpawnPlatform(x, width, height, velocityY); break; //todo add Collectables Random, Bindings for Food Collectables, also in Foodcollector
             case 1: SpawnOneShotPlatform(x, width, height, velocityY); break;
             case 2: SpawnStretchingPlatform(x, width, height, velocityY); break;
             case 3: SpawnJumpPlatform(x, width, height, velocityY); break;
