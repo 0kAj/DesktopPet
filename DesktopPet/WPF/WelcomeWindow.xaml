@@ -31,10 +31,10 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Welcome to your Desktop-Pet!"
-                               Style="{ StaticResource HeaderTextBlock}" />
+                               Style="{ StaticResource HeaderTextBlock }" />
                     <Button Grid.Column="2" Content="✕"
-                            Style="{StaticResource CloseButton}"
-                            Click="CloseButton_OnClick" />
+                            Style="{ StaticResource CloseButton }"
+                            Command="{ Binding CloseCommand }" />
                 </Grid>
 
                 <StackPanel Grid.Row="1"
@@ -44,35 +44,36 @@
                             Width="350">
                     <TextBlock Text="What is the name of your pet?"
                                Margin="0 5 0 5"
-                               Style="{StaticResource LabelTextBlock}" />
-                    <Border Background="{StaticResource TextBoxBackgroundBrush}"
+                               Style="{ StaticResource LabelTextBlock }" />
+                    <Border Background="{ StaticResource TextBoxBackgroundBrush }"
                             CornerRadius="8"
                             Padding="10"
                             BorderThickness="1">
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
                         </Border.Effect>
-                        <TextBox Background="Wheat" x:Name="NameTb" FontSize="16" BorderThickness="0" />
+                        <TextBox Background="Wheat" x:Name="NameTb" FontSize="16" BorderThickness="0" 
+                                 Text="{ Binding PetName, UpdateSourceTrigger=PropertyChanged }"/>
                     </Border>
-                    <TextBlock x:Name="ErrorTb"
-                               Style="{StaticResource ErrorTextBlock}"
+                    <TextBlock Style="{ StaticResource ErrorTextBlock }"
                                Padding="0 10 0 5"
-                               Text="THIS IS AN ERROR!!!"
+                               Text="{ Binding ErrorMessage }"
+                               Visibility="{ Binding IsErrorMessageVisible, Converter={ StaticResource BoolToVisibilityConverter } }"
                                Foreground="Red" />
 
 
-                    <CheckBox x:Name="SetAsDefaultPetCb" Margin="10"
+                    <CheckBox Margin="10"
                               HorizontalAlignment="Center"
-                              IsChecked="True"
+                              IsChecked="{ Binding SetAsDefaultPet }"
                               VerticalAlignment="Center">
                         Set as Default Pet
                     </CheckBox>
 
                     <Button Content="Let's pet!"
-                            Style="{StaticResource AccentButtonAqua}"
+                            Style="{ StaticResource AccentButtonAqua }"
                             Background="Aqua" Foreground="DarkBlue"
                             IsDefault="True"
-                            Click="OKButton_OnClick" />
+                            Command="{ Binding OkCommand }" />
                 </StackPanel>
             </Grid>
         </Border>

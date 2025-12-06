@@ -1,9 +1,8 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
-public partial class RewardsWindowViewModel: ObservableObject
+public partial class RewardsWindowViewModel
 {
     public event Action? RequestClose;
     
