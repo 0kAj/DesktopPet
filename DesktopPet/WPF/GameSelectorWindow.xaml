@@ -12,7 +12,7 @@
                Topmost="True"
                Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                WindowStartupLocation="CenterScreen"
-               Title="GameSelectorWindow" Height="450" Width="800">
+               Title="{ Binding Title }" Height="450" Width="800">
 
     <engine:Window.Resources>
         <ResourceDictionary Source="/WPF/ResourceDictionaries/DesktopPetTheme.xaml" />
@@ -40,7 +40,7 @@
 
                     <Button Grid.Column="1" Content="✕"
                             Style="{StaticResource CloseButton}"
-                            Click="CloseButton_OnClick" />
+                            Command="{ Binding CloseCommand }" />
                 </Grid>
 
                 <!-- Hauptinhalt: Game Selection & Pet Panel -->
@@ -55,7 +55,7 @@
                         <WrapPanel Margin="20" ScrollViewer.CanContentScroll="True"
                                    ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <!-- Food Collector Card -->
-                            <Button Margin="5" Width="200" Height="200" Background="Beige" Click="FoodCollector_Click">
+                            <Button Margin="5" Width="200" Height="200" Background="Beige" Command="{ Binding FoodCollectorCommand }">
                                 <StackPanel>
                                     <Image Source="pack://application:,,,/Assets/Sprites/Games/FoodCollector.png"
                                            RenderOptions.BitmapScalingMode="NearestNeighbor"
@@ -73,7 +73,7 @@
                                 </StackPanel>
                             </Button>
                             <!-- Pet Jump Card -->
-                            <Button Margin="5" Width="200" Height="200" Background="Beige" Click="PetJump_Click">
+                            <Button Margin="5" Width="200" Height="200" Background="Beige" Command="{ Binding PetJumpCommand }">
                                 <StackPanel>
                                     <Image Source="pack://application:,,,/Assets/Sprites/Games/PetJump.png"
                                            RenderOptions.BitmapScalingMode="NearestNeighbor"
@@ -109,14 +109,12 @@
                                     Margin="20">
 
                             <!-- Pet Name -->
-                            <TextBlock Text="PETNAME"
-                                       x:Name="PetNameTb"
+                            <TextBlock Text="{ Binding PetName }"
                                        Style="{StaticResource HeaderTextBlock}"
                                        Margin="10" />
 
                             <!-- Pet Image -->
-                            <Image x:Name="Pet"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                            <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                                    Height="90"
                                    Width="90"
                                    Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png">
@@ -164,7 +162,7 @@
 
                                     <!-- Buttons -->
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                                        <Button Click="Feed_button_OnClick"
+                                        <Button Command="{ Binding FeedCommand }"
                                                 Style="{StaticResource AccentButtonAqua}"
                                                 Margin="5">
                                             Feed

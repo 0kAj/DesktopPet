@@ -1,0 +1,59 @@
+using CommunityToolkit.Mvvm.Input;
+using DesktopPet.Data.Attributes;
+using DesktopPet.Handlers;
+using DesktopPet.MiniGames;
+using DesktopPet.Utils;
+
+namespace DesktopPet.WPF.WindowViewModels;
+
+public partial class GameSelectorWindowViewModel
+{
+    private readonly PetBrain _brain;
+
+    public Action? RequestClose;
+
+    public GameSelectorWindowViewModel(PetBrain brain)
+    {
+        _brain = brain;
+        
+        PetAttributeHelper.InitAttributes(_brain, out var hunger, out var thirst, out var collectedFood,
+            out var collectedThirst);
+        PetHungerAttribute = hunger;
+        PetThirstAttribute = thirst;
+        CollectedFoodAttribute = collectedFood;
+        CollectedThirstAttribute = collectedThirst;
+    }
+
+    public PetAttribute PetHungerAttribute { get; }
+    public PetAttribute PetThirstAttribute { get; }
+    public PetAttribute CollectedFoodAttribute { get; }
+    public PetAttribute CollectedThirstAttribute { get; }
+    
+    public string PetName => _brain.Name;
+    public string Title => "Game Selector - " + _brain.Name;
+
+    [RelayCommand]
+    private void Feed()
+    {
+        //start FeedGame
+        GameManager.Instance.StartGame("Food Collector", _brain);
+        Close();
+    }
+
+    [RelayCommand]
+    private void Close() => RequestClose?.Invoke();
+
+    [RelayCommand]
+    private void FoodCollector()
+    {
+        GameManager.Instance.StartGame("Food Collector", _brain);
+        Close();
+    }
+
+    [RelayCommand]
+    private void PetJump()
+    {
+        GameManager.Instance.StartGame("Pet Jump", _brain);
+        Close();
+    }
+}
