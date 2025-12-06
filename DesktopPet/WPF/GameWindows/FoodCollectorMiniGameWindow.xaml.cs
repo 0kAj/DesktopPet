@@ -15,7 +15,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     private readonly Random _rand = new();
     private int _foodScore;
 
-    public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
+    public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain) //todo I NEED VIEWMODEL
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);

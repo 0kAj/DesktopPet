@@ -21,7 +21,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
     private int spawnInterval;
 
-    public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
+    public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain) //todo I NEED VIEWMODEL
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
