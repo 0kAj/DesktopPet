@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -12,7 +11,7 @@ public partial class TimerDisplay : UserControl
     public TimerDisplay()
     {
         InitializeComponent();
-        
+
         Timer = new TimerViewModel();
         DataContext = Timer;
         Timer.PropertyChanged += ViewModelOnPropertyChanged;

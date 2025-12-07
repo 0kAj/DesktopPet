@@ -14,10 +14,6 @@ public partial class TimerViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(TimerFontSize))]
     private int _remaining;
 
-    public event Action? Tick;
-
-    public event Action? Timeout;
-
     public TimerViewModel(int startSeconds = 30)
     {
         Remaining = startSeconds;
@@ -57,6 +53,10 @@ public partial class TimerViewModel : ObservableObject
 
     public string DisplayTime =>
         TimeSpan.FromSeconds(Remaining).ToString(@"mm\:ss");
+
+    public event Action? Tick;
+
+    public event Action? Timeout;
 
     public void Start()
     {

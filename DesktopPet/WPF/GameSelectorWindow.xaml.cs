@@ -9,7 +9,7 @@ public partial class GameSelectorWindow : Window
     public GameSelectorWindow(PetBrain petBrain)
     {
         InitializeComponent();
-        
+
         var vm = new GameSelectorWindowViewModel(petBrain);
         vm.RequestClose += Close;
         DataContext = vm;

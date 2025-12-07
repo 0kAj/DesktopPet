@@ -1,4 +1,3 @@
-using CommunityToolkit.Diagnostics;
 using DesktopPet.Handlers.Events;
 using DesktopPet.Handlers.MovementStates;
 using DesktopPet.MiniGames;
@@ -17,8 +16,6 @@ public class PetBrain
     private readonly PetEventHandler _petEventHandler;
     private readonly PetMovementHandler _petMovementHandler;
 
-    private string _name;
-
     public PetBrain(PetWindow petWindow)
     {
         PetWindow = petWindow;
@@ -28,22 +25,14 @@ public class PetBrain
         _petEventHandler = new PetEventHandler();
     }
 
+    public required string Name { get; set; }
+
     public PetWindow PetWindow { get; private set; }
 
     public bool IsOnGround { get; set; }
     public bool IsOnDragging { get; set; }
 
     public double Speed { get; set; }
-
-    public string Name
-    {
-        get => _name;
-        set
-        {
-            Guard.IsNotNullOrWhiteSpace(value);
-            _name = value;
-        }
-    }
 
     public PlatformManager? PlatformManager { get; set; }
 

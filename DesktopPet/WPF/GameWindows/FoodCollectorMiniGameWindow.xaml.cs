@@ -1,12 +1,7 @@
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
-using DesktopPet.MiniGames;
 using DesktopPet.WPF.WindowViewModels;
 
 namespace DesktopPet.WPF.GameWindows;
@@ -20,11 +15,11 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
-        
+
         _vm = new MiniGameViewModel(petBrain);
         DataContext = _vm;
         _vm.GameFinished += End;
-        _vm.AddRemainingTime += (amount) => TDisplay.Timer.AddRemaining(amount);
+        _vm.AddRemainingTime += amount => TDisplay.Timer.AddRemaining(amount);
 
         Loaded += (_, _) => _vm.SetCanvasSize(GameCanvas.ActualWidth, GameCanvas.ActualHeight);
 

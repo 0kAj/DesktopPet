@@ -14,12 +14,8 @@ public partial class App : Application
         // only show welcomewindow if no default pet set
         var defaultPet = PetManager.Instance.GetDefaultPet();
         if (defaultPet != null)
-        {
             new PetWindow(defaultPet.PetName).Show();
-        }
         else
-        {
             new WelcomeWindow().Show();
-        }
     }
 }

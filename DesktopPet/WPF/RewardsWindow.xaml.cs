@@ -1,4 +1,3 @@
-using System.Windows;
 using DesktopPet.WPF.WindowViewModels;
 using Window = DesktopPet.Engine.Window;
 

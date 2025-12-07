@@ -22,7 +22,7 @@ public class PetManager
 
         foreach (var pet in _petStorage.Pets)
         {
-             var petData = new PetData(
+            var petData = new PetData(
                 pet.PetName,
                 new ObservableCollection<PetAttribute>(pet.Attributes),
                 new ObservableCollection<string>(pet.LastPlayedGames),
@@ -47,7 +47,7 @@ public class PetManager
             .ToList();
         DataManager.Instance.SaveData(_petStorage);
     }
-    
+
     public PetData? GetDefaultPet()
     {
         foreach (var pet in _petCache.Values)
@@ -79,9 +79,9 @@ public class PetManager
         if (_petCache.TryGetValue(petName, out var pet))
             return pet.Attributes;
 
-        return new();
+        return new ObservableCollection<PetAttribute>();
     }
-    
+
     public string GetAttribute(string petName, string attributeName, string defaultValue = "")
     {
         if (!_petCache.TryGetValue(petName, out var pet))
@@ -94,7 +94,7 @@ public class PetManager
 
         return defaultValue;
     }
-    
+
     public void SetAttribute(string petName, string attributeName, string attributeValue)
     {
         SetAttribute(petName, new PetAttribute(attributeName, attributeValue));
@@ -177,7 +177,7 @@ public class PetManager
     public ObservableCollection<string> GetLastPlayedGames(string petName)
     {
         if (!_petCache.TryGetValue(petName, out var pet))
-            return new();
+            return new ObservableCollection<string>();
 
         return pet.LastPlayedGames;
     }

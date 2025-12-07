@@ -12,11 +12,11 @@ namespace DesktopPet.Engine;
 public abstract class MiniGameWindow : HighPrecisionTickingWindow
 {
     protected readonly PetBrain Brain;
+
+    private Label? _fpsDisplay;
     private bool _isPaused;
 
     private PauseMenu? _pauseMenu;
-
-    private Label? _fpsDisplay;
 
     protected MiniGameWindow(PetBrain brain)
     {

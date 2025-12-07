@@ -10,12 +10,10 @@ public partial class GameSelectorWindowViewModel
 {
     private readonly PetBrain _brain;
 
-    public event Action? RequestClose;
-
     public GameSelectorWindowViewModel(PetBrain brain)
     {
         _brain = brain;
-        
+
         PetAttributeHelper.InitAttributes(_brain, out var hunger, out var thirst, out var collectedFood,
             out var collectedThirst);
         PetHungerAttribute = hunger;
@@ -28,9 +26,11 @@ public partial class GameSelectorWindowViewModel
     public PetAttribute PetThirstAttribute { get; }
     public PetAttribute CollectedFoodAttribute { get; }
     public PetAttribute CollectedThirstAttribute { get; }
-    
+
     public string PetName => _brain.Name;
     public string Title => "Game Selector - " + _brain.Name;
+
+    public event Action? RequestClose;
 
     [RelayCommand]
     private void Feed()
@@ -41,7 +41,10 @@ public partial class GameSelectorWindowViewModel
     }
 
     [RelayCommand]
-    private void Close() => RequestClose?.Invoke();
+    private void Close()
+    {
+        RequestClose?.Invoke();
+    }
 
     [RelayCommand]
     private void FoodCollector()

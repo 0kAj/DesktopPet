@@ -6,23 +6,19 @@ using DesktopPet.Data.Pet;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
-public partial class WelcomeWindowViewModel: ObservableObject
+public partial class WelcomeWindowViewModel : ObservableObject
 {
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsErrorMessageVisible))]
+    private string? _errorMessage;
+
+    [ObservableProperty] private string? _petName;
+
+    [ObservableProperty] private bool _setAsDefaultPet = true;
+
+    public bool IsErrorMessageVisible => !string.IsNullOrWhiteSpace(ErrorMessage);
     public event Action? RequestClose;
     public event Action<string>? RequestOpenPetWindow;
-    
-    [ObservableProperty]
-    private string? _petName;
-    
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsErrorMessageVisible))]
-    private string? _errorMessage;
-    
-    public bool IsErrorMessageVisible => !string.IsNullOrWhiteSpace(ErrorMessage);
-    
-    [ObservableProperty]
-    private bool _setAsDefaultPet = true;
-    
+
     [RelayCommand]
     private void Ok()
     {
@@ -43,7 +39,10 @@ public partial class WelcomeWindowViewModel: ObservableObject
         RequestOpenPetWindow?.Invoke(PetName);
         RequestClose?.Invoke();
     }
-    
+
     [RelayCommand]
-    private void Close() => RequestClose?.Invoke();
+    private void Close()
+    {
+        RequestClose?.Invoke();
+    }
 }

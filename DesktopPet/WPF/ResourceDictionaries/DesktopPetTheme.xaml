@@ -194,6 +194,6 @@
          ============================== -->
     <converter:StringToIntConverter x:Key="StrToInt" />
     <converter:StringToDoubleConverter x:Key="StrToDouble" />
-    <valueconverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <valueconverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
 </ResourceDictionary>

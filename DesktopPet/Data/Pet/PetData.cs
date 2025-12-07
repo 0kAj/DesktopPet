@@ -12,8 +12,6 @@ public partial class PetData : ObservableObject
     [ObservableProperty] private bool _isDefault;
 
     [ObservableProperty] private string _petName;
-    
-    public event Action? DataChanged;
 
     public PetData(string petName, bool isDefault = false)
     {
@@ -24,7 +22,25 @@ public partial class PetData : ObservableObject
 
         SubscribeToPropertyChanged();
     }
-    
+
+    [JsonConstructor]
+    public PetData(string petName, ObservableCollection<PetAttribute> attributes,
+        ObservableCollection<string> lastPlayedGames, bool isDefault = false)
+    {
+        PetName = petName;
+        Attributes = new ObservableCollection<PetAttribute>(attributes);
+        IsDefault = isDefault;
+        LastPlayedGames = new ObservableCollection<string>(lastPlayedGames);
+
+        SubscribeToPropertyChanged();
+    }
+
+    public ObservableCollection<PetAttribute> Attributes { get; set; }
+
+    public ObservableCollection<string> LastPlayedGames { get; set; }
+
+    public event Action? DataChanged;
+
     private void SubscribeToPropertyChanged()
     {
         PropertyChanged += (_, _) => DataChanged?.Invoke();
@@ -48,25 +64,9 @@ public partial class PetData : ObservableObject
 
         DataChanged?.Invoke();
     }
-    
+
     private void AttributeChanged(object? sender, PropertyChangedEventArgs e)
     {
         DataChanged?.Invoke();
     }
-
-    [JsonConstructor]
-    public PetData(string petName, ObservableCollection<PetAttribute> attributes,
-        ObservableCollection<string> lastPlayedGames, bool isDefault = false)
-    {
-        PetName = petName;
-        Attributes = new ObservableCollection<PetAttribute>(attributes);
-        IsDefault = isDefault;
-        LastPlayedGames = new ObservableCollection<string>(lastPlayedGames);
-
-        SubscribeToPropertyChanged();
-    }
-
-    public ObservableCollection<PetAttribute> Attributes { get; set; }
-
-    public ObservableCollection<string> LastPlayedGames { get; set; }
 }

@@ -10,24 +10,24 @@ namespace DesktopPet.WPF.GameWindows;
 public partial class PetJumpMiniGameWindow : MiniGameWindow
 {
     private readonly PetJumpViewModel _vm;
-    
+
     public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
-        
+
         _vm = new PetJumpViewModel(petBrain);
         DataContext = _vm;
         _vm.GameFinished += End;
-        _vm.AddRemainingTime += (amount) => TDisplay.Timer.AddRemaining(amount);
-        
+        _vm.AddRemainingTime += amount => TDisplay.Timer.AddRemaining(amount);
+
         Loaded += (_, _) => _vm.SetCanvasSize(GameCanvas.ActualWidth, GameCanvas.ActualHeight);
-        
+
         // route all key events to petwindow
         KeyDown += (_, e) => petBrain.PetWindow.RaiseEvent(e);
-        
+
         SetDelta(20);
-        
+
         TDisplay.Timer.Set(30);
         TDisplay.Timer.Timeout += End;
 

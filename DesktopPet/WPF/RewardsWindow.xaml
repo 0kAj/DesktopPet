@@ -52,7 +52,7 @@
                         </Border.Effect>
                         <ui:CollectablesDisplay Food="{ Binding FoodScore }"
                                                 Thirst="{ Binding ThirstScore }"
-                                                HorizontalAlignment="Center"/>
+                                                HorizontalAlignment="Center" />
                     </Border>
 
                     <Button Content="OK"

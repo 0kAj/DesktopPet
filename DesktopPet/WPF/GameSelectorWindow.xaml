@@ -55,7 +55,8 @@
                         <WrapPanel Margin="20" ScrollViewer.CanContentScroll="True"
                                    ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <!-- Food Collector Card -->
-                            <Button Margin="5" Width="200" Height="200" Background="Beige" Command="{ Binding FoodCollectorCommand }">
+                            <Button Margin="5" Width="200" Height="200" Background="Beige"
+                                    Command="{ Binding FoodCollectorCommand }">
                                 <StackPanel>
                                     <Image Source="pack://application:,,,/Assets/Sprites/Games/FoodCollector.png"
                                            RenderOptions.BitmapScalingMode="NearestNeighbor"
@@ -73,7 +74,8 @@
                                 </StackPanel>
                             </Button>
                             <!-- Pet Jump Card -->
-                            <Button Margin="5" Width="200" Height="200" Background="Beige" Command="{ Binding PetJumpCommand }">
+                            <Button Margin="5" Width="200" Height="200" Background="Beige"
+                                    Command="{ Binding PetJumpCommand }">
                                 <StackPanel>
                                     <Image Source="pack://application:,,,/Assets/Sprites/Games/PetJump.png"
                                            RenderOptions.BitmapScalingMode="NearestNeighbor"

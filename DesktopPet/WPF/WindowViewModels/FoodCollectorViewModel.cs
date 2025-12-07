@@ -13,7 +13,6 @@ public class FoodCollectorViewModel : MiniGameViewModel
         base.Tick();
         // create collectable at random pos
         if (Rand.Next(0, 30) == 1)
-        {
             switch (Rand.Next(0, 2))
             {
                 case 0:
@@ -23,6 +22,5 @@ public class FoodCollectorViewModel : MiniGameViewModel
                     CreateThirst();
                     break;
             }
-        }
     }
 }

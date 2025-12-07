@@ -11,7 +11,7 @@ public class PlatformManager
     private readonly int _speedMultiplier;
 
     private int _tickCounter;
-    
+
     public PlatformManager()
     {
         _random = new Random();

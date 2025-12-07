@@ -9,26 +9,26 @@ namespace DesktopPet.WPF.WindowViewModels;
 public class PetJumpViewModel : MiniGameViewModel
 {
     private readonly PlatformManager _platformManager;
-    
+
     private int _spawnInterval;
-    
+
     public PetJumpViewModel(PetBrain brain) : base(brain)
     {
         _platformManager = new PlatformManager(MaxTicksForSpeedMultiplier, SpeedMultiplier);
         brain.PlatformManager = _platformManager;
-        
+
         _spawnInterval = Rand.Next(10, 50);
     }
-    
+
     public ObservableCollection<FallingPlatform> Platforms => _platformManager.Platforms;
-    
+
     public override void Tick()
     {
         base.Tick();
         _platformManager.Tick();
 
         _spawnInterval--;
-        
+
         if (_spawnInterval == 0)
         {
             var platformWidth = 150;
@@ -45,7 +45,6 @@ public class PetJumpViewModel : MiniGameViewModel
             };
 
             foreach (var pX in positions)
-            {
                 switch (Rand.Next(4))
                 {
                     case 0:
@@ -58,8 +57,7 @@ public class PetJumpViewModel : MiniGameViewModel
                     case 3:
                         break;
                 }
-            }
-            
+
             _platformManager
                 .SpawnRandomPlatform(
                     posX,

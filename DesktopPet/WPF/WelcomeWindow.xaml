@@ -52,8 +52,8 @@
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
                         </Border.Effect>
-                        <TextBox Background="Wheat" x:Name="NameTb" FontSize="16" BorderThickness="0" 
-                                 Text="{ Binding PetName, UpdateSourceTrigger=PropertyChanged }"/>
+                        <TextBox Background="Wheat" x:Name="NameTb" FontSize="16" BorderThickness="0"
+                                 Text="{ Binding PetName, UpdateSourceTrigger=PropertyChanged }" />
                     </Border>
                     <TextBlock Style="{ StaticResource ErrorTextBlock }"
                                Padding="0 10 0 5"
