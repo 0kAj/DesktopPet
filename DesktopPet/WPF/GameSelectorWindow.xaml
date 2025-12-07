@@ -169,7 +169,11 @@
                                                 Margin="5">
                                             Feed
                                         </Button>
-                                        <Button Margin="5" Style="{StaticResource AccentButtonAqua}">Thirst</Button>
+                                        <Button Command="{ Binding ThirstCommand }"
+                                            Style="{StaticResource AccentButtonAqua}"
+                                            Margin="5" >
+                                            Thirst
+                                        </Button>
                                     </StackPanel>
                                 </StackPanel>
                                 <Border.Effect>

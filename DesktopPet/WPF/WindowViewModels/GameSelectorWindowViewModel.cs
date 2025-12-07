@@ -35,9 +35,31 @@ public partial class GameSelectorWindowViewModel
     [RelayCommand]
     private void Feed()
     {
-        //start FeedGame
-        GameManager.Instance.StartGame("Food Collector", _brain);
-        Close();
+        var petHunger = int.TryParse(PetHungerAttribute.Value, out var p) ? p : 0;
+        if (petHunger == 100) return;
+        var collectedFood = int.TryParse(CollectedFoodAttribute.Value, out var c) ? c : 0;
+        
+        // cap 100 step-max. 5
+        var maxAmount = Math.Min(100 - petHunger, collectedFood);
+        var amount = Math.Min(maxAmount, 5);
+        
+        PetHungerAttribute.Value = (petHunger + amount).ToString();
+        CollectedFoodAttribute.Value = (collectedFood - amount).ToString();
+    }
+
+    [RelayCommand]
+    private void Thirst()
+    {
+        var petThirst = int.TryParse(PetThirstAttribute.Value, out var p) ? p : 0;
+        if (petThirst == 100) return;
+        var collectedThirst = int.TryParse(CollectedThirstAttribute.Value, out var c) ? c : 0;
+
+        // cap 100 step-max. 5
+        var maxAmount = Math.Min(100 - petThirst, collectedThirst);
+        var amount = Math.Min(maxAmount, 5);
+        
+        PetThirstAttribute.Value = (petThirst + amount).ToString();
+        CollectedThirstAttribute.Value = (collectedThirst - amount).ToString();
     }
 
     [RelayCommand]
