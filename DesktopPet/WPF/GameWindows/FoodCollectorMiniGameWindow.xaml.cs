@@ -6,6 +6,7 @@ using System.Windows.Shapes;
 using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
+using DesktopPet.MiniGames;
 using DesktopPet.WPF.WindowViewModels;
 
 namespace DesktopPet.WPF.GameWindows;
@@ -13,8 +14,6 @@ namespace DesktopPet.WPF.GameWindows;
 [MiniGame("Food Collector")]
 public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
-    private readonly Random _rand = new();
-
     private readonly MiniGameViewModel _vm;
 
     public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
@@ -22,9 +21,12 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         InitializeComponent();
         SizingHelper.FitToScreen(this);
         
-        _vm = new MiniGameViewModel();
+        _vm = new MiniGameViewModel(petBrain);
         DataContext = _vm;
         _vm.GameFinished += End;
+        _vm.AddRemainingTime += (amount) => TDisplay.Timer.AddRemaining(amount);
+
+        Loaded += (_, _) => _vm.SetCanvasSize(GameCanvas.ActualWidth, GameCanvas.ActualHeight);
 
         // route all key events to petwindow
         KeyDown += (_, args) => Brain.PetWindow.RaiseEvent(args);
@@ -65,45 +67,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 
     protected override void Tick()
     {
-        // create food at random pos
-        if (_rand.Next(0, 30) == 1)
-        {
-            var food = new Ellipse
-            {
-                Width = 20,
-                Height = 20,
-                Fill = new ImageBrush
-                {
-                    ImageSource = new BitmapImage(
-                        new Uri("pack://application:,,,/Assets/Sprites/Food/apple.png"))
-                }
-            };
-            Canvas.SetLeft(food, _rand.Next(0, (int)GameCanvas.ActualWidth - 20));
-            Canvas.SetTop(food, 0);
-            GameCanvas.Children.Add(food);
-        }
-
-        // food collision
-        for (var i = GameCanvas.Children.Count - 1; i >= 0; i--)
-            if (GameCanvas.Children[i] is Ellipse food)
-            {
-                var top = Canvas.GetTop(food) + 5;
-                Canvas.SetTop(food, top);
-
-                var foodRect = new Rect(Canvas.GetLeft(food), top, food.Width, food.Height);
-                var playerRect = Brain.PetWindow.GetCollisionRect();
-
-                if (foodRect.IntersectsWith(playerRect))
-                {
-                    GameCanvas.Children.Remove(food);
-                    _vm.FoodScore++;
-                    _vm.ThirstScore++; //todo add also water bottles
-                    TDisplay.Timer.AddRemaining(1);
-                }
-                else if (top > GameCanvas.ActualHeight)
-                {
-                    GameCanvas.Children.Remove(food);
-                }
-            }
+        if (!IsTicking) return;
+        _vm.Tick();
     }
 }

@@ -28,9 +28,10 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         InitializeComponent();
         SizingHelper.FitToScreen(this);
         
-        _vm = new MiniGameViewModel();
+        _vm = new MiniGameViewModel(petBrain);
         DataContext = _vm;
         _vm.GameFinished += End;
+        _vm.AddRemainingTime += (amount) => TDisplay.Timer.AddRemaining(amount);
 
         Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
@@ -46,7 +47,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
         SetDelta(20);
         
-        TDisplay.Timer.Set(30 * 3);
+        TDisplay.Timer.Set(30);
         TDisplay.Timer.Timeout += End;
 
         TickStart += () => TDisplay.Timer.Start();
@@ -88,7 +89,7 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
 
         if (_spawnInterval == 0)
         {
-            // todo make special platforms that spawn with special items like coins/hunger or bottles
+            // todo add collectable on Platforms at x/4 x/2 and x3/4
 
             var platformWidth = 150;
             _platformManager

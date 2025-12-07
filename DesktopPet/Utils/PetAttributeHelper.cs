@@ -19,7 +19,7 @@ public static class PetAttributeHelper
     {
         var pet = PetManager.Instance.GetPet(brain.Name);
 
-        hunger = pet.Attributes.FirstOrDefault(a => a.Name == PetHungerName)
+        hunger = pet!.Attributes.FirstOrDefault(a => a.Name == PetHungerName)
                  ?? new PetAttribute(PetHungerName, "100");
 
         thirst = pet.Attributes.FirstOrDefault(a => a.Name == PetThirstName)
@@ -44,7 +44,7 @@ public static class PetAttributeHelper
     {
         var pet = PetManager.Instance.GetPet(brain.Name);
 
-        collectedFood = pet.Attributes.FirstOrDefault(a => a.Name == CollectedFoodName)
+        collectedFood = pet!.Attributes.FirstOrDefault(a => a.Name == CollectedFoodName)
                         ?? new PetAttribute(CollectedFoodName, "0");
 
         collectedThirst = pet.Attributes.FirstOrDefault(a => a.Name == CollectedThirstName)
