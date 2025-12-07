@@ -10,7 +10,7 @@
                        AllowsTransparency="True"
                        WindowStyle="None"
                        WindowState="Normal"
-                       Topmost="True"
+                       Topmost="False"
                        ShowInTaskbar="False"
                        Title="PetJump" Height="450" Width="800">
     <engine:MiniGameWindow.Background>
@@ -21,6 +21,50 @@
     </Window.Resources>
     <Grid>
         <Canvas x:Name="GameCanvas" Background="Transparent" />
+        <!-- Collectables Canvas -->
+        <ItemsControl ItemsSource="{ Binding Collectables }">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{ Binding X }" />
+                    <Setter Property="Canvas.Top" Value="{ Binding Y }" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Width="{ Binding Width }" Height="{ Binding Height }">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{ Binding ImageUri }" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!-- Platform Canvas -->
+        <ItemsControl ItemsSource="{ Binding Platforms }">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Fill="{ Binding Color }"
+                               Width="{ Binding PlatformWidth }"
+                               Height="{ Binding PlatformHeight }" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Canvas x:Name="UiCanvas" Background="Transparent" />
         <ui:CollectablesDisplay Food="{ Binding FoodScore }"
                                 Thirst="{ Binding ThirstScore }" />

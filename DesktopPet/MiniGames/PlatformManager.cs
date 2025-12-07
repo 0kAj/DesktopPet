@@ -1,37 +1,32 @@
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using DesktopPet.MiniGames.GameObjects.Platforms;
-using DesktopPet.WPF.GameWindows.customControls.gameobjects;
 
 namespace DesktopPet.MiniGames;
 
 public class PlatformManager
 {
-    private readonly Canvas _canvas;
     private readonly int _maxTicksForSpeedMultiplier;
     private readonly Random _random;
     private readonly int _speedMultiplier;
 
     private int _tickCounter;
-
-    public PlatformManager(Canvas canvas)
+    
+    public PlatformManager()
     {
-        _canvas = canvas;
         _random = new Random();
         _speedMultiplier = 1;
         _maxTicksForSpeedMultiplier = 0;
     }
 
-    public PlatformManager(Canvas canvas, int maxTicksForSpeedMultiplier, int speedMultiplier)
+    public PlatformManager(int maxTicksForSpeedMultiplier, int speedMultiplier)
     {
-        _canvas = canvas;
         _random = new Random();
         _maxTicksForSpeedMultiplier = maxTicksForSpeedMultiplier;
         _speedMultiplier = speedMultiplier;
     }
 
-    public List<FallingPlatform> Platforms { get; } = new();
+    public ObservableCollection<FallingPlatform> Platforms { get; } = new();
 
     public void Tick()
     {
@@ -59,7 +54,6 @@ public class PlatformManager
 
     private void Remove(int i)
     {
-        _canvas.Children.Remove(Platforms[i].View);
         Platforms.RemoveAt(i);
     }
 
@@ -68,33 +62,32 @@ public class PlatformManager
         switch (_random.Next(4)) //todo create Platform-registry
         {
             case 0:
-                SpawnPlatform(x, width, height, velocityY);
-                break; //todo add Collectables Random, Bindings for Food Collectables, also in Foodcollector
+                SpawnPlatform(x, width, height, velocityY); break;
             case 1: SpawnOneShotPlatform(x, width, height, velocityY); break;
             case 2: SpawnStretchingPlatform(x, width, height, velocityY); break;
             case 3: SpawnJumpPlatform(x, width, height, velocityY); break;
         }
     }
 
-    public void SpawnPlatform(double x, double width, double height, double velocityY)
+    private void SpawnPlatform(double x, double width, double height, double velocityY)
     {
         var p = new FallingPlatform(x, -height, width, height, velocityY);
         AddPlatformToCanvas(p);
     }
 
-    public void SpawnOneShotPlatform(double x, double width, double height, double velocityY)
+    private void SpawnOneShotPlatform(double x, double width, double height, double velocityY)
     {
         var p = new OneShotPlatform(x, -height, width, height, velocityY);
         AddPlatformToCanvas(p);
     }
 
-    public void SpawnStretchingPlatform(double x, double width, double height, double velocityY)
+    private void SpawnStretchingPlatform(double x, double width, double height, double velocityY)
     {
         var p = new StretchingPlatform(x, -height, width, height, velocityY);
         AddPlatformToCanvas(p);
     }
 
-    public void SpawnJumpPlatform(double x, double width, double height, double velocityY)
+    private void SpawnJumpPlatform(double x, double width, double height, double velocityY)
     {
         var p = new JumpPlatform(x, -height, width, height, velocityY);
         AddPlatformToCanvas(p);
@@ -103,17 +96,5 @@ public class PlatformManager
     private void AddPlatformToCanvas(FallingPlatform p)
     {
         Platforms.Add(p);
-
-        var view = new PlatformView
-        {
-            DataContext = p
-        };
-
-        view.SetBinding(Canvas.LeftProperty, new Binding("X"));
-        view.SetBinding(Canvas.TopProperty, new Binding("Y"));
-
-        p.View = view;
-
-        _canvas.Children.Add(view);
     }
 }

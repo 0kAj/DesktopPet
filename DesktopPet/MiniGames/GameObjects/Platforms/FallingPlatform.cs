@@ -2,12 +2,15 @@ using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DesktopPet.Handlers;
-using DesktopPet.WPF.GameWindows.customControls.gameobjects;
 
 namespace DesktopPet.MiniGames.GameObjects.Platforms;
 
-public partial class FallingPlatform : GameObject
+public partial class FallingPlatform : ObservableObject
 {
+    [ObservableProperty] private double _x;
+
+    [ObservableProperty] private double _y;
+    
     [ObservableProperty] private Brush _color;
 
     [ObservableProperty] private double _platformHeight;
@@ -32,9 +35,7 @@ public partial class FallingPlatform : GameObject
 
     public double DefaultVelocityY { get; }
     public double CurrentVelocityY { get; set; }
-
-    public PlatformView View { get; set; }
-
+    
     public virtual void Tick()
     {
         Y += CurrentVelocityY;

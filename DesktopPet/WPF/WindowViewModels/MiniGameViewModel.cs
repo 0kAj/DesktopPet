@@ -13,10 +13,15 @@ public partial class MiniGameViewModel : ObservableObject
     
     [ObservableProperty]
     private int _thirstScore;
+
+    protected const int MaxTicksForSpeedMultiplier = 200;
+    protected const int SpeedMultiplier = 5;
+    private int _tickCounter;
+
     
     public ObservableCollection<CollectableViewModel> Collectables { get; } = new();
 
-    private readonly Random _rand = new();
+    protected readonly Random Rand = new();
 
     public event Action? GameFinished;
     public event Action<int>? AddRemainingTime;
@@ -24,10 +29,14 @@ public partial class MiniGameViewModel : ObservableObject
     private double _canvasWidth;
     private double _canvasHeight;
     private readonly PetBrain _brain;
+    
+    // SpeedMultiplier * velocity for first MaxTicksForSpeedMultiplier ticks
+    public double SpeedFactor => _tickCounter <= MaxTicksForSpeedMultiplier ? 1.0 / SpeedMultiplier : 1.0;
 
     public MiniGameViewModel(PetBrain brain)
     {
         _brain = brain;
+        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
     }
 
     public void SetCanvasSize(double canvasWidth, double canvasHeight)
@@ -39,46 +48,34 @@ public partial class MiniGameViewModel : ObservableObject
     [RelayCommand]
     private void FinishGame() => GameFinished?.Invoke();
     
-    public void Tick()
+    public virtual void Tick()
     {
-        // create collectable at random pos
-        if (_rand.Next(0, 30) == 1)
-        {
-            switch (_rand.Next(0, 2))
-            {
-                case 0:
-                    CreateFood();
-                    break;
-                case 1:
-                    CreateThirst();
-                    break;
-            }
-        }
+        _tickCounter++;
 
         MoveAndCollideCollectables();
     }
     
-    private void CreateFood()
+    protected void CreateFood()
     {
-        CreateFood(_rand.Next(0, (int)_canvasWidth - 20), 0, 2);
+        CreateFood(Rand.Next(0, (int)_canvasWidth - 20), 0, 2);
     }
     
-    private void CreateFood(int posX, int posY, int speed)
+    protected void CreateFood(double posX, double posY, int speed)
     {
         CreateCollectable(CollectableType.FOOD, "pack://application:,,,/Assets/Sprites/Food/apple.png", posX, posY, speed);
     }
 
-    private void CreateThirst()
+    protected void CreateThirst()
     {
-        CreateThirst(_rand.Next(0, (int)_canvasWidth - 20), 0, 2);
+        CreateThirst(Rand.Next(0, (int)_canvasWidth - 20), 0, 2);
     }
     
-    private void CreateThirst(int posX, int posY, int speed)
+    protected void CreateThirst(double posX, double posY, int speed)
     {
         CreateCollectable(CollectableType.THIRST, "pack://application:,,,/Assets/Sprites/Food/WaterBottle.png", posX, posY, speed);
     }
 
-    private void CreateCollectable(CollectableType type, string uri, int posX, int posY, int speed)
+    protected void CreateCollectable(CollectableType type, string uri, double posX, double posY, int speed)
     {
         var c = new CollectableViewModel()
         {
@@ -97,7 +94,10 @@ public partial class MiniGameViewModel : ObservableObject
         {
             var collectable = Collectables[i];
             // move food
-            collectable.Move(collectable.Speed);
+            if (_tickCounter < MaxTicksForSpeedMultiplier)
+                collectable.Move(collectable.Speed / SpeedFactor);
+            else
+                collectable.Move(collectable.Speed);
 
             // collide
             var foodRect = collectable.CollisionRect;

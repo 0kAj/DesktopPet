@@ -67,13 +67,13 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     private PetAttribute CollectedFoodAttribute { get; }
     private PetAttribute CollectedThirstAttribute { get; }
 
-    protected int CollectedFood //todo saving Error
+    protected int CollectedFood
     {
         get => int.TryParse(CollectedFoodAttribute.Value, out var val) ? val : 0;
         set => CollectedFoodAttribute.Value = value.ToString();
     }
 
-    protected int CollectedThirst //todo saving Error
+    protected int CollectedThirst
     {
         get => int.TryParse(CollectedThirstAttribute.Value, out var val) ? val : 0;
         set => CollectedThirstAttribute.Value = value.ToString();
