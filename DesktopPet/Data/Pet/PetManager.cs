@@ -21,12 +21,17 @@ public class PetManager
         _petCache.Clear();
 
         foreach (var pet in _petStorage.Pets)
-            _petCache[pet.PetName] = new PetData(
+        {
+             var petData = new PetData(
                 pet.PetName,
                 new ObservableCollection<PetAttribute>(pet.Attributes),
                 new ObservableCollection<string>(pet.LastPlayedGames),
                 pet.IsDefault
             );
+            // add autosave when changed
+            petData.DataChanged += SaveToStorage;
+            _petCache[pet.PetName] = petData;
+        }
     }
 
     private void SaveToStorage()
@@ -42,26 +47,57 @@ public class PetManager
             .ToList();
         DataManager.Instance.SaveData(_petStorage);
     }
+    
+    public PetData? GetDefaultPet()
+    {
+        foreach (var pet in _petCache.Values)
+            if (pet.IsDefault)
+                return pet;
+        return null;
+    }
+
+    public PetData? GetPet(string petName)
+    {
+        foreach (var pet in _petCache.Values)
+            if (pet.PetName == petName)
+                return pet;
+        return null;
+    }
 
     public bool IsDefault(string petName)
     {
-        return false;
+        var p = GetPet(petName);
+        if (p == null) return false;
+        return p.IsDefault;
     }
 
-
-    public Collection<PetAttribute> GetAttributes(string petName)
+    public ObservableCollection<PetAttribute> GetAttributes(string petName)
     {
         //todo Multiple Pets:
         // colorable pets
-        // welcome window where to set the name
         // prohibit double names
-        if (string.IsNullOrWhiteSpace(petName))
-            return new Collection<PetAttribute>();
-
         if (_petCache.TryGetValue(petName, out var pet))
-            return new Collection<PetAttribute>(pet.Attributes);
+            return pet.Attributes;
 
-        return new Collection<PetAttribute>();
+        return new();
+    }
+    
+    public string GetAttribute(string petName, string attributeName, string defaultValue = "")
+    {
+        if (!_petCache.TryGetValue(petName, out var pet))
+            return defaultValue;
+
+        var list = pet.Attributes;
+        foreach (var a in pet.Attributes)
+            if (a.Name == attributeName)
+                return a.Value;
+
+        return defaultValue;
+    }
+    
+    public void SetAttribute(string petName, string attributeName, string attributeValue)
+    {
+        SetAttribute(petName, new PetAttribute(attributeName, attributeValue));
     }
 
     public void SetAttribute(string petName, PetAttribute attribute)
@@ -83,8 +119,6 @@ public class PetManager
             existing.Value = attribute.Value;
         else
             pet.Attributes.Add(attribute);
-
-        SaveToStorage();
     }
 
     public void RemoveAttribute(string petName, string attributeName)
@@ -103,8 +137,6 @@ public class PetManager
 
         if (idx >= 0)
             list.RemoveAt(idx);
-
-        SaveToStorage();
     }
 
     public void SetDefaultPet(string petName)
@@ -118,42 +150,6 @@ public class PetManager
 
         if (newDefaultPet != null)
             newDefaultPet.IsDefault = true;
-
-        SaveToStorage();
-    }
-
-    public PetData? GetDefaultPet()
-    {
-        foreach (var pet in _petCache.Values)
-            if (pet.IsDefault)
-                return pet;
-        return null;
-    }
-
-    public PetData? GetPet(string petName)
-    {
-        foreach (var pet in _petCache.Values)
-            if (pet.PetName == petName)
-                return pet;
-        return null;
-    }
-
-    public string GetAttribute(string petName, string attributeName, string defaultValue = "")
-    {
-        if (!_petCache.TryGetValue(petName, out var pet))
-            return defaultValue;
-
-        var list = pet.Attributes;
-        foreach (var a in pet.Attributes)
-            if (a.Name == attributeName)
-                return a.Value;
-
-        return defaultValue;
-    }
-
-    public void SetAttribute(string petName, string attributeName, string attributeValue)
-    {
-        SetAttribute(petName, new PetAttribute(attributeName, attributeValue));
     }
 
     public void SetLastPlayedGame(string petName, string lastPlayedGameName)
@@ -176,15 +172,13 @@ public class PetManager
         const int maxEntries = 3;
         if (list.Count > maxEntries)
             list.ToList().RemoveRange(maxEntries, list.Count - maxEntries);
-
-        SaveToStorage();
     }
 
-    public Collection<string> GetLastPlayedGames(string petName)
+    public ObservableCollection<string> GetLastPlayedGames(string petName)
     {
         if (!_petCache.TryGetValue(petName, out var pet))
-            return new Collection<string>();
+            return new();
 
-        return new Collection<string>(pet.LastPlayedGames);
+        return pet.LastPlayedGames;
     }
 }
