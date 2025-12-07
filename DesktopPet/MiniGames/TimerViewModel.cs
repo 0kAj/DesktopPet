@@ -14,9 +14,9 @@ public partial class TimerViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(TimerFontSize))]
     private int _remaining;
 
-    public Action Tick;
+    public event Action? Tick;
 
-    public Action Timeout;
+    public event Action? Timeout;
 
     public TimerViewModel(int startSeconds = 30)
     {
@@ -29,15 +29,13 @@ public partial class TimerViewModel : ObservableObject
 
         _timer.Tick += (_, _) =>
         {
+            Remaining--;
             Tick?.Invoke();
             if (Remaining == 0)
             {
                 _timer.Stop();
                 Timeout?.Invoke();
-                return;
             }
-
-            Remaining--;
         };
     }
 
@@ -77,6 +75,6 @@ public partial class TimerViewModel : ObservableObject
 
     public void AddRemaining(int seconds)
     {
-        Remaining += seconds;
+        Remaining = Math.Max(0, Remaining + seconds);
     }
 }

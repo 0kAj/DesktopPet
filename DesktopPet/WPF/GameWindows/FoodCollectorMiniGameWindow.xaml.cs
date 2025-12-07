@@ -6,6 +6,7 @@ using System.Windows.Shapes;
 using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
+using DesktopPet.WPF.WindowViewModels;
 
 namespace DesktopPet.WPF.GameWindows;
 
@@ -13,20 +14,25 @@ namespace DesktopPet.WPF.GameWindows;
 public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
     private readonly Random _rand = new();
-    private int _foodScore;
+
+    private readonly FoodCollectorViewModel _vm;
 
     public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain) //todo I NEED VIEWMODEL
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
+        
+        _vm = new FoodCollectorViewModel();
+        DataContext = _vm;
+        _vm.GameFinished += End;
 
         // route all key events to petwindow
-        KeyDown += (sender, args) => _brain.PetWindow.RaiseEvent(args);
+        KeyDown += (_, args) => Brain.PetWindow.RaiseEvent(args);
 
         SetDelta(20);
 
         TDisplay.Timer.Set(30);
-        TDisplay.Timer.Timeout += () => End();
+        TDisplay.Timer.Timeout += End;
 
         TickStart += () => TDisplay.Timer.Start();
         TickStop += () => TDisplay.Timer.Stop();
@@ -38,7 +44,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     public override void Start()
     {
         // init Pet as playable
-        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
+        Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
         StartTicking();
     }
@@ -47,8 +53,10 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     {
         base.End();
         StopTicking();
-        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        var rewardsWindow = new RewardsWindow(_foodScore, 0);
+        Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
+        CollectedFood += _vm.FoodScore;
+        CollectedThirst += _vm.ThirstScore;
+        var rewardsWindow = new RewardsWindow(_vm.FoodScore, _vm.ThirstScore);
         rewardsWindow.Show();
         Close();
     }
@@ -81,14 +89,15 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                 Canvas.SetTop(food, top);
 
                 var foodRect = new Rect(Canvas.GetLeft(food), top, food.Width, food.Height);
-                var playerRect = _brain.PetWindow.GetCollisionRect();
+                var playerRect = Brain.PetWindow.GetCollisionRect();
 
                 if (foodRect.IntersectsWith(playerRect))
                 {
                     GameCanvas.Children.Remove(food);
-                    _foodScore++;
+                    _vm.FoodScore++;
+                    _vm.ThirstScore++; //todo add also water bottles
                     CollectedFood += 1;
-                    // _brain.PetWindow.debugLabel.Content = $"foodScore: {_foodScore}";
+                    CollectedThirst += 1; //todo optimize the collect score
                     TDisplay.Timer.AddRemaining(1);
                 }
                 else if (top > GameCanvas.ActualHeight)

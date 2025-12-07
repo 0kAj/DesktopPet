@@ -26,12 +26,12 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         InitializeComponent();
         SizingHelper.FitToScreen(this);
 
-        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
+        Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
         KeyDown += (_, e) => petBrain.PetWindow.RaiseEvent(e);
 
         _platformManager = new PlatformManager(GameCanvas, MaxTicksForSpeedMultiplier, SpeedMultiplier);
-        _brain.PlatformManager = _platformManager;
+        Brain.PlatformManager = _platformManager;
 
         random = new Random();
 
@@ -61,8 +61,8 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         base.End();
         CollectedFood += _foodScore;
         StopTicking();
-        _brain.PlatformManager = null;
-        _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
+        Brain.PlatformManager = null;
+        Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
         var rewardsWindow = new RewardsWindow(_foodScore, _thirstScore);
         rewardsWindow.Show();
         Close();

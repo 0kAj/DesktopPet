@@ -11,48 +11,50 @@ namespace DesktopPet.Engine;
 
 public abstract class MiniGameWindow : HighPrecisionTickingWindow
 {
-    protected readonly PetBrain _brain;
+    protected readonly PetBrain Brain;
     private bool _isPaused;
 
-    private PauseMenu _pauseMenu;
+    private PauseMenu? _pauseMenu;
 
-    private Label fpsDisplay;
+    private Label? _fpsDisplay;
 
     protected MiniGameWindow(PetBrain brain)
     {
-        _brain = brain;
-        brain.PetWindow.KeyDown += TogglePauseMenu;
+        Brain = brain;
+        Brain.PetWindow.KeyDown += TogglePauseMenu;
 
         Loaded += (_, _) =>
         {
             // create FPS-display
-            fpsDisplay = new Label();
-            fpsDisplay.FontSize = 50;
-            fpsDisplay.FontWeight = FontWeights.Bold;
-            fpsDisplay.Foreground = Brushes.Chartreuse;
-            fpsDisplay.Visibility = Visibility.Hidden;
-            fpsDisplay.ContentStringFormat = "FPS: {0:F0}";
-            MiniGameUiCanvas.Children.Add(fpsDisplay);
+            _fpsDisplay = new Label
+            {
+                FontSize = 50,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.Chartreuse,
+                Visibility = Visibility.Hidden,
+                ContentStringFormat = "FPS: {0:F0}"
+            };
+            MiniGameUiCanvas.Children.Add(_fpsDisplay);
         };
 
         KeyDown += (_, e) =>
         {
+            if (_fpsDisplay == null) return;
             //toggable debug fps
             if (e.Key == Key.Tab)
             {
-                var vis = fpsDisplay.Visibility switch
+                var vis = _fpsDisplay.Visibility switch
                 {
                     Visibility.Visible => Visibility.Hidden,
-                    Visibility.Hidden => Visibility.Visible,
                     _ => Visibility.Visible
                 };
 
-                fpsDisplay.Visibility = vis;
+                _fpsDisplay.Visibility = vis;
             }
         };
 
 
-        PetAttributeHelper.InitAttributes(brain, out var collectedFood, out var collectedThirst);
+        PetAttributeHelper.InitAttributes(Brain, out var collectedFood, out var collectedThirst);
         CollectedFoodAttribute = collectedFood;
         CollectedThirstAttribute = collectedThirst;
 
@@ -62,8 +64,8 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     public abstract string GameName { get; }
     protected abstract Canvas MiniGameUiCanvas { get; }
 
-    public PetAttribute CollectedFoodAttribute { get; }
-    public PetAttribute CollectedThirstAttribute { get; }
+    private PetAttribute CollectedFoodAttribute { get; }
+    private PetAttribute CollectedThirstAttribute { get; }
 
     protected int CollectedFood
     {
@@ -82,7 +84,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
 
     protected virtual void End()
     {
-        _brain.PetWindow.KeyDown -= TogglePauseMenu;
+        Brain.PetWindow.KeyDown -= TogglePauseMenu;
     }
 
     private void TogglePauseMenu(object sender, KeyEventArgs e)
@@ -97,15 +99,15 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
 
     protected override void Tick(float delta)
     {
-        if (fpsDisplay == null) return;
+        if (_fpsDisplay == null) return;
 
-        fpsDisplay.Content = 1000f / delta;
+        _fpsDisplay.Content = 1000f / delta;
     }
 
     private void ShowPauseMenu()
     {
         StopTicking();
-        _brain.PetWindow.StopTicking();
+        Brain.PetWindow.StopTicking();
         _isPaused = true;
 
         if (_pauseMenu == null)
@@ -114,7 +116,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
             _pauseMenu.ResumeClicked += HidePauseMenu;
             _pauseMenu.LeaveClicked += () =>
             {
-                _brain.PetWindow.StartTicking();
+                Brain.PetWindow.StartTicking();
                 End();
             };
             MiniGameUiCanvas.Children.Add(_pauseMenu);
@@ -133,7 +135,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         if (_pauseMenu != null)
             _pauseMenu.Visibility = Visibility.Collapsed;
         StartTicking();
-        _brain.PetWindow.StartTicking();
+        Brain.PetWindow.StartTicking();
         _isPaused = false;
     }
 }
