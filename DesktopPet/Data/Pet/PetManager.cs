@@ -75,7 +75,6 @@ public class PetManager
     {
         //todo Multiple Pets:
         // colorable pets
-        // prohibit double names
         if (_petCache.TryGetValue(petName, out var pet))
             return pet.Attributes;
 

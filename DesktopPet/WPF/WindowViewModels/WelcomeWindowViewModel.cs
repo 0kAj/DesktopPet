@@ -30,6 +30,12 @@ public partial class WelcomeWindowViewModel : ObservableObject
             SystemSounds.Asterisk.Play();
             return;
         }
+        if (PetManager.Instance.GetPet(PetName) == null)
+        {
+            ErrorMessage = $"Pet name '{PetName}' already exists.";
+            SystemSounds.Asterisk.Play();
+            return;
+        }
 
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("hunger", "100"));
