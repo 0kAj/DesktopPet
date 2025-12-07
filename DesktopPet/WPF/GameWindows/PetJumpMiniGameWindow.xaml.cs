@@ -4,6 +4,7 @@ using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
+using DesktopPet.WPF.WindowViewModels;
 
 namespace DesktopPet.WPF.GameWindows;
 
@@ -13,36 +14,40 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     private const int MaxTicksForSpeedMultiplier = 200;
     private const int SpeedMultiplier = 5;
     private readonly PlatformManager _platformManager;
-    private readonly Random random;
-
-    private int _foodScore;
-    private int _thirstScore;
+    private readonly Random _random;
+    
     private int _tickCounter;
 
-    private int spawnInterval;
+    private int _spawnInterval;
+    
+    private readonly MiniGameViewModel _vm;
 
-    public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain) //todo I NEED VIEWMODEL
+
+    public PetJumpMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
+        
+        _vm = new MiniGameViewModel();
+        DataContext = _vm;
+        _vm.GameFinished += End;
 
         Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.BasicPetController);
 
+        // route all key events to petwindow
         KeyDown += (_, e) => petBrain.PetWindow.RaiseEvent(e);
 
         _platformManager = new PlatformManager(GameCanvas, MaxTicksForSpeedMultiplier, SpeedMultiplier);
         Brain.PlatformManager = _platformManager;
 
-        random = new Random();
+        _random = new Random();
 
-        spawnInterval = random.Next(10, 50);
+        _spawnInterval = _random.Next(10, 50);
 
         SetDelta(20);
-
-        UpdateCollectableDisplay();
-
+        
         TDisplay.Timer.Set(30 * 3);
-        TDisplay.Timer.Timeout += () => End();
+        TDisplay.Timer.Timeout += End;
 
         TickStart += () => TDisplay.Timer.Start();
         TickStop += () => TDisplay.Timer.Stop();
@@ -59,12 +64,15 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
     protected override void End()
     {
         base.End();
-        CollectedFood += _foodScore;
         StopTicking();
         Brain.PlatformManager = null;
+        // back to default AI
         Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        var rewardsWindow = new RewardsWindow(_foodScore, _thirstScore);
-        rewardsWindow.Show();
+        // add Score
+        CollectedFood += _vm.FoodScore;
+        CollectedThirst += _vm.ThirstScore;
+        // show collected score
+        new RewardsWindow(_vm.FoodScore, _vm.ThirstScore).Show();
         Close();
     }
 
@@ -73,30 +81,22 @@ public partial class PetJumpMiniGameWindow : MiniGameWindow
         _platformManager.Tick();
 
         _tickCounter++;
-        spawnInterval--;
+        _spawnInterval--;
 
         // SpeedMultiplier * velocity for first MaxTicksForSpeedMultiplier ticks
         var speedFactor = _tickCounter <= MaxTicksForSpeedMultiplier ? 1.0 / SpeedMultiplier : 1.0;
 
-        if (spawnInterval == 0)
+        if (_spawnInterval == 0)
         {
             // todo make special platforms that spawn with special items like coins/hunger or bottles
 
             var platformWidth = 150;
             _platformManager
                 .SpawnRandomPlatform(
-                    random.NextDouble() * (SystemParameters.FullPrimaryScreenWidth - platformWidth),
+                    _random.NextDouble() * (SystemParameters.FullPrimaryScreenWidth - platformWidth),
                     platformWidth, 30,
                     1);
-            spawnInterval = (int)(random.Next(50, 120) * speedFactor);
+            _spawnInterval = (int)(_random.Next(50, 120) * speedFactor);
         }
-    }
-
-    private void UpdateCollectableDisplay()
-    {
-        //update score
-        CDisplay.ThirstTb.Text = _thirstScore.ToString();
-
-        CDisplay.FoodTb.Text = _foodScore.ToString();
     }
 }

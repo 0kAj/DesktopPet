@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
-public partial class FoodCollectorViewModel : ObservableObject
+public partial class MiniGameViewModel : ObservableObject
 {
     [ObservableProperty]
     private int _foodScore;

@@ -15,14 +15,14 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
     private readonly Random _rand = new();
 
-    private readonly FoodCollectorViewModel _vm;
+    private readonly MiniGameViewModel _vm;
 
-    public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain) //todo I NEED VIEWMODEL
+    public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
         
-        _vm = new FoodCollectorViewModel();
+        _vm = new MiniGameViewModel();
         DataContext = _vm;
         _vm.GameFinished += End;
 
@@ -53,11 +53,13 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
     {
         base.End();
         StopTicking();
+        // back to default AI
         Brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
+        // add Score
         CollectedFood += _vm.FoodScore;
         CollectedThirst += _vm.ThirstScore;
-        var rewardsWindow = new RewardsWindow(_vm.FoodScore, _vm.ThirstScore);
-        rewardsWindow.Show();
+        // show collected score
+        new RewardsWindow(_vm.FoodScore, _vm.ThirstScore).Show();
         Close();
     }
 
@@ -96,8 +98,6 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
                     GameCanvas.Children.Remove(food);
                     _vm.FoodScore++;
                     _vm.ThirstScore++; //todo add also water bottles
-                    CollectedFood += 1;
-                    CollectedThirst += 1; //todo optimize the collect score
                     TDisplay.Timer.AddRemaining(1);
                 }
                 else if (top > GameCanvas.ActualHeight)

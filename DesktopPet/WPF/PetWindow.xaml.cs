@@ -8,7 +8,7 @@ public partial class PetWindow : VelocityWindow
 {
     private readonly PetBrain _brain;
 
-    public PetWindow(string petName) //todo I NEED VIEWMODEL
+    public PetWindow(string petName)
     {
         InitializeComponent();
         // give it a brain
