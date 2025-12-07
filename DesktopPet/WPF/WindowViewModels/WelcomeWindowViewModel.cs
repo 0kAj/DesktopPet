@@ -1,6 +1,7 @@
 using System.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DesktopPet.Background;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Data.Pet;
 
@@ -35,6 +36,8 @@ public partial class WelcomeWindowViewModel : ObservableObject
 
         if (SetAsDefaultPet)
             PetManager.Instance.SetDefaultPet(PetName);
+
+        PetStatUpdater.Instance.PetName = PetName;
 
         RequestOpenPetWindow?.Invoke(PetName);
         RequestClose?.Invoke();

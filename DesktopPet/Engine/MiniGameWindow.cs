@@ -54,7 +54,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         };
 
 
-        PetAttributeHelper.InitAttributes(Brain, out var collectedFood, out var collectedThirst);
+        PetAttributeHelper.InitCollectedAttributes(Brain.Name, out var collectedFood, out var collectedThirst);
         CollectedFoodAttribute = collectedFood;
         CollectedThirstAttribute = collectedThirst;
 

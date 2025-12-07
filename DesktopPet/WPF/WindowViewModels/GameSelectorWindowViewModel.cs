@@ -14,7 +14,7 @@ public partial class GameSelectorWindowViewModel
     {
         _brain = brain;
 
-        PetAttributeHelper.InitAttributes(_brain, out var hunger, out var thirst, out var collectedFood,
+        PetAttributeHelper.InitAttributes(_brain.Name, out var hunger, out var thirst, out var collectedFood,
             out var collectedThirst);
         PetHungerAttribute = hunger;
         PetThirstAttribute = thirst;

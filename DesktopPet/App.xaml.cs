@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using DesktopPet.Background;
 using DesktopPet.Data.Pet;
 using DesktopPet.WPF;
 
@@ -14,8 +15,13 @@ public partial class App : Application
         // only show welcomewindow if no default pet set
         var defaultPet = PetManager.Instance.GetDefaultPet();
         if (defaultPet != null)
+        {
+            PetStatUpdater.Instance.PetName = defaultPet.PetName;
             new PetWindow(defaultPet.PetName).Show();
+        }
         else
+        {
             new WelcomeWindow().Show();
+        }
     }
 }
