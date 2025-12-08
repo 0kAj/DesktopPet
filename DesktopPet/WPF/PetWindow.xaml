@@ -1,4 +1,4 @@
-﻿<engine:VelocityWindow x:Class="DesktopPet.WPF.PetWindow"
+﻿<engine:Window x:Class="DesktopPet.WPF.PetWindow"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,12 +17,40 @@
                        Title="PetWindow" Height="100" Width="150">
     <DockPanel HorizontalAlignment="Center">
         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" x:Name="DebugLabel">DebugInfo</Label>
-        <Image x:Name="Pet"
-               RenderOptions.BitmapScalingMode="NearestNeighbor"
-               DockPanel.Dock="Bottom"
-               VerticalAlignment="Bottom"
-               Height="50"
-               Width="50"
-               Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png" />
+        <Grid x:Name="Pet"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                   DockPanel.Dock="Bottom"
+                   VerticalAlignment="Bottom"
+                   Height="50"
+                   Width="50">
+            <Rectangle Fill="#639bff"/>
+            <Image x:Name="PetEyes" Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_eyes.png">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="{ Binding MoveDirectionX }" Y="0"></TranslateTransform>
+                        <ScaleTransform CenterY="20" ScaleY="1"></ScaleTransform>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Rectangle x:Name="PetNose" Fill="#ac3232">
+                <Rectangle.OpacityMask>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_nose.png"></ImageBrush>
+                </Rectangle.OpacityMask>
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="{ Binding MoveDirectionX }" Y="0"></TranslateTransform>
+                        <ScaleTransform CenterY="35" ScaleY="1"></ScaleTransform>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle x:Name="PetMouth" Fill="Black">
+                <Rectangle.OpacityMask>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png"></ImageBrush>
+                </Rectangle.OpacityMask>
+                <Rectangle.RenderTransform>
+                    <TranslateTransform X="{ Binding MoveDirectionX }" Y="0"></TranslateTransform>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+        </Grid>
     </DockPanel>
-</engine:VelocityWindow>
+</engine:Window>

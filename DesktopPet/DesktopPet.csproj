@@ -28,6 +28,14 @@
         <Resource Include="Assets\Sprites\Games\FoodCollector.png"/>
         <None Remove="Assets\Sprites\Games\PetJump.png"/>
         <Resource Include="Assets\Sprites\Games\PetJump.png"/>
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha.png" />
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha.png" />
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_eyes.png" />
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_eyes.png" />
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_mouth.png" />
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_mouth.png" />
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_nose.png" />
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_nose.png" />
     </ItemGroup>
 
     <ItemGroup>
