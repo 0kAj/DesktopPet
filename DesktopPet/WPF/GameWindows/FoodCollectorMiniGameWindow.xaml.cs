@@ -9,14 +9,14 @@ namespace DesktopPet.WPF.GameWindows;
 [MiniGame("Food Collector")]
 public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
-    private readonly MiniGameViewModel _vm;
+    private readonly FoodCollectorViewModel _vm;
 
     public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
 
-        _vm = new MiniGameViewModel(petBrain);
+        _vm = new FoodCollectorViewModel(petBrain);
         DataContext = _vm;
         _vm.GameFinished += End;
         _vm.AddRemainingTime += amount => TDisplay.Timer.AddRemaining(amount);
