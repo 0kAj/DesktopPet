@@ -45,6 +45,7 @@ public partial class PetData : ObservableObject
     {
         PropertyChanged += (_, _) => DataChanged?.Invoke();
 
+        Attributes.CollectionChanged += AttributesChanged;
         LastPlayedGames.CollectionChanged += (_, _) => DataChanged?.Invoke();
 
         // Initial subscribe for existing attributes

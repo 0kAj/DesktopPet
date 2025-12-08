@@ -105,6 +105,7 @@ public class PetManager
         if (!_petCache.TryGetValue(petName, out var pet))
         {
             pet = new PetData(petName);
+            pet.DataChanged += SaveToStorage;
             _petCache[petName] = pet;
         }
 
