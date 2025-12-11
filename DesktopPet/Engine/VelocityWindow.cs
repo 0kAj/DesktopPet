@@ -1,8 +1,9 @@
 using System.Windows;
+using DesktopPet.Handlers.LookEvents;
 
 namespace DesktopPet.Engine;
 
-public abstract class VelocityWindow : HighPrecisionTickingWindow
+public abstract class VelocityWindow : HighPrecisionTickingWindow, IVelocity
 {
     public double VelocityX { get; set; }
     public double VelocityY { get; set; }

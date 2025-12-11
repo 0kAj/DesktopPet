@@ -27,8 +27,8 @@
             <Image x:Name="PetEyes" Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_eyes.png">
                 <Image.RenderTransform>
                     <TransformGroup>
-                        <TranslateTransform X="{ Binding MoveDirectionX }" Y="0"></TranslateTransform>
-                        <ScaleTransform CenterY="20" ScaleY="1"></ScaleTransform>
+                        <TranslateTransform X="{ Binding LookDirectionX }" Y="{ Binding LookDirectionY }"></TranslateTransform>
+                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }"></ScaleTransform>
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
@@ -38,7 +38,7 @@
                 </Rectangle.OpacityMask>
                 <Rectangle.RenderTransform>
                     <TransformGroup>
-                        <TranslateTransform X="{ Binding MoveDirectionX }" Y="0"></TranslateTransform>
+                        <TranslateTransform X="{ Binding LookDirectionX }" Y="0"></TranslateTransform>
                         <ScaleTransform CenterY="35" ScaleY="1"></ScaleTransform>
                     </TransformGroup>
                 </Rectangle.RenderTransform>
@@ -48,7 +48,7 @@
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png"></ImageBrush>
                 </Rectangle.OpacityMask>
                 <Rectangle.RenderTransform>
-                    <TranslateTransform X="{ Binding MoveDirectionX }" Y="0"></TranslateTransform>
+                    <TranslateTransform X="{ Binding LookDirectionX }" Y="0"></TranslateTransform>
                 </Rectangle.RenderTransform>
             </Rectangle>
         </Grid>

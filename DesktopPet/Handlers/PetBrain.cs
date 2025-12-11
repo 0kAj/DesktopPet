@@ -1,4 +1,5 @@
 using DesktopPet.Handlers.Events;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Handlers.MovementStates;
 using DesktopPet.MiniGames;
 using PetWindow = DesktopPet.WPF.PetWindow;
@@ -15,10 +16,13 @@ public class PetBrain
 
     private readonly PetEventHandler _petEventHandler;
     private readonly PetMovementHandler _petMovementHandler;
+    
+    private LookingPetViewModel _lookingPet;
 
-    public PetBrain(PetWindow petWindow)
+    public PetBrain(PetWindow petWindow, LookingPetViewModel lookingPetViewModel)
     {
         PetWindow = petWindow;
+        _lookingPet = lookingPetViewModel;
 
         _petMovementHandler = new PetMovementHandler();
         // add PetEventHandler
@@ -41,6 +45,13 @@ public class PetBrain
         // reset AI
         _petMovementHandler.ClearStates();
         _petEventHandler.ClearStates();
+        
+        // add universal states
+        _petMovementHandler.AddState(new PetBlinkLookState(_lookingPet));
+        _petMovementHandler.AddState(new PetLookToMoveDirectionState(_lookingPet));
+        _petMovementHandler.AddState(new PetLookToMousePositionState(_lookingPet, PetWindow));
+
+        
         // Set AI
         switch (template)
         {

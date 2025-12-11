@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
+using DesktopPet.Handlers.LookEvents;
 
 namespace DesktopPet.WPF;
 
@@ -8,11 +9,16 @@ public partial class PetWindow : VelocityWindow
 {
     private readonly PetBrain _brain;
 
+    private LookingPetViewModel _vm;
+
     public PetWindow(string petName)
     {
         InitializeComponent();
         // give it a brain
-        _brain = new PetBrain(this) { Name = petName };
+        _vm = new LookingPetViewModel(this);
+        DataContext = _vm;
+        
+        _brain = new PetBrain(this, _vm) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
 
         DebugLabel.Content = _brain.Name;
@@ -39,5 +45,11 @@ public partial class PetWindow : VelocityWindow
     {
         var res = Pet.PointToScreen(new Point(0, 0));
         return new Rect(res.X, res.Y, Pet.ActualWidth, Pet.ActualHeight);
+    }
+
+    public override Vector GetCollisionPositionVector()
+    {
+        var res = Pet.PointToScreen(new Point(0, 0));
+        return new Vector(res.X +  Pet.ActualWidth / 2, res.Y);
     }
 }

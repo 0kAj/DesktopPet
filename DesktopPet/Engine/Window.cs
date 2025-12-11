@@ -1,10 +1,11 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using DesktopPet.Handlers.LookEvents;
 
 namespace DesktopPet.Engine;
 
-public class Window : System.Windows.Window
+public class Window : System.Windows.Window, IWindowHelper
 {
     private Point GetGlobalMousePos()
     {
@@ -30,4 +31,6 @@ public class Window : System.Windows.Window
     {
         return new Vector(Left + Width / 2, Top);
     }
+
+    public virtual Vector GetCollisionPositionVector() => GetPositionVector();
 }
