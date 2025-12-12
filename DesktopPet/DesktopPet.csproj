@@ -36,6 +36,10 @@
         <Resource Include="Assets\Sprites\Pets\Mouse_alpha_mouth.png" />
         <None Remove="Assets\Sprites\Pets\Mouse_alpha_nose.png" />
         <Resource Include="Assets\Sprites\Pets\Mouse_alpha_nose.png" />
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_inner_eyes.png" />
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_inner_eyes.png" />
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_outer_eyes.png" />
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_outer_eyes.png" />
     </ItemGroup>
 
     <ItemGroup>

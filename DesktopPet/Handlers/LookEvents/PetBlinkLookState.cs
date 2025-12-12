@@ -8,16 +8,18 @@ public class PetBlinkLookState : IBehaviourState
     private LookingPetViewModel _lookingPet;
 
     private MultiTickAttribute<double> _eyeScaleYAttribute;
-    private float _eyeScaleYAttributeAmount;
-    private int _eyeScaleYAttributeDirection = 1;
+    private bool _closeEyes = false;
 
     public PetBlinkLookState(LookingPetViewModel lookingPet)
     {
         _lookingPet = lookingPet;
         lookingPet.EyeScaleY = 1.0;
+
+        _eyeScaleYAttribute = new MultiTickAttribute<double>(0.1, true);
     }
 
     public bool IsDone => false;
+
     public bool CanTick()
     {
         var randomValue = _random.Next() % 500 == 0;
@@ -29,28 +31,13 @@ public class PetBlinkLookState : IBehaviourState
     public void Tick()
     {
         // Scale
-        if (_eyeScaleYAttribute == null)
-        {
-            _eyeScaleYAttribute = new(1.0, 0.1);
-        }
-        
-        if (!_eyeScaleYAttribute.IsChanging)
-            _eyeScaleYAttribute.IsChanging = true;
 
+        var targetYScale = _closeEyes ? 0.1 : 1.0;
 
-        if (_eyeScaleYAttribute.IsChanging)
-        {
-            _lookingPet.EyeScaleY = Single.Lerp((float)_eyeScaleYAttribute.StartValue, (float)_eyeScaleYAttribute.EndValue, _eyeScaleYAttributeAmount);
-            _eyeScaleYAttributeAmount += 0.1f * _eyeScaleYAttributeDirection;
-            
-            if (_eyeScaleYAttributeAmount > 1)
-                _eyeScaleYAttributeDirection *= -1;
-            if (_eyeScaleYAttributeAmount < 0)
-            {
-                _eyeScaleYAttribute.IsChanging = false;
-                _eyeScaleYAttributeDirection = 1; // reset dir
-            }
-        }
+        _lookingPet.EyeScaleY = _eyeScaleYAttribute.Tick(_lookingPet.EyeScaleY, targetYScale);
+
+        if (Math.Abs(_lookingPet.EyeScaleY - targetYScale) < 0.01)
+            _closeEyes = !_closeEyes;
     }
 
     public void OnEnd()

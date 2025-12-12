@@ -4,6 +4,7 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:engine="clr-namespace:DesktopPet.Engine"
+                       xmlns:converter="clr-namespace:DesktopPet.WPF.Converter"
                        mc:Ignorable="d"
                        Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                        WindowStyle="None"
@@ -15,6 +16,9 @@
                        ShowInTaskbar="False"
                        WindowStartupLocation="CenterScreen"
                        Title="PetWindow" Height="100" Width="150">
+    <Window.Resources>
+        <converter:DoubleScaleConverter x:Key="ScaleConverter"/>
+    </Window.Resources>
     <DockPanel HorizontalAlignment="Center">
         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" x:Name="DebugLabel">DebugInfo</Label>
         <Grid x:Name="Pet"
@@ -24,11 +28,21 @@
                    Height="50"
                    Width="50">
             <Rectangle Fill="#639bff"/>
-            <Image x:Name="PetEyes" Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_eyes.png">
+            <Image x:Name="PetOuterEyes" Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_outer_eyes.png">
                 <Image.RenderTransform>
                     <TransformGroup>
-                        <TranslateTransform X="{ Binding LookDirectionX }" Y="{ Binding LookDirectionY }"></TranslateTransform>
-                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }"></ScaleTransform>
+                        <TranslateTransform X="{ Binding LookDirectionX }"
+                                            Y="{ Binding LookDirectionY }"/>
+                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="PetInnerEyes" Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_inner_eyes.png">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="{ Binding LookDirectionX, Converter={ StaticResource ScaleConverter } }"
+                                            Y="{ Binding LookDirectionY, Converter={ StaticResource ScaleConverter } }"/>
+                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }"/>
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
