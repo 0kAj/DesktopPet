@@ -9,7 +9,7 @@ public partial class PetWindow : VelocityWindow
 {
     private readonly PetBrain _brain;
 
-    private LookingPetViewModel _vm;
+    private readonly LookingPetViewModel _vm;
 
     public PetWindow(string petName)
     {
@@ -17,7 +17,7 @@ public partial class PetWindow : VelocityWindow
         // give it a brain
         _vm = new LookingPetViewModel(this, petName);
         DataContext = _vm;
-        
+
         _brain = new PetBrain(this, _vm) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
 
@@ -50,6 +50,6 @@ public partial class PetWindow : VelocityWindow
     public override Vector GetCollisionPositionVector()
     {
         var res = Pet.PointToScreen(new Point(0, 0));
-        return new Vector(res.X +  Pet.ActualWidth / 2, res.Y);
+        return new Vector(res.X + Pet.ActualWidth / 2, res.Y);
     }
 }

@@ -71,9 +71,9 @@ public static class PetAttributeHelper
 
         primaryColor = pet.Attributes.FirstOrDefault(a => a.Name == PrimaryColorName)
                        ?? new PetAttribute(PrimaryColorName, Colors.CornflowerBlue.ToString());
-        secondaryColor = pet.Attributes.FirstOrDefault(a => a.Name == SecondaryColorName) 
+        secondaryColor = pet.Attributes.FirstOrDefault(a => a.Name == SecondaryColorName)
                          ?? new PetAttribute(SecondaryColorName, Colors.DarkSlateBlue.ToString());
-        
+
         // save defaults if required
         PetManager.Instance.SetAttribute(petName, primaryColor);
         PetManager.Instance.SetAttribute(petName, secondaryColor);

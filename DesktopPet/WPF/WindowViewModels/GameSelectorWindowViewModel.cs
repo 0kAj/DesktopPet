@@ -1,9 +1,7 @@
-using ColorPicker;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Handlers;
-using DesktopPet.Handlers.Events;
 using DesktopPet.MiniGames;
 using DesktopPet.Utils;
 
@@ -12,6 +10,8 @@ namespace DesktopPet.WPF.WindowViewModels;
 public partial class GameSelectorWindowViewModel : ObservableObject
 {
     private readonly PetBrain _brain;
+
+    [ObservableProperty] private bool showColorPickers;
 
     public GameSelectorWindowViewModel(PetBrain brain)
     {
@@ -23,7 +23,7 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         PetThirstAttribute = thirst;
         CollectedFoodAttribute = collectedFood;
         CollectedThirstAttribute = collectedThirst;
-        
+
         PetAttributeHelper.InitPetColorAttributes(_brain.Name, out var primaryColor, out var secondaryColor);
         PrimaryColorAttribute = primaryColor;
         SecondaryColorAttribute = secondaryColor;
@@ -36,9 +36,6 @@ public partial class GameSelectorWindowViewModel : ObservableObject
     public PetAttribute PrimaryColorAttribute { get; set; }
     public PetAttribute SecondaryColorAttribute { get; set; }
 
-    [ObservableProperty]
-    private bool showColorPickers = false;
-
     public string PetName => _brain.Name;
     public string Title => "Game Selector - " + _brain.Name;
 
@@ -50,11 +47,11 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         var petHunger = int.TryParse(PetHungerAttribute.Value, out var p) ? p : 0;
         if (petHunger == 100) return;
         var collectedFood = int.TryParse(CollectedFoodAttribute.Value, out var c) ? c : 0;
-        
+
         // cap 100 step-max. 5
         var maxAmount = Math.Min(100 - petHunger, collectedFood);
         var amount = Math.Min(maxAmount, 5);
-        
+
         PetHungerAttribute.Value = (petHunger + amount).ToString();
         CollectedFoodAttribute.Value = (collectedFood - amount).ToString();
     }
@@ -69,7 +66,7 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         // cap 100 step-max. 5
         var maxAmount = Math.Min(100 - petThirst, collectedThirst);
         var amount = Math.Min(maxAmount, 5);
-        
+
         PetThirstAttribute.Value = (petThirst + amount).ToString();
         CollectedThirstAttribute.Value = (collectedThirst - amount).ToString();
     }

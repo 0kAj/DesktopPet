@@ -59,7 +59,7 @@ public class PlatformManager
 
     public void SpawnRandomPlatform(double x, double width, double height, double velocityY)
     {
-        switch (_random.Next(4)) //todo create Platform-registry
+        switch (_random.Next(4))
         {
             case 0:
                 SpawnPlatform(x, width, height, velocityY); break;

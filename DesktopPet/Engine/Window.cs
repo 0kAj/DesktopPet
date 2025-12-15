@@ -7,11 +7,6 @@ namespace DesktopPet.Engine;
 
 public class Window : System.Windows.Window, IWindowHelper
 {
-    private Point GetGlobalMousePos()
-    {
-        return PointToScreen(Mouse.GetPosition(this));
-    }
-
     public Point GetDpiSaveGlobalMousePos()
     {
         var pos = GetGlobalMousePos();
@@ -21,16 +16,24 @@ public class Window : System.Windows.Window, IWindowHelper
         return new Point(pos.X / scale, pos.Y / scale);
     }
 
-
-    private double GetWindowsScale(Visual v)
-    {
-        return VisualTreeHelper.GetDpi(v).PixelsPerDip;
-    }
-
     public Vector GetPositionVector()
     {
         return new Vector(Left + Width / 2, Top);
     }
 
-    public virtual Vector GetCollisionPositionVector() => GetPositionVector();
+    public virtual Vector GetCollisionPositionVector()
+    {
+        return GetPositionVector();
+    }
+
+    private Point GetGlobalMousePos()
+    {
+        return PointToScreen(Mouse.GetPosition(this));
+    }
+
+
+    private double GetWindowsScale(Visual v)
+    {
+        return VisualTreeHelper.GetDpi(v).PixelsPerDip;
+    }
 }

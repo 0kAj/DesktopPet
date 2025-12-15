@@ -2,14 +2,11 @@ namespace DesktopPet.Handlers.LookEvents;
 
 public class MultiTickAttribute<T> where T : struct
 {
-    public bool IsChanging { get; private set; }
-    public double StartValue { get; private set; }
-    public double EndValue { get; private set; }
+    private readonly bool _pingPong;
+    private readonly double _speed;
+    private double _direction;
 
     private double _progress;
-    private readonly double _speed;
-    private readonly bool _pingPong;
-    private double _direction;
 
     public MultiTickAttribute(double speed = 0.15, bool pingPong = false, double direction = 1)
     {
@@ -17,6 +14,10 @@ public class MultiTickAttribute<T> where T : struct
         _pingPong = pingPong;
         _direction = direction;
     }
+
+    public bool IsChanging { get; private set; }
+    public double StartValue { get; private set; }
+    public double EndValue { get; private set; }
 
     public double Tick(double currentValue, double target)
     {
@@ -57,5 +58,7 @@ public class MultiTickAttribute<T> where T : struct
     }
 
     private double Lerp(double a, double b, double t)
-        => a + (b - a) * t;
+    {
+        return a + (b - a) * t;
+    }
 }

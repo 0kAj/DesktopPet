@@ -108,28 +108,28 @@
                             DockPanel.Dock="Top" />
                         <Button Height="40" Width="40" DockPanel.Dock="Top" HorizontalAlignment="Right"
                                 Background="Transparent" Command="{Binding ColorPickerCommand}">
-                            <fa:ImageAwesome Icon="Eyedropper"/>
+                            <fa:ImageAwesome Icon="Eyedropper" />
                         </Button>
-                        <StackPanel Visibility="{Binding ShowColorPickers, Converter={StaticResource BoolToVisibilityConverter}}" DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel
+                            Visibility="{Binding ShowColorPickers, Converter={StaticResource BoolToVisibilityConverter}}"
+                            DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel HorizontalAlignment="Right" Margin="20 0 20 0">
-                                <TextBlock Text="Primary Color" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Primary Color" HorizontalAlignment="Center" />
                                 <colorpicker:SquarePicker x:Name="PrimaryColorPickerRing"
                                                           SelectedColor="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColor},Mode=TwoWay }"
                                                           Width="40" Height="40" />
                                 <colorpicker:HexColorTextBox
                                     SelectedColor="{ Binding ElementName=PrimaryColorPickerRing, Path=SelectedColor, Mode=TwoWay }"
-                                    ShowAlpha="False" Height="40">
-                                </colorpicker:HexColorTextBox>
+                                    ShowAlpha="False" Height="40" />
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Margin="20 0 20 0">
-                                <TextBlock Text="Secondary Color" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Secondary Color" HorizontalAlignment="Center" />
                                 <colorpicker:SquarePicker x:Name="SecondaryColorPickerRing"
                                                           SelectedColor="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColor},Mode=TwoWay }"
                                                           Width="40" Height="40" />
                                 <colorpicker:HexColorTextBox
                                     SelectedColor="{ Binding ElementName=SecondaryColorPickerRing, Path=SelectedColor, Mode=TwoWay }"
-                                    ShowAlpha="False" Height="40">
-                                </colorpicker:HexColorTextBox>
+                                    ShowAlpha="False" Height="40" />
                             </StackPanel>
                         </StackPanel>
 
@@ -156,8 +156,7 @@
                                 <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                                        Height="90"
                                        Width="90"
-                                       Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha.png">
-                                </Image>
+                                       Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha.png" />
                             </Grid>
 
                             <!-- Hunger & Thirst Bars -->
@@ -174,12 +173,13 @@
                                                Height="50" Width="50"
                                                Source="pack://application:,,,/Assets/Sprites/Food/apple.png"
                                                VerticalAlignment="Center" />
-                                        <Grid  Height="30"
-                                               Width="250">
+                                        <Grid Height="30"
+                                              Width="250">
                                             <ProgressBar Foreground="#ac3133"
                                                          Background="BurlyWood"
                                                          Value="{ Binding Path=PetHungerAttribute.Value, Converter={StaticResource StrToDouble} }" />
-                                            <Rectangle Width="250" Height="15" Fill="Black" Opacity="0.25" VerticalAlignment="Bottom"></Rectangle>
+                                            <Rectangle Width="250" Height="15" Fill="Black" Opacity="0.25"
+                                                       VerticalAlignment="Bottom" />
                                         </Grid>
                                     </StackPanel>
 
@@ -197,7 +197,8 @@
                                             <ProgressBar Foreground="#3a416d"
                                                          Background="BurlyWood"
                                                          Value="{ Binding Path=PetThirstAttribute.Value, Converter={StaticResource StrToDouble} }" />
-                                            <Rectangle Width="250" Height="15" Fill="Black" Opacity="0.25" VerticalAlignment="Bottom"></Rectangle>
+                                            <Rectangle Width="250" Height="15" Fill="Black" Opacity="0.25"
+                                                       VerticalAlignment="Bottom" />
                                         </Grid>
                                     </StackPanel>
 

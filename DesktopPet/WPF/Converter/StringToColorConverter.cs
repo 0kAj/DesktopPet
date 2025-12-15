@@ -8,10 +8,7 @@ public class StringToColorConverter : IValueConverter
 {
     public virtual object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is string colorStr)
-        {
-           return ColorConverter.ConvertFromString(colorStr);
-        }
+        if (value is string colorStr) return ColorConverter.ConvertFromString(colorStr);
         return Colors.Black;
     }
 
