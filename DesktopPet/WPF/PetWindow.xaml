@@ -17,7 +17,7 @@
                        WindowStartupLocation="CenterScreen"
                        Title="PetWindow" Height="100" Width="150">
     <Window.Resources>
-        <converter:DoubleScaleConverter x:Key="ScaleConverter"/>
+        <ResourceDictionary Source="/WPF/ResourceDictionaries/DesktopPetTheme.xaml" />
     </Window.Resources>
     <DockPanel HorizontalAlignment="Center">
         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" x:Name="DebugLabel">DebugInfo</Label>
@@ -27,7 +27,19 @@
                    VerticalAlignment="Bottom"
                    Height="50"
                    Width="50">
-            <Rectangle Fill="#639bff"/>
+            <Rectangle Fill="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }"/>
+            <Rectangle Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
+                <Rectangle.OpacityMask>
+                    <ImageBrush x:Name="PetOuterEyesOutline" ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_outer_eyes.png">
+                    </ImageBrush>
+                </Rectangle.OpacityMask>
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="{ Binding LookDirectionX }"
+                                            Y="{ Binding LookDirectionY }"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
             <Image x:Name="PetOuterEyes" Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_outer_eyes.png">
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -57,7 +69,7 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle x:Name="PetMouth" Fill="Black">
+            <Rectangle x:Name="PetMouth" Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
                 <Rectangle.OpacityMask>
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png"></ImageBrush>
                 </Rectangle.OpacityMask>

@@ -5,11 +5,13 @@
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:engine="clr-namespace:DesktopPet.Engine"
                xmlns:ui="clr-namespace:DesktopPet.WPF.GameWindows.customControls.UI"
+               xmlns:fa="http://schemas.fontawesome.io/icons/"
+               xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
                mc:Ignorable="d"
                AllowsTransparency="True"
                Background="Transparent"
                WindowStyle="None"
-               Topmost="True"
+               Topmost="False"
                Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                WindowStartupLocation="CenterScreen"
                Title="{ Binding Title }" Height="450" Width="800">
@@ -104,6 +106,32 @@
                             Thirst="{ Binding CollectedThirstAttribute.Value, Converter={StaticResource StrToInt} }"
                             Size="30"
                             DockPanel.Dock="Top" />
+                        <Button Height="40" Width="40" DockPanel.Dock="Top" HorizontalAlignment="Right"
+                                Background="Transparent" Command="{Binding ColorPickerCommand}">
+                            <fa:ImageAwesome Icon="Eyedropper"/>
+                        </Button>
+                        <StackPanel Visibility="{Binding ShowColorPickers, Converter={StaticResource BoolToVisibilityConverter}}" DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel HorizontalAlignment="Right" Margin="20 0 20 0">
+                                <TextBlock Text="Primary Color" HorizontalAlignment="Center"></TextBlock>
+                                <colorpicker:SquarePicker x:Name="PrimaryColorPickerRing"
+                                                          SelectedColor="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColor},Mode=TwoWay }"
+                                                          Width="40" Height="40" />
+                                <colorpicker:HexColorTextBox
+                                    SelectedColor="{ Binding ElementName=PrimaryColorPickerRing, Path=SelectedColor, Mode=TwoWay }"
+                                    ShowAlpha="False" Height="40">
+                                </colorpicker:HexColorTextBox>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Margin="20 0 20 0">
+                                <TextBlock Text="Secondary Color" HorizontalAlignment="Center"></TextBlock>
+                                <colorpicker:SquarePicker x:Name="SecondaryColorPickerRing"
+                                                          SelectedColor="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColor},Mode=TwoWay }"
+                                                          Width="40" Height="40" />
+                                <colorpicker:HexColorTextBox
+                                    SelectedColor="{ Binding ElementName=SecondaryColorPickerRing, Path=SelectedColor, Mode=TwoWay }"
+                                    ShowAlpha="False" Height="40">
+                                </colorpicker:HexColorTextBox>
+                            </StackPanel>
+                        </StackPanel>
 
                         <StackPanel HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
@@ -116,14 +144,21 @@
                                        Margin="10" />
 
                             <!-- Pet Image -->
-                            <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   Height="90"
-                                   Width="90"
-                                   Source="pack://application:,,,/Assets/Sprites/Pets/Mouse.png">
-                                <Image.Effect>
-                                    <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
-                                </Image.Effect>
-                            </Image>
+                            <Grid RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                  Height="90"
+                                  Width="90">
+                                <Rectangle Width="90" Height="90"
+                                           Fill="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
+                                    <Rectangle.Effect>
+                                        <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
+                                    </Rectangle.Effect>
+                                </Rectangle>
+                                <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                       Height="90"
+                                       Width="90"
+                                       Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha.png">
+                                </Image>
+                            </Grid>
 
                             <!-- Hunger & Thirst Bars -->
                             <Border Background="{StaticResource TextBoxBackgroundBrush}"
@@ -131,7 +166,7 @@
                                     Margin="10" Padding="10">
                                 <StackPanel>
                                     <Label HorizontalAlignment="Center" Padding="0" FontSize="20" FontWeight="Bold"
-                                           Foreground="Brown">
+                                           Foreground="#ac3133">
                                         Hunger
                                     </Label>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
@@ -139,15 +174,17 @@
                                                Height="50" Width="50"
                                                Source="pack://application:,,,/Assets/Sprites/Food/apple.png"
                                                VerticalAlignment="Center" />
-                                        <ProgressBar Height="30"
-                                                     Width="250"
-                                                     Foreground="Coral"
-                                                     Background="BurlyWood"
-                                                     Value="{ Binding Path=PetHungerAttribute.Value, Converter={StaticResource StrToDouble} }" />
+                                        <Grid  Height="30"
+                                               Width="250">
+                                            <ProgressBar Foreground="#ac3133"
+                                                         Background="BurlyWood"
+                                                         Value="{ Binding Path=PetHungerAttribute.Value, Converter={StaticResource StrToDouble} }" />
+                                            <Rectangle Width="250" Height="15" Fill="Black" Opacity="0.25" VerticalAlignment="Bottom"></Rectangle>
+                                        </Grid>
                                     </StackPanel>
 
                                     <Label HorizontalAlignment="Center" Padding="0" FontSize="20" FontWeight="Bold"
-                                           Foreground="DarkBlue">
+                                           Foreground="#3a416d">
                                         Thirst
                                     </Label>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
@@ -155,11 +192,13 @@
                                                Height="50" Width="50"
                                                Source="pack://application:,,,/Assets/Sprites/Food/Waterbottle.png"
                                                VerticalAlignment="Center" />
-                                        <ProgressBar Height="30"
-                                                     Width="250"
-                                                     Foreground="Blue"
-                                                     Background="CornflowerBlue"
-                                                     Value="{ Binding Path=PetThirstAttribute.Value, Converter={StaticResource StrToDouble} }" />
+                                        <Grid Height="30"
+                                              Width="250">
+                                            <ProgressBar Foreground="#3a416d"
+                                                         Background="BurlyWood"
+                                                         Value="{ Binding Path=PetThirstAttribute.Value, Converter={StaticResource StrToDouble} }" />
+                                            <Rectangle Width="250" Height="15" Fill="Black" Opacity="0.25" VerticalAlignment="Bottom"></Rectangle>
+                                        </Grid>
                                     </StackPanel>
 
                                     <!-- Buttons -->
@@ -170,8 +209,8 @@
                                             Feed
                                         </Button>
                                         <Button Command="{ Binding ThirstCommand }"
-                                            Style="{StaticResource AccentButtonAqua}"
-                                            Margin="5" >
+                                                Style="{StaticResource AccentButtonAqua}"
+                                                Margin="5">
                                             Thirst
                                         </Button>
                                     </StackPanel>

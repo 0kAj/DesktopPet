@@ -1,12 +1,15 @@
+using ColorPicker;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Handlers;
+using DesktopPet.Handlers.Events;
 using DesktopPet.MiniGames;
 using DesktopPet.Utils;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
-public partial class GameSelectorWindowViewModel
+public partial class GameSelectorWindowViewModel : ObservableObject
 {
     private readonly PetBrain _brain;
 
@@ -20,12 +23,21 @@ public partial class GameSelectorWindowViewModel
         PetThirstAttribute = thirst;
         CollectedFoodAttribute = collectedFood;
         CollectedThirstAttribute = collectedThirst;
+        
+        PetAttributeHelper.InitPetColorAttributes(_brain.Name, out var primaryColor, out var secondaryColor);
+        PrimaryColorAttribute = primaryColor;
+        SecondaryColorAttribute = secondaryColor;
     }
 
     public PetAttribute PetHungerAttribute { get; }
     public PetAttribute PetThirstAttribute { get; }
     public PetAttribute CollectedFoodAttribute { get; }
     public PetAttribute CollectedThirstAttribute { get; }
+    public PetAttribute PrimaryColorAttribute { get; set; }
+    public PetAttribute SecondaryColorAttribute { get; set; }
+
+    [ObservableProperty]
+    private bool showColorPickers = false;
 
     public string PetName => _brain.Name;
     public string Title => "Game Selector - " + _brain.Name;
@@ -80,5 +92,11 @@ public partial class GameSelectorWindowViewModel
     {
         GameManager.Instance.StartGame("Pet Jump", _brain);
         Close();
+    }
+
+    [RelayCommand]
+    private void ColorPicker()
+    {
+        ShowColorPickers = !ShowColorPickers;
     }
 }

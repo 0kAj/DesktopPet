@@ -1,3 +1,4 @@
+using System.Windows.Media;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Data.Pet;
 
@@ -9,6 +10,8 @@ public static class PetAttributeHelper
     public const string CollectedThirstName = "collectedThirst";
     public const string PetHungerName = "hunger";
     public const string PetThirstName = "thurst";
+    public const string PrimaryColorName = "primaryColor";
+    public const string SecondaryColorName = "secondaryColor";
 
     public static void InitAttributes(string petName,
         out PetAttribute hunger,
@@ -58,5 +61,21 @@ public static class PetAttributeHelper
         // save defaults if required
         PetManager.Instance.SetAttribute(petName, hunger);
         PetManager.Instance.SetAttribute(petName, thirst);
+    }
+
+    public static void InitPetColorAttributes(string petName,
+        out PetAttribute primaryColor,
+        out PetAttribute secondaryColor)
+    {
+        var pet = PetManager.Instance.GetPet(petName)!;
+
+        primaryColor = pet.Attributes.FirstOrDefault(a => a.Name == PrimaryColorName)
+                       ?? new PetAttribute(PrimaryColorName, Colors.CornflowerBlue.ToString());
+        secondaryColor = pet.Attributes.FirstOrDefault(a => a.Name == SecondaryColorName) 
+                         ?? new PetAttribute(SecondaryColorName, Colors.DarkSlateBlue.ToString());
+        
+        // save defaults if required
+        PetManager.Instance.SetAttribute(petName, primaryColor);
+        PetManager.Instance.SetAttribute(petName, secondaryColor);
     }
 }

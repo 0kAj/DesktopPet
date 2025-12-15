@@ -15,7 +15,7 @@ public partial class PetWindow : VelocityWindow
     {
         InitializeComponent();
         // give it a brain
-        _vm = new LookingPetViewModel(this);
+        _vm = new LookingPetViewModel(this, petName);
         DataContext = _vm;
         
         _brain = new PetBrain(this, _vm) { Name = petName };

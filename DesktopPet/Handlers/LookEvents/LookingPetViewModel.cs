@@ -1,4 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using DesktopPet.Data.Attributes;
+using DesktopPet.Utils;
 
 namespace DesktopPet.Handlers.LookEvents;
 
@@ -16,6 +18,9 @@ public partial class LookingPetViewModel : ObservableObject
 
     public double VelocityX => _velocity.VelocityX;
     public double VelocityY => _velocity.VelocityY;
+    
+    public PetAttribute PrimaryColorAttribute { get; set; }
+    public PetAttribute SecondaryColorAttribute { get; set; }
 
     public double BodyShadowAngle => Math.Sign(LookDirectionX) switch
     {
@@ -24,8 +29,11 @@ public partial class LookingPetViewModel : ObservableObject
         < 0 => 0
     };
 
-    public LookingPetViewModel(IVelocity velocity)
+    public LookingPetViewModel(IVelocity velocity, string petName)
     {
         _velocity = velocity;
+        PetAttributeHelper.InitPetColorAttributes(petName, out PetAttribute primaryColor, out PetAttribute secondaryColor);
+        PrimaryColorAttribute = primaryColor;
+        SecondaryColorAttribute = secondaryColor;
     }
 }
