@@ -4,7 +4,6 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:engine="clr-namespace:DesktopPet.Engine"
-                       xmlns:converter="clr-namespace:DesktopPet.WPF.Converter"
                        mc:Ignorable="d"
                        Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                        WindowStyle="None"
@@ -22,21 +21,21 @@
     <DockPanel HorizontalAlignment="Center">
         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" x:Name="DebugLabel">DebugInfo</Label>
         <Grid x:Name="Pet"
-                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                   DockPanel.Dock="Bottom"
-                   VerticalAlignment="Bottom"
-                   Height="50"
-                   Width="50">
-            <Rectangle Fill="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }"/>
+              RenderOptions.BitmapScalingMode="NearestNeighbor"
+              DockPanel.Dock="Bottom"
+              VerticalAlignment="Bottom"
+              Height="50"
+              Width="50">
+            <Rectangle Fill="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }" />
             <Rectangle Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
                 <Rectangle.OpacityMask>
-                    <ImageBrush x:Name="PetOuterEyesOutline" ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_outer_eyes.png">
-                    </ImageBrush>
+                    <ImageBrush x:Name="PetOuterEyesOutline"
+                                ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_outer_eyes.png" />
                 </Rectangle.OpacityMask>
                 <Rectangle.RenderTransform>
                     <TransformGroup>
                         <TranslateTransform X="{ Binding LookDirectionX }"
-                                            Y="{ Binding LookDirectionY }"/>
+                                            Y="{ Binding LookDirectionY }" />
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
@@ -44,8 +43,8 @@
                 <Image.RenderTransform>
                     <TransformGroup>
                         <TranslateTransform X="{ Binding LookDirectionX }"
-                                            Y="{ Binding LookDirectionY }"/>
-                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }"/>
+                                            Y="{ Binding LookDirectionY }" />
+                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }" />
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
@@ -53,28 +52,29 @@
                 <Image.RenderTransform>
                     <TransformGroup>
                         <TranslateTransform X="{ Binding LookDirectionX, Converter={ StaticResource ScaleConverter } }"
-                                            Y="{ Binding LookDirectionY, Converter={ StaticResource ScaleConverter } }"/>
-                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }"/>
+                                            Y="{ Binding LookDirectionY, Converter={ StaticResource ScaleConverter } }" />
+                        <ScaleTransform CenterY="20" ScaleY="{ Binding EyeScaleY }" />
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
             <Rectangle x:Name="PetNose" Fill="#ac3232">
                 <Rectangle.OpacityMask>
-                    <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_nose.png"></ImageBrush>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_nose.png" />
                 </Rectangle.OpacityMask>
                 <Rectangle.RenderTransform>
                     <TransformGroup>
-                        <TranslateTransform X="{ Binding LookDirectionX }" Y="0"></TranslateTransform>
-                        <ScaleTransform CenterY="35" ScaleY="1"></ScaleTransform>
+                        <TranslateTransform X="{ Binding LookDirectionX }" Y="0" />
+                        <ScaleTransform CenterY="35" ScaleY="1" />
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle x:Name="PetMouth" Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
+            <Rectangle x:Name="PetMouth"
+                       Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
                 <Rectangle.OpacityMask>
-                    <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png"></ImageBrush>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png" />
                 </Rectangle.OpacityMask>
                 <Rectangle.RenderTransform>
-                    <TranslateTransform X="{ Binding LookDirectionX }" Y="0"></TranslateTransform>
+                    <TranslateTransform X="{ Binding LookDirectionX }" Y="0" />
                 </Rectangle.RenderTransform>
             </Rectangle>
         </Grid>

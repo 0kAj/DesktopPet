@@ -192,12 +192,12 @@
     <!-- ==============================
          Converters
     ============================== -->
-    <converter:DoubleScaleConverter x:Key="ScaleConverter"/>
-    
+    <converter:DoubleScaleConverter x:Key="ScaleConverter" />
+
     <converter:StringToIntConverter x:Key="StrToInt" />
     <converter:StringToDoubleConverter x:Key="StrToDouble" />
-    <converter:StringToColorConverter x:Key="StrToColor"/>
-    <converter:StringToColorBrushConverter x:Key="StrToColorBrush"/>
+    <converter:StringToColorConverter x:Key="StrToColor" />
+    <converter:StringToColorBrushConverter x:Key="StrToColorBrush" />
     <valueconverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
 </ResourceDictionary>

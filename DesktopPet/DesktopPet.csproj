@@ -28,26 +28,26 @@
         <Resource Include="Assets\Sprites\Games\FoodCollector.png"/>
         <None Remove="Assets\Sprites\Games\PetJump.png"/>
         <Resource Include="Assets\Sprites\Games\PetJump.png"/>
-        <None Remove="Assets\Sprites\Pets\Mouse_alpha.png" />
-        <Resource Include="Assets\Sprites\Pets\Mouse_alpha.png" />
-        <None Remove="Assets\Sprites\Pets\Mouse_alpha_eyes.png" />
-        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_eyes.png" />
-        <None Remove="Assets\Sprites\Pets\Mouse_alpha_mouth.png" />
-        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_mouth.png" />
-        <None Remove="Assets\Sprites\Pets\Mouse_alpha_nose.png" />
-        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_nose.png" />
-        <None Remove="Assets\Sprites\Pets\Mouse_alpha_inner_eyes.png" />
-        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_inner_eyes.png" />
-        <None Remove="Assets\Sprites\Pets\Mouse_alpha_outer_eyes.png" />
-        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_outer_eyes.png" />
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha.png"/>
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha.png"/>
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_eyes.png"/>
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_eyes.png"/>
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_mouth.png"/>
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_mouth.png"/>
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_nose.png"/>
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_nose.png"/>
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_inner_eyes.png"/>
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_inner_eyes.png"/>
+        <None Remove="Assets\Sprites\Pets\Mouse_alpha_outer_eyes.png"/>
+        <Resource Include="Assets\Sprites\Pets\Mouse_alpha_outer_eyes.png"/>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="ColorHelper" Version="1.8.1"/>
         <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.0"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
-        <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
-        <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.2" />
+        <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9"/>
+        <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.2"/>
         <PackageReference Include="ValueConverters" Version="3.1.22"/>
     </ItemGroup>
 

@@ -10,7 +10,7 @@ public class StringToColorBrushConverter : StringToColorConverter
         var color = base.Convert(value, targetType, parameter, culture);
         if (color is Color c)
             return new SolidColorBrush(c);
-        
+
         return new SolidColorBrush(Colors.Black);
     }
 }

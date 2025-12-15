@@ -6,7 +6,7 @@ using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers;
 
-public class PetBrain
+public class PetBrain //todo Brain rework
 {
     public enum MovementTemplate //todo YOU can do this better!!!
     {
@@ -14,10 +14,10 @@ public class PetBrain
         BasicPetController
     }
 
+    private readonly LookingPetViewModel _lookingPet;
+
     private readonly PetEventHandler _petEventHandler;
     private readonly PetMovementHandler _petMovementHandler;
-    
-    private LookingPetViewModel _lookingPet;
 
     public PetBrain(PetWindow petWindow, LookingPetViewModel lookingPetViewModel)
     {
@@ -31,7 +31,7 @@ public class PetBrain
 
     public required string Name { get; set; }
 
-    public PetWindow PetWindow { get; private set; }
+    public PetWindow PetWindow { get; } //todo is this necessary?
 
     public bool IsOnGround { get; set; }
     public bool IsOnDragging { get; set; }
@@ -45,13 +45,13 @@ public class PetBrain
         // reset AI
         _petMovementHandler.ClearStates();
         _petEventHandler.ClearStates();
-        
+
         // add universal states
         _petMovementHandler.AddState(new PetBlinkLookState(_lookingPet));
         _petMovementHandler.AddState(new PetLookToMoveDirectionState(_lookingPet));
         _petMovementHandler.AddState(new PetLookToMousePositionState(_lookingPet, PetWindow));
 
-        
+
         // Set AI
         switch (template)
         {

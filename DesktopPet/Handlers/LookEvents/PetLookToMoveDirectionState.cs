@@ -4,20 +4,20 @@ namespace DesktopPet.Handlers.LookEvents;
 
 public class PetLookToMoveDirectionState : IBehaviourState
 {
-    private LookingPetViewModel _lookingPet;
-    
-    private MultiTickAttribute<double> _lookDirectionXAttribute;
-    private MultiTickAttribute<double> _lookDirectionYAttribute;
+    private readonly MultiTickAttribute<double> _lookDirectionXAttribute;
+    private readonly MultiTickAttribute<double> _lookDirectionYAttribute;
+    private readonly LookingPetViewModel _lookingPet;
 
     public PetLookToMoveDirectionState(LookingPetViewModel lookingPet)
     {
         _lookingPet = lookingPet;
-        
+
         _lookDirectionXAttribute = new MultiTickAttribute<double>(0.1);
         _lookDirectionYAttribute = new MultiTickAttribute<double>(0.1);
     }
 
     public bool IsDone => false;
+
     public bool CanTick()
     {
         return _lookingPet.VelocityX != 0;

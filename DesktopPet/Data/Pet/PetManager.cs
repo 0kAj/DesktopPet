@@ -73,8 +73,6 @@ public class PetManager
 
     public ObservableCollection<PetAttribute> GetAttributes(string petName)
     {
-        //todo Multiple Pets:
-        // colorable pets
         if (_petCache.TryGetValue(petName, out var pet))
             return pet.Attributes;
 
