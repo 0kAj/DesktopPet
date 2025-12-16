@@ -12,7 +12,7 @@ public partial class WelcomeWindowViewModel : ObservableObject
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsErrorMessageVisible))]
     private string? _errorMessage;
 
-    [ObservableProperty] private string? _petName;
+    [ObservableProperty] private string? _petName; //todo make this good
 
     [ObservableProperty] private bool _setAsDefaultPet = true;
 

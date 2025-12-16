@@ -1,3 +1,4 @@
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopPet.Data.Attributes;
@@ -12,6 +13,7 @@ public partial class GameSelectorWindowViewModel : ObservableObject
     private readonly PetBrain _brain;
 
     [ObservableProperty] private bool showColorPickers;
+    //todo show secondary color in preview
 
     public GameSelectorWindowViewModel(PetBrain brain)
     {
@@ -26,7 +28,9 @@ public partial class GameSelectorWindowViewModel : ObservableObject
 
         PetAttributeHelper.InitPetColorAttributes(_brain.Name, out var primaryColor, out var secondaryColor);
         PrimaryColorAttribute = primaryColor;
+        PrimaryColorAttribute.PropertyChanged += (_,_) => ResetPrimaryColorCommand.NotifyCanExecuteChanged();
         SecondaryColorAttribute = secondaryColor;
+        SecondaryColorAttribute.PropertyChanged += (_, _) => ResetSecondaryColorCommand.NotifyCanExecuteChanged();
     }
 
     public PetAttribute PetHungerAttribute { get; }
@@ -95,5 +99,21 @@ public partial class GameSelectorWindowViewModel : ObservableObject
     private void ColorPicker()
     {
         ShowColorPickers = !ShowColorPickers;
+    }
+
+    private bool IsPrimaryColorNotDefaultPrimaryColor() => PrimaryColorAttribute.Value != Colors.CornflowerBlue.ToString();
+    
+    [RelayCommand(CanExecute = nameof(IsPrimaryColorNotDefaultPrimaryColor))]
+    private void ResetPrimaryColor()
+    {
+        PrimaryColorAttribute.Value = Colors.CornflowerBlue.ToString();
+    }
+    
+    private bool IsSecondaryColorNotDefaultSecondaryColor() => SecondaryColorAttribute.Value != Colors.DarkSlateBlue.ToString();
+
+    [RelayCommand(CanExecute = nameof(IsSecondaryColorNotDefaultSecondaryColor))]
+    private void ResetSecondaryColor()
+    {
+        SecondaryColorAttribute.Value = Colors.DarkSlateBlue.ToString();
     }
 }
