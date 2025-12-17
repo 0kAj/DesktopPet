@@ -13,7 +13,6 @@ public partial class GameSelectorWindowViewModel : ObservableObject
     private readonly PetBrain _brain;
 
     [ObservableProperty] private bool showColorPickers;
-    //todo show secondary color in preview
 
     public GameSelectorWindowViewModel(PetBrain brain)
     {

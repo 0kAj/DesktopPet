@@ -186,6 +186,11 @@
                                        Height="90"
                                        Width="90"
                                        Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha.png" />
+                                <Rectangle Width="90" Height="90" Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
+                                    <Rectangle.OpacityMask>
+                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png"></ImageBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
                             </Grid>
 
                             <!-- Hunger & Thirst Bars -->
