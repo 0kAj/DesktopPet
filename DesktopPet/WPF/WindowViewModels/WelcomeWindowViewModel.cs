@@ -1,43 +1,40 @@
+using System.ComponentModel.DataAnnotations;
 using System.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopPet.Background;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Data.Pet;
+using DesktopPet.WPF.Validation;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
-public partial class WelcomeWindowViewModel : ObservableObject
+public partial class WelcomeWindowViewModel : ObservableValidator
 {
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsErrorMessageVisible))]
-    private string? _errorMessage;
-
-    [ObservableProperty] private string? _petName; //todo make this good
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "PetName is required.")]
+    [MinLength(3, ErrorMessage = "PetName must be at least 3 characters long.")]
+    [UniquePetName]
+    [NotifyCanExecuteChangedFor(nameof(OkCommand))]
+    private string? _petName;
 
     [ObservableProperty] private bool _setAsDefaultPet = true;
 
-    public bool IsErrorMessageVisible => !string.IsNullOrWhiteSpace(ErrorMessage);
+    public WelcomeWindowViewModel()
+    {
+        ValidateAllProperties();
+    }
+
     public event Action? RequestClose;
     public event Action<string>? RequestOpenPetWindow;
 
-    [RelayCommand]
+    private bool HasNoErrors => !HasErrors;
+    
+    [RelayCommand(CanExecute = nameof(HasNoErrors))]
     private void Ok()
     {
         // create new Pet
-        if (string.IsNullOrWhiteSpace(PetName))
-        {
-            ErrorMessage = "Pet name cannot be empty.";
-            SystemSounds.Asterisk.Play();
-            return;
-        }
-
-        if (PetManager.Instance.GetPet(PetName) != null)
-        {
-            ErrorMessage = $"Pet name '{PetName}' already exists.";
-            SystemSounds.Asterisk.Play();
-            return;
-        }
-
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("hunger", "100"));
 

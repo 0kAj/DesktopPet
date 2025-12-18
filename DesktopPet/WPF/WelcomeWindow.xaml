@@ -53,16 +53,22 @@
                             <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="2" />
                         </Border.Effect>
                         <TextBox Background="Wheat" x:Name="NameTb" FontSize="16" BorderThickness="0"
-                                 Text="{ Binding PetName, UpdateSourceTrigger=PropertyChanged }" />
+                                 Text="{ Binding PetName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True }">
+                            <Validation.ErrorTemplate>
+                                <ControlTemplate>
+                                    <StackPanel>
+                                        <AdornedElementPlaceholder />
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   Padding="0 15 0 0"
+                                                   Text="{Binding [0].ErrorContent}"
+                                                   Foreground="Red" />
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Validation.ErrorTemplate>
+                        </TextBox>
                     </Border>
-                    <TextBlock Style="{ StaticResource ErrorTextBlock }"
-                               Padding="0 10 0 5"
-                               Text="{ Binding ErrorMessage }"
-                               Visibility="{ Binding IsErrorMessageVisible, Converter={ StaticResource BoolToVisibilityConverter } }"
-                               Foreground="Red" />
 
-
-                    <CheckBox Margin="10"
+                    <CheckBox Margin="10 30 10 10"
                               HorizontalAlignment="Center"
                               IsChecked="{ Binding SetAsDefaultPet }"
                               VerticalAlignment="Center">
@@ -73,7 +79,8 @@
                             Style="{ StaticResource AccentButtonAqua }"
                             Background="Aqua" Foreground="DarkBlue"
                             IsDefault="True"
-                            Command="{ Binding OkCommand }" />
+                            Command="{ Binding OkCommand }">
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
