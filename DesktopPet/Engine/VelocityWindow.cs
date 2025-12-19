@@ -1,5 +1,5 @@
 using System.Windows;
-using DesktopPet.Handlers.LookEvents;
+using DesktopPet.Interfaces.Window;
 
 namespace DesktopPet.Engine;
 

@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using DesktopPet.Handlers.LookEvents;
+using DesktopPet.Interfaces.Window;
 
 namespace DesktopPet.Engine;
 

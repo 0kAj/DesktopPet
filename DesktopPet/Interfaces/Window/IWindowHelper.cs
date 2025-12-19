@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace DesktopPet.Handlers.LookEvents;
+namespace DesktopPet.Interfaces.Window;
 
 public interface IWindowHelper
 {

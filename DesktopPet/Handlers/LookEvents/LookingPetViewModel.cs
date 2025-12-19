@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using DesktopPet.Data.Attributes;
+using DesktopPet.Interfaces.Window;
 using DesktopPet.Utils;
 
 namespace DesktopPet.Handlers.LookEvents;

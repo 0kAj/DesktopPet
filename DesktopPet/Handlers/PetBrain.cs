@@ -31,7 +31,45 @@ public class PetBrain //todo Brain rework
 
     public required string Name { get; set; }
 
-    public PetWindow PetWindow { get; } //todo is this necessary?
+    public PetWindow PetWindow { get; } //todo is this necessary?:
+    //################# what is it doing?? #################################
+    //# VOID KeyDown event register/unregister
+    //# VOID Ticking start/Stop
+    //# SET applying velocityY /X
+    //# VOID raise Event -> events path through
+    // RECT GetCollisionRect
+    
+    //####################### be in States ####################################################
+    //# VOID Moue up/down event register/ unregister
+    //# SET window position -> Left,Top
+    // VECTOR2 GetDPISave global mouse
+    //# VOID reset Velocity
+    //# VOID capture and release mouse
+    //# DOUBLE GET Top, Left
+    // VECTOR2 PositionVector
+    //# DOUBLE get actualheight
+    
+    // ##################### resulting Interfaces ########################
+    
+    // IWindowEvents -> EventManager Singleton -> MVVM Toolkit Messenger
+    // - EVENTS mouseUp/down keyUp/down
+    
+    // IVelocity:
+    // - Velocity GET/SET
+    
+    // IWindowPosition: -> MVVM -> X,Y,Height
+    // - position LEFT,TOP actualheight
+    
+    // ITickController:
+    // - TIMER start/Stop
+    
+    // IWindowHelper:
+    // - GetDPISave
+    // - PositionVector
+    
+    // missing :
+    // GetCollisionRect
+    
 
     public bool IsOnGround { get; set; }
     public bool IsOnDragging { get; set; }

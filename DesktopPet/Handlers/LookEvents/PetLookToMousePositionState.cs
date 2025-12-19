@@ -1,4 +1,5 @@
 using DesktopPet.Interfaces;
+using DesktopPet.Interfaces.Window;
 
 namespace DesktopPet.Handlers.LookEvents;
 
