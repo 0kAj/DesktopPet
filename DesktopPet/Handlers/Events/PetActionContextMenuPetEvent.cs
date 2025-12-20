@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using DesktopPet.Data.Pet;
 using DesktopPet.Interfaces;
 using DesktopPet.MiniGames;
+using FontAwesome.WPF;
+using Microsoft.Extensions.DependencyInjection;
 using GameSelectorWindow = DesktopPet.WPF.GameSelectorWindow;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
@@ -27,59 +29,67 @@ public class PetActionContextMenuPetEvent : IPetEvent
         _petWindow.Pet.ContextMenu = null;
     }
 
-    private ContextMenu CreatePetActionContextMenu()
+    private ContextMenu CreatePetActionContextMenu() //todo as Binding?
     {
         var cm = new ContextMenu();
 
-        var playMenuItem = new MenuItem();
-        playMenuItem.Header = "Play";
+
         var gameSelectorMenuItem = new MenuItem();
         gameSelectorMenuItem.Header = "Game Selector"; // Game Selector
-        gameSelectorMenuItem.Click += (_, _) => new GameSelectorWindow(_brain).Show();
-        playMenuItem.Items.Add(gameSelectorMenuItem);
-        playMenuItem.Items.Add(new Separator()); // ------------
+        gameSelectorMenuItem.Icon = 
+        gameSelectorMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
+        gameSelectorMenuItem.Click += (_, _) => App.Host.Services.GetRequiredService<GameSelectorWindow>().Show();
+        gameSelectorMenuItem.Items.Add(new Separator()); // ------------
 
         foreach (var game in GameManager.Instance.GetRegisteredGames())
         {
             var gameTypeMenuItem = new MenuItem();
             gameTypeMenuItem.Header = game;
+            gameTypeMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
             gameTypeMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
-            playMenuItem.Items.Add(gameTypeMenuItem);
+            gameSelectorMenuItem.Items.Add(gameTypeMenuItem);
         }
 
-        playMenuItem.Items.Add(new Separator()); // ------------
-        var recentGamesMenuItem = new MenuItem();
-        recentGamesMenuItem.Header = "Recent Games"; // Recent Games
-
-        foreach (var game in PetManager.Instance.GetLastPlayedGames(_brain.Name))
+        // add last played Games if required
+        var lastPlayedGames = PetManager.Instance.GetLastPlayedGames(_brain.Name);
+        if (lastPlayedGames.Count > 0)
         {
-            var recentGameMenuItem = new MenuItem();
-            recentGameMenuItem.Header = game;
-            recentGameMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
-            recentGamesMenuItem.Items.Add(recentGameMenuItem);
+            var recentGamesMenuItem = new MenuItem();
+            recentGamesMenuItem.Header = "Recent Games"; // Recent Games
+            recentGamesMenuItem.Icon = CreateIcon(FontAwesomeIcon.ClockOutline);
+
+            foreach (var game in lastPlayedGames)
+            {
+                var recentGameMenuItem = new MenuItem();
+                recentGameMenuItem.Header = game;
+                recentGameMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
+                recentGameMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
+                recentGamesMenuItem.Items.Add(recentGameMenuItem);
+            }
+
+            gameSelectorMenuItem.Items.Add(recentGamesMenuItem);
         }
 
-        playMenuItem.Items.Add(recentGamesMenuItem);
-        cm.Items.Add(playMenuItem);
-
-        var feedMenuItem = new MenuItem();
-        feedMenuItem.Header = "Feed";
-        feedMenuItem.Click += (_, _) => GameManager.Instance.StartGame("Food Collector", _brain);
-        cm.Items.Add(feedMenuItem);
-        cm.Items.Add(new Separator());
-
-        var backMenuItem = new MenuItem();
-        backMenuItem.Header = "Back";
-        backMenuItem.Click += (_, _) => _petWindow.Pet.ContextMenu!.IsOpen = false;
-        cm.Items.Add(backMenuItem);
+        cm.Items.Add(gameSelectorMenuItem);
 
         cm.Items.Add(new Separator()); // -----------------
 
         var closeMenuItem = new MenuItem();
-        closeMenuItem.Header = "Close";
+        closeMenuItem.Header = "Close DesktopPet";
+        closeMenuItem.Icon = CreateIcon(FontAwesomeIcon.Close);
         closeMenuItem.Click += (_, _) => Application.Current.Shutdown();
         cm.Items.Add(closeMenuItem);
 
         return cm;
+    }
+
+    private FontAwesome.WPF.FontAwesome CreateIcon(FontAwesomeIcon icon)
+    {
+        return new FontAwesome.WPF.FontAwesome
+        {
+            Icon = icon,
+            Width = 16,
+            Height = 16
+        };
     }
 }
