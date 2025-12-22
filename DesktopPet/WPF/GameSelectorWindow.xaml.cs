@@ -6,11 +6,11 @@ namespace DesktopPet.WPF;
 
 public partial class GameSelectorWindow : Window
 {
-    public GameSelectorWindow(PetBrain petBrain)
+    public GameSelectorWindow(GameSelectorWindowViewModel vm)
     {
         InitializeComponent();
 
-        var vm = new GameSelectorWindowViewModel(petBrain);
+        // var vm = new GameSelectorWindowViewModel(petBrain);
         vm.RequestClose += Close;
         DataContext = vm;
 

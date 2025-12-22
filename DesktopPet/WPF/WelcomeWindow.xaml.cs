@@ -1,13 +1,13 @@
 using DesktopPet.WPF.WindowViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Window = DesktopPet.Engine.Window;
 
 namespace DesktopPet.WPF;
 
 public partial class WelcomeWindow : Window
 {
-    public WelcomeWindow()
+    public WelcomeWindow(WelcomeWindowViewModel vm)
     {
-        var vm = new WelcomeWindowViewModel();
         DataContext = vm;
         vm.RequestClose += Close;
         vm.RequestOpenPetWindow += ShowPetWindow;
@@ -17,6 +17,7 @@ public partial class WelcomeWindow : Window
 
     private void ShowPetWindow(string petName)
     {
-        new PetWindow(petName).Show();
+        var eventManager = App.Host.Services.GetRequiredService<PetEventManager>();
+        new PetWindow(eventManager, petName).Show();
     }
 }

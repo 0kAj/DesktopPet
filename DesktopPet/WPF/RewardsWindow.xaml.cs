@@ -5,11 +5,10 @@ namespace DesktopPet.WPF;
 
 public partial class RewardsWindow : Window
 {
-    public RewardsWindow(int foodScore, int thirstScore)
+    public RewardsWindow(RewardsWindowViewModel vm)
     {
         InitializeComponent();
 
-        var vm = new RewardsWindowViewModel(foodScore, thirstScore);
         DataContext = vm;
         vm.RequestClose += Close;
     }

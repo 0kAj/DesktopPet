@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using DesktopPet.Interfaces;
+using DesktopPet.WPF;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.MovementStates;
@@ -12,14 +13,19 @@ public class DragDropMovementState : IBehaviourState
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
 
-    public DragDropMovementState(PetBrain petBrain)
+    private PetEventManager _eventManager;
+
+    public DragDropMovementState(PetBrain petBrain, PetEventManager eventManager)
     {
         _brain = petBrain;
+        _eventManager = eventManager;
+
         _petWindow = petBrain.PetWindow;
         // MouseDown="Pet_OnMouseDown"
         // MouseUp="Pet_OnMouseUp"
-        _petWindow.MouseDown += Pet_OnMouseDown;
-        _petWindow.MouseUp += Pet_OnMouseUp;
+
+        _eventManager.MouseDown += Pet_OnMouseDown;
+        _eventManager.MouseUp += Pet_OnMouseUp;
     }
 
     public bool IsDone => false; // always draggable
@@ -48,8 +54,8 @@ public class DragDropMovementState : IBehaviourState
 
     public void UnRegister()
     {
-        _petWindow.MouseDown -= Pet_OnMouseDown;
-        _petWindow.MouseUp -= Pet_OnMouseUp;
+        _eventManager.MouseDown -= Pet_OnMouseDown;
+        _eventManager.MouseUp -= Pet_OnMouseUp;
     }
 
 
@@ -65,7 +71,8 @@ public class DragDropMovementState : IBehaviourState
         _dragStartPos = _petWindow.GetDpiSaveGlobalMousePos();
         _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
         // _petWindow.debugLabel.Content = "Mouse Down";
-        _petWindow.CaptureMouse();
+        // _petWindow.CaptureMouse();
+        _eventManager.OnCaptureMouse();
     }
 
     private void Pet_OnMouseUp(object sender, MouseButtonEventArgs e)
@@ -75,6 +82,7 @@ public class DragDropMovementState : IBehaviourState
         // drag end
         _brain.IsOnDragging = false;
         // _petWindow.debugLabel.Content = "Mouse Up";
-        _petWindow.ReleaseMouseCapture();
+        // _petWindow.ReleaseMouseCapture();
+        _eventManager.OnReleaseMouseCapture();
     }
 }

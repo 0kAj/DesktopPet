@@ -9,27 +9,31 @@ public partial class PetWindow : VelocityWindow
 {
     private readonly PetBrain _brain;
 
-    private readonly LookingPetViewModel _vm;
+    private readonly PetEventManager _eventManager;
 
-    public PetWindow(string petName)
+    public PetWindow(PetEventManager eventManager, string petName)
     {
         InitializeComponent();
+        _eventManager = eventManager;
         // give it a brain
-        _vm = new LookingPetViewModel(this, petName);
-        DataContext = _vm;
+        var vm = new LookingPetViewModel(this, petName);
+        DataContext = vm;
 
-        _brain = new PetBrain(this, _vm) { Name = petName };
+        _brain = new PetBrain(this, vm) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
 
         DebugLabel.Content = _brain.Name;
 
         ContentRendered += (_, _) => StartTicking();
-
-        // GameManager.Instance.StartGame("Pet Jump", _brain);
-        // GameManager.Instance.StartGame("Food Collector", _brain);
-        // new GameSelectorWindow(_brain).Show();
+        KeyDown += _eventManager.OnKeyDown;
+        MouseDown += _eventManager.OnMouseDown;
+        MouseUp += _eventManager.OnMouseUp;
+        _eventManager.Pause += StopTicking;
+        _eventManager.Resume += StartTicking;
+        _eventManager.CaptureMouse += () => CaptureMouse();
+        _eventManager.ReleaseMouseCapture += ReleaseMouseCapture;
     }
-
+    
     protected override void Tick()
     {
         base.Tick();

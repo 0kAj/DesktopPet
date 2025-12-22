@@ -47,6 +47,7 @@
         <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.0"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
         <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.2"/>
         <PackageReference Include="ValueConverters" Version="3.1.22"/>
     </ItemGroup>

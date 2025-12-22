@@ -5,6 +5,7 @@ using System.Windows.Media;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Handlers;
 using DesktopPet.Utils;
+using DesktopPet.WPF;
 using PauseMenu = DesktopPet.WPF.GameWindows.customControls.UI.PauseMenu;
 
 namespace DesktopPet.Engine;
@@ -17,12 +18,15 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     private bool _isPaused;
 
     private PauseMenu? _pauseMenu;
+    
+    protected readonly PetEventManager EventManager;
 
-    protected MiniGameWindow(PetBrain brain)
+    protected MiniGameWindow(PetBrain brain, PetEventManager eventManager)
     {
         Brain = brain;
-        Brain.PetWindow.KeyDown += TogglePauseMenu;
-
+        EventManager = eventManager;
+        eventManager.KeyDown += TogglePauseMenu;
+        
         Loaded += (_, _) =>
         {
             // create FPS-display
@@ -59,6 +63,9 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         CollectedThirstAttribute = collectedThirst;
 
         DataContext = this;
+        
+        EventManager.Pause += Pause;
+        EventManager.Resume += Resume;
     }
 
     public abstract string GameName { get; }
@@ -84,7 +91,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
 
     protected virtual void End()
     {
-        Brain.PetWindow.KeyDown -= TogglePauseMenu;
+       
     }
 
     private void TogglePauseMenu(object sender, KeyEventArgs e)
@@ -104,11 +111,21 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         _fpsDisplay.Content = 1000f / delta;
     }
 
+    private void Pause()
+    {
+        _isPaused = true;
+        StopTicking();
+    }
+
+    private void Resume()
+    {
+        _isPaused = false;
+        StartTicking();
+    }
+
     private void ShowPauseMenu()
     {
-        StopTicking();
-        Brain.PetWindow.StopTicking();
-        _isPaused = true;
+        EventManager.OnPause();
 
         if (_pauseMenu == null)
         {
@@ -116,7 +133,8 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
             _pauseMenu.ResumeClicked += HidePauseMenu;
             _pauseMenu.LeaveClicked += () =>
             {
-                Brain.PetWindow.StartTicking();
+                EventManager.Resume -= Resume;
+                EventManager.OnResume();
                 End();
             };
             MiniGameUiCanvas.Children.Add(_pauseMenu);
@@ -134,8 +152,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     {
         if (_pauseMenu != null)
             _pauseMenu.Visibility = Visibility.Collapsed;
-        StartTicking();
-        Brain.PetWindow.StartTicking();
-        _isPaused = false;
+        
+        EventManager.OnResume();
     }
 }

@@ -1,8 +1,10 @@
 using System.Windows.Controls;
 using DesktopPet.Attribute;
 using DesktopPet.Engine;
+using DesktopPet.Factory;
 using DesktopPet.Handlers;
 using DesktopPet.WPF.WindowViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DesktopPet.WPF.GameWindows;
 
@@ -11,7 +13,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
 {
     private readonly FoodCollectorViewModel _vm;
 
-    public FoodCollectorMiniGameWindow(PetBrain petBrain) : base(petBrain)
+    public FoodCollectorMiniGameWindow(PetBrain petBrain, PetEventManager eventManager) : base(petBrain, eventManager)
     {
         InitializeComponent();
         SizingHelper.FitToScreen(this);
@@ -24,7 +26,7 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         Loaded += (_, _) => _vm.SetCanvasSize(GameCanvas.ActualWidth, GameCanvas.ActualHeight);
 
         // route all key events to petwindow
-        KeyDown += (_, args) => Brain.PetWindow.RaiseEvent(args);
+        KeyDown += EventManager.OnKeyDown;
 
         SetDelta(20);
 
@@ -56,7 +58,10 @@ public partial class FoodCollectorMiniGameWindow : MiniGameWindow
         CollectedFood += _vm.FoodScore;
         CollectedThirst += _vm.ThirstScore;
         // show collected score
-        new RewardsWindow(_vm.FoodScore, _vm.ThirstScore).Show();
+        // new RewardsWindow(_vm.FoodScore, _vm.ThirstScore).Show();
+        var factory = App.Host.Services.GetRequiredService<IRewardsWindowFactory>();
+        factory.Create(_vm.FoodScore, _vm.ThirstScore).Show();
+
         Close();
     }
 

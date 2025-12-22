@@ -7,12 +7,6 @@ namespace DesktopPet.MiniGames;
 
 public class GameManager
 {
-    private GameManager()
-    {
-    }
-
-    public static GameManager Instance { get; } = new();
-
     public void StartGame(string name, PetBrain petBrain)
     {
         var game = MiniGameRegistry.Create(name, petBrain);

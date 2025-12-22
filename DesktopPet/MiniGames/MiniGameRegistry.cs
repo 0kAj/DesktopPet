@@ -2,22 +2,27 @@ using System.Reflection;
 using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Handlers;
+using DesktopPet.WPF;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DesktopPet.MiniGames;
 
 public static class MiniGameRegistry
 {
-    private static readonly Dictionary<string, Func<PetBrain, MiniGameWindow>> Games = new();
+    private static readonly Dictionary<string, Func<PetBrain, PetEventManager, MiniGameWindow>> Games = new();
 
+    private static readonly PetEventManager _eventManager;
+    
     // be static to get called when the Application starts
     static MiniGameRegistry()
     {
+        _eventManager = App.Host.Services.GetRequiredService<PetEventManager>();
         RegisterAllGamesFromAssembly();
     }
 
     public static IEnumerable<string> GameNames => Games.Keys;
 
-    public static void Register(string name, Func<PetBrain, MiniGameWindow> creator)
+    public static void Register(string name, Func<PetBrain, PetEventManager, MiniGameWindow> creator)
     {
         Games[name] = creator;
     }
@@ -26,7 +31,7 @@ public static class MiniGameRegistry
     {
         if (!Games.ContainsKey(name)) return null;
         var game = Games[name];
-        return game(brain);
+        return game(brain, _eventManager);
     }
 
     private static void RegisterAllGamesFromAssembly()
@@ -40,13 +45,13 @@ public static class MiniGameRegistry
             {
                 // register minigame to Assembly
                 // constructor minigame(petbrain)
-                var gameConstructor = type.GetConstructor(new[] { typeof(PetBrain) });
+                var gameConstructor = type.GetConstructor(new[] { typeof(PetBrain),  typeof(PetEventManager) });
 
                 // Game name from attribute MiniGame["dgtuguohjb"]
                 var gameName = type.GetCustomAttribute<MiniGameAttribute>()!.GameName;
 
                 // register gamename  &&  save costructor(petBrain) with petBrain as func param
-                Register(gameName, petBrain => (MiniGameWindow)gameConstructor!.Invoke([petBrain]));
+                Register(gameName, (petBrain, eventManager) => (MiniGameWindow)gameConstructor!.Invoke([petBrain, eventManager]));
             }
     }
 }

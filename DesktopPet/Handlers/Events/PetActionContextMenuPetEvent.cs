@@ -31,6 +31,8 @@ public class PetActionContextMenuPetEvent : IPetEvent
 
     private ContextMenu CreatePetActionContextMenu() //todo as Binding?
     {
+        var gameManager = App.Host.Services.GetRequiredService<GameManager>();
+        
         var cm = new ContextMenu();
 
 
@@ -38,15 +40,14 @@ public class PetActionContextMenuPetEvent : IPetEvent
         gameSelectorMenuItem.Header = "Game Selector"; // Game Selector
         gameSelectorMenuItem.Icon = 
         gameSelectorMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
-        gameSelectorMenuItem.Click += (_, _) => App.Host.Services.GetRequiredService<GameSelectorWindow>().Show();
-        gameSelectorMenuItem.Items.Add(new Separator()); // ------------
+        // gameSelectorMenuItem.Click += (_, _) => App.Host.Services.GetRequiredService<GameSelectorWindow>().Show();
 
-        foreach (var game in GameManager.Instance.GetRegisteredGames())
+        foreach (var game in gameManager.GetRegisteredGames())
         {
             var gameTypeMenuItem = new MenuItem();
             gameTypeMenuItem.Header = game;
             gameTypeMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
-            gameTypeMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
+            gameTypeMenuItem.Click += (_, _) => gameManager.StartGame(game, _brain);
             gameSelectorMenuItem.Items.Add(gameTypeMenuItem);
         }
 
@@ -54,6 +55,7 @@ public class PetActionContextMenuPetEvent : IPetEvent
         var lastPlayedGames = PetManager.Instance.GetLastPlayedGames(_brain.Name);
         if (lastPlayedGames.Count > 0)
         {
+            gameSelectorMenuItem.Items.Add(new Separator()); // ------------
             var recentGamesMenuItem = new MenuItem();
             recentGamesMenuItem.Header = "Recent Games"; // Recent Games
             recentGamesMenuItem.Icon = CreateIcon(FontAwesomeIcon.ClockOutline);
@@ -63,7 +65,7 @@ public class PetActionContextMenuPetEvent : IPetEvent
                 var recentGameMenuItem = new MenuItem();
                 recentGameMenuItem.Header = game;
                 recentGameMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
-                recentGameMenuItem.Click += (_, _) => GameManager.Instance.StartGame(game, _brain);
+                recentGameMenuItem.Click += (_, _) => gameManager.StartGame(game, _brain);
                 recentGamesMenuItem.Items.Add(recentGameMenuItem);
             }
 

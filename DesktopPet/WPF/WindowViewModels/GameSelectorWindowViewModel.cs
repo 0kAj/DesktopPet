@@ -5,6 +5,7 @@ using DesktopPet.Data.Attributes;
 using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 using DesktopPet.Utils;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
@@ -83,16 +84,18 @@ public partial class GameSelectorWindowViewModel : ObservableObject
     [RelayCommand]
     private void FoodCollector()
     {
-        GameManager.Instance.StartGame("Food Collector", _brain);
+        GameManager.StartGame("Food Collector", _brain);
         Close();
     }
 
     [RelayCommand]
     private void PetJump()
     {
-        GameManager.Instance.StartGame("Pet Jump", _brain);
+        GameManager.StartGame("Pet Jump", _brain);
         Close();
     }
+    
+    private GameManager GameManager => App.Host.Services.GetRequiredService<GameManager>();
 
     [RelayCommand]
     private void ColorPicker()

@@ -1,13 +1,14 @@
 using CommunityToolkit.Mvvm.Input;
+using DesktopPet.MiniGames;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
 public partial class RewardsWindowViewModel
 {
-    public RewardsWindowViewModel(int foodScore, int thirstScore)
+    public RewardsWindowViewModel(RewardsData data)
     {
-        FoodScore = foodScore;
-        ThirstScore = thirstScore;
+        FoodScore = data.FoodScore;
+        ThirstScore = data.ThirstScore;
     }
 
     public int FoodScore { get; }
