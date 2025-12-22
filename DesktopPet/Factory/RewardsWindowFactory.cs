@@ -8,7 +8,7 @@ namespace DesktopPet.Factory;
 public class RewardsWindowFactory : IRewardsWindowFactory
 {
     private readonly IServiceProvider _serviceProvider;
-    
+
     public RewardsWindowFactory(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -16,14 +16,15 @@ public class RewardsWindowFactory : IRewardsWindowFactory
 
     public RewardsWindow Create(int foodScore, int thirstScore)
     {
-        var data = new RewardsData()
+        var data = new RewardsData
         {
             FoodScore = foodScore,
             ThirstScore = thirstScore
         };
-        
-        var window = ActivatorUtilities.CreateInstance<RewardsWindow>(_serviceProvider, new RewardsWindowViewModel(data));
-        
+
+        var window =
+            ActivatorUtilities.CreateInstance<RewardsWindow>(_serviceProvider, new RewardsWindowViewModel(data));
+
         return window;
     }
 }

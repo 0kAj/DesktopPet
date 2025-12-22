@@ -10,6 +10,9 @@ namespace DesktopPet.Handlers.LookEvents;
 
 public partial class PetViewModel : VelocityGameObject
 {
+    private readonly PetBrain _brain;
+
+    private readonly PetEventManager _eventManager;
     [ObservableProperty] private double _eyeScaleX;
     [ObservableProperty] private double _eyeScaleY;
 
@@ -17,17 +20,11 @@ public partial class PetViewModel : VelocityGameObject
     private double _lookDirectionX;
 
     [ObservableProperty] private double _lookDirectionY;
-    
-    private readonly PetBrain _brain;
-    
-    private readonly PetEventManager _eventManager;
-    
-    [ObservableProperty]
-    private string _petName;
-    
-    [ObservableProperty]
-    private ContextMenu _petContextMenu;
-    
+
+    [ObservableProperty] private ContextMenu _petContextMenu;
+
+    [ObservableProperty] private string _petName;
+
     public PetViewModel(PetEventManager eventManager, string petName)
     {
         PetName = petName;
@@ -35,23 +32,13 @@ public partial class PetViewModel : VelocityGameObject
         PetAttributeHelper.InitPetColorAttributes(petName, out var primaryColor, out var secondaryColor);
         PrimaryColorAttribute = primaryColor;
         SecondaryColorAttribute = secondaryColor;
-        
+
         // give it a brain
         _brain = new PetBrain(this) { Name = petName };
         _brain.InitFromMovementTemplate(PetBrain.MovementTemplate.DefaultPet);
-        
+
         _eventManager.Pause += StopTicking;
         _eventManager.Resume += StartTicking;
-    }
-
-    public void Init()
-    {
-        WindowWidth = 150;
-        WindowHeight = 100;
-        ObjectWidth = 50;
-        ObjectHeight = 50;
-        Left = -WindowWidth;
-        Top = SystemParameters.WorkArea.Bottom - CollisionRect.Height - (CollisionRect.Top - Top);
     }
 
     public PetAttribute PrimaryColorAttribute { get; set; }
@@ -63,6 +50,16 @@ public partial class PetViewModel : VelocityGameObject
         0 => 5,
         < 0 => 0
     };
+
+    public void Init()
+    {
+        WindowWidth = 150;
+        WindowHeight = 100;
+        ObjectWidth = 50;
+        ObjectHeight = 50;
+        Left = -WindowWidth;
+        Top = SystemParameters.WorkArea.Bottom - CollisionRect.Height - (CollisionRect.Top - Top);
+    }
 
     protected override void Tick()
     {

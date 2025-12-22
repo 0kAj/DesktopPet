@@ -53,7 +53,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Game Selection -->
-                    <ScrollViewer Grid.Column="0" 
+                    <ScrollViewer Grid.Column="0"
                                   MaxWidth="1110" Width="700"
                                   MaxHeight="750" Height="750">
                         <WrapPanel Margin="20" ScrollViewer.CanContentScroll="True"
@@ -141,8 +141,9 @@
                                     <colorpicker:HexColorTextBox
                                         SelectedColor="{ Binding ElementName=PrimaryColorPickerRing, Path=SelectedColor, Mode=TwoWay }"
                                         ShowAlpha="False" Height="40" />
-                                    <Button Margin="5 0 0 0" VerticalAlignment="Center" Command="{Binding ResetPrimaryColorCommand}">
-                                        <fa:ImageAwesome Width="20" Height="20" Icon="RotateLeft"></fa:ImageAwesome>
+                                    <Button Margin="5 0 0 0" VerticalAlignment="Center"
+                                            Command="{Binding ResetPrimaryColorCommand}">
+                                        <fa:ImageAwesome Width="20" Height="20" Icon="RotateLeft" />
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
@@ -155,8 +156,9 @@
                                     <colorpicker:HexColorTextBox
                                         SelectedColor="{ Binding ElementName=SecondaryColorPickerRing, Path=SelectedColor, Mode=TwoWay }"
                                         ShowAlpha="False" Height="40" />
-                                    <Button Margin="5 0 0 0" VerticalAlignment="Center" Command="{Binding ResetSecondaryColorCommand}">
-                                        <fa:ImageAwesome Width="20" Height="20" Icon="RotateLeft"></fa:ImageAwesome>
+                                    <Button Margin="5 0 0 0" VerticalAlignment="Center"
+                                            Command="{Binding ResetSecondaryColorCommand}">
+                                        <fa:ImageAwesome Width="20" Height="20" Icon="RotateLeft" />
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
@@ -186,9 +188,11 @@
                                        Height="90"
                                        Width="90"
                                        Source="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha.png" />
-                                <Rectangle Width="90" Height="90" Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
+                                <Rectangle Width="90" Height="90"
+                                           Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
                                     <Rectangle.OpacityMask>
-                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png"></ImageBrush>
+                                        <ImageBrush
+                                            ImageSource="pack://application:,,,/Assets/Sprites/Pets/Mouse_alpha_mouth.png" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Grid>

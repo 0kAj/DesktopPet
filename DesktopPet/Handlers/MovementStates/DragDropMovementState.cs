@@ -2,7 +2,6 @@ using System.Windows;
 using System.Windows.Input;
 using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
-using DesktopPet.Utils;
 using DesktopPet.WPF;
 
 namespace DesktopPet.Handlers.MovementStates;
@@ -10,11 +9,11 @@ namespace DesktopPet.Handlers.MovementStates;
 public class DragDropMovementState : IBehaviourState
 {
     private readonly PetBrain _brain;
+
+    private readonly PetEventManager _eventManager;
     private readonly PetViewModel _petViewModel;
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
-
-    private PetEventManager _eventManager;
 
     public DragDropMovementState(PetBrain petBrain, PetEventManager eventManager)
     {

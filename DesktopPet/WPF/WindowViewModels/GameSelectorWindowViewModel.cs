@@ -13,7 +13,7 @@ public partial class GameSelectorWindowViewModel : ObservableObject
 {
     private readonly PetBrain _brain;
 
-    [ObservableProperty] private bool showColorPickers;
+    [ObservableProperty] private bool _showColorPickers;
 
     public GameSelectorWindowViewModel(PetBrain brain)
     {
@@ -28,7 +28,7 @@ public partial class GameSelectorWindowViewModel : ObservableObject
 
         PetAttributeHelper.InitPetColorAttributes(_brain.Name, out var primaryColor, out var secondaryColor);
         PrimaryColorAttribute = primaryColor;
-        PrimaryColorAttribute.PropertyChanged += (_,_) => ResetPrimaryColorCommand.NotifyCanExecuteChanged();
+        PrimaryColorAttribute.PropertyChanged += (_, _) => ResetPrimaryColorCommand.NotifyCanExecuteChanged();
         SecondaryColorAttribute = secondaryColor;
         SecondaryColorAttribute.PropertyChanged += (_, _) => ResetSecondaryColorCommand.NotifyCanExecuteChanged();
     }
@@ -42,6 +42,8 @@ public partial class GameSelectorWindowViewModel : ObservableObject
 
     public string PetName => _brain.Name;
     public string Title => "Game Selector - " + _brain.Name;
+
+    private GameManager GameManager => App.Host.Services.GetRequiredService<GameManager>();
 
     public event Action? RequestClose;
 
@@ -94,8 +96,6 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         GameManager.StartGame("Pet Jump", _brain);
         Close();
     }
-    
-    private GameManager GameManager => App.Host.Services.GetRequiredService<GameManager>();
 
     [RelayCommand]
     private void ColorPicker()
@@ -103,15 +103,21 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         ShowColorPickers = !ShowColorPickers;
     }
 
-    private bool IsPrimaryColorNotDefaultPrimaryColor() => PrimaryColorAttribute.Value != Colors.CornflowerBlue.ToString();
-    
+    private bool IsPrimaryColorNotDefaultPrimaryColor()
+    {
+        return PrimaryColorAttribute.Value != Colors.CornflowerBlue.ToString();
+    }
+
     [RelayCommand(CanExecute = nameof(IsPrimaryColorNotDefaultPrimaryColor))]
     private void ResetPrimaryColor()
     {
         PrimaryColorAttribute.Value = Colors.CornflowerBlue.ToString();
     }
-    
-    private bool IsSecondaryColorNotDefaultSecondaryColor() => SecondaryColorAttribute.Value != Colors.DarkSlateBlue.ToString();
+
+    private bool IsSecondaryColorNotDefaultSecondaryColor()
+    {
+        return SecondaryColorAttribute.Value != Colors.DarkSlateBlue.ToString();
+    }
 
     [RelayCommand(CanExecute = nameof(IsSecondaryColorNotDefaultSecondaryColor))]
     private void ResetSecondaryColor()

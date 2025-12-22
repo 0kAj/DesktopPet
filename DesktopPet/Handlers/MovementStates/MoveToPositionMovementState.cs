@@ -1,7 +1,6 @@
 using System.Windows;
 using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
-using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.MovementStates;
 
@@ -55,7 +54,8 @@ public class MoveToPositionMovementState : IBehaviourState
     private Vector GetTargetPosition()
     {
         // target y = taskbar y
-        var targetY = SystemParameters.WorkArea.Bottom - _petViewModel.CollisionRect.Height - (_petViewModel.CollisionRect.Top - _petViewModel.Top);
+        var targetY = SystemParameters.WorkArea.Bottom - _petViewModel.CollisionRect.Height -
+                      (_petViewModel.CollisionRect.Top - _petViewModel.Top);
         // var targetY = SystemParameters.WorkArea.Bottom - _petViewModel.CollisionRect.Height - _petViewModel.CollisionRect.Top;
 
         // target x = CENTER, LEFT, RIGHT

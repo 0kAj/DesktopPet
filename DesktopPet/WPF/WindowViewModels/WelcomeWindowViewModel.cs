@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopPet.Background;
@@ -26,11 +25,11 @@ public partial class WelcomeWindowViewModel : ObservableValidator
         ValidateAllProperties();
     }
 
+    private bool HasNoErrors => !HasErrors;
+
     public event Action? RequestClose;
     public event Action<string>? RequestOpenPetWindow;
 
-    private bool HasNoErrors => !HasErrors;
-    
     [RelayCommand(CanExecute = nameof(HasNoErrors))]
     private void Ok()
     {

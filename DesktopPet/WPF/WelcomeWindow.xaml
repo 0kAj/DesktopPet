@@ -79,8 +79,7 @@
                             Style="{ StaticResource AccentButtonAqua }"
                             Background="Aqua" Foreground="DarkBlue"
                             IsDefault="True"
-                            Command="{ Binding OkCommand }">
-                    </Button>
+                            Command="{ Binding OkCommand }" />
                 </StackPanel>
             </Grid>
         </Border>

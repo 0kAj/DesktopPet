@@ -11,6 +11,6 @@ public class UniquePetName : ValidationAttribute
             return ValidationResult.Success;
         return PetManager.Instance.GetPet(petName) != null
             ? new ValidationResult($"Pet name '{petName}' already exists.")
-            :  ValidationResult.Success;
+            : ValidationResult.Success;
     }
 }

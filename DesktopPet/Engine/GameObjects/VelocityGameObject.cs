@@ -7,6 +7,12 @@ public abstract class VelocityGameObject : HighPrecisionTickingGameObject
     public double VelocityX { get; set; }
     public double VelocityY { get; set; }
 
+    public Func<Rect>? GetCollisionRect { get; set; }
+    public Rect CollisionRect => GetCollisionRect?.Invoke() ?? new Rect(Left, Top, WindowWidth, WindowHeight);
+
+    public Func<Vector>? GetCollisionPositionVector { get; set; }
+    public Vector CollisionPositionVector => GetCollisionPositionVector?.Invoke() ?? new Vector(Left, Top);
+
     protected override void Tick()
     {
         Top += VelocityY;
@@ -42,12 +48,6 @@ public abstract class VelocityGameObject : HighPrecisionTickingGameObject
         }
     }
 
-    public Func<Rect>? GetCollisionRect { get; set; }
-    public Rect CollisionRect => GetCollisionRect?.Invoke() ?? new Rect(Left, Top, WindowWidth, WindowHeight);
-
-    public Func<Vector>? GetCollisionPositionVector { get; set; }
-    public Vector CollisionPositionVector => GetCollisionPositionVector?.Invoke() ?? new Vector(Left, Top);
-    
 
     public void ResetVelocity()
     {

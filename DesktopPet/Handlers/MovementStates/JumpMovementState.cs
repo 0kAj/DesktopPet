@@ -1,6 +1,5 @@
 using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
-using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.MovementStates;
 

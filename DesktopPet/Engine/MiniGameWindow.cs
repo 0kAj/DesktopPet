@@ -14,19 +14,19 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
 {
     protected readonly PetBrain Brain;
 
+    protected readonly PetEventManager EventManager;
+
     private Label? _fpsDisplay;
     private bool _isPaused;
 
     private PauseMenu? _pauseMenu;
-    
-    protected readonly PetEventManager EventManager;
 
     protected MiniGameWindow(PetBrain brain, PetEventManager eventManager)
     {
         Brain = brain;
         EventManager = eventManager;
         eventManager.KeyDown += TogglePauseMenu;
-        
+
         Loaded += (_, _) =>
         {
             // create FPS-display
@@ -63,7 +63,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
         CollectedThirstAttribute = collectedThirst;
 
         DataContext = this;
-        
+
         EventManager.Pause += Pause;
         EventManager.Resume += Resume;
     }
@@ -91,7 +91,6 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
 
     protected virtual void End()
     {
-       
     }
 
     private void TogglePauseMenu(object sender, KeyEventArgs e)
@@ -152,7 +151,7 @@ public abstract class MiniGameWindow : HighPrecisionTickingWindow
     {
         if (_pauseMenu != null)
             _pauseMenu.Visibility = Visibility.Collapsed;
-        
+
         EventManager.OnResume();
     }
 }

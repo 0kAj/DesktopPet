@@ -12,7 +12,7 @@ public static class MiniGameRegistry
     private static readonly Dictionary<string, Func<PetBrain, PetEventManager, MiniGameWindow>> Games = new();
 
     private static readonly PetEventManager _eventManager;
-    
+
     // be static to get called when the Application starts
     static MiniGameRegistry()
     {
@@ -45,13 +45,14 @@ public static class MiniGameRegistry
             {
                 // register minigame to Assembly
                 // constructor minigame(petbrain)
-                var gameConstructor = type.GetConstructor(new[] { typeof(PetBrain),  typeof(PetEventManager) });
+                var gameConstructor = type.GetConstructor(new[] { typeof(PetBrain), typeof(PetEventManager) });
 
                 // Game name from attribute MiniGame["dgtuguohjb"]
                 var gameName = type.GetCustomAttribute<MiniGameAttribute>()!.GameName;
 
                 // register gamename  &&  save costructor(petBrain) with petBrain as func param
-                Register(gameName, (petBrain, eventManager) => (MiniGameWindow)gameConstructor!.Invoke([petBrain, eventManager]));
+                Register(gameName,
+                    (petBrain, eventManager) => (MiniGameWindow)gameConstructor!.Invoke([petBrain, eventManager]));
             }
     }
 }

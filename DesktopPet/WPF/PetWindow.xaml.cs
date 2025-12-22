@@ -12,7 +12,7 @@ public partial class PetWindow : Window
     {
         InitializeComponent();
         _eventManager = eventManager;
-        
+
         _vm = new PetViewModel(_eventManager, petName);
         DataContext = _vm;
 

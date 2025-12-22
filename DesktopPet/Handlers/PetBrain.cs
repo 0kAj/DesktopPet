@@ -15,10 +15,10 @@ public class PetBrain //todo Brain rework
         BasicPetController
     }
 
-    public readonly PetViewModel PetViewModel;
-
     private readonly PetEventHandler _petEventHandler;
     private readonly PetMovementHandler _petMovementHandler;
+
+    public readonly PetViewModel PetViewModel;
 
     public PetBrain(PetViewModel petViewModel)
     {
@@ -50,7 +50,7 @@ public class PetBrain //todo Brain rework
         _petMovementHandler.AddState(new PetLookToMousePositionState(PetViewModel));
 
         var eventManager = App.Host.Services.GetRequiredService<PetEventManager>();
-        
+
         // Set AI
         switch (template)
         {

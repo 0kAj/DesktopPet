@@ -10,12 +10,12 @@ public class MouseHelper
     {
         return visual.PointToScreen(Mouse.GetPosition(inputElement));
     }
-    
+
     private static double GetWindowsScale(Visual v)
     {
         return VisualTreeHelper.GetDpi(v).PixelsPerDip;
     }
-    
+
     public static Point GetDpiSaveGlobalMousePos(Visual visual, IInputElement inputElement)
     {
         var pos = GetGlobalMousePos(visual, inputElement);

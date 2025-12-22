@@ -2,7 +2,6 @@ using System.Windows.Input;
 using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using DesktopPet.WPF;
-using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.MovementStates;
 
@@ -10,10 +9,10 @@ public class JumpControllerMovementState : IPetEvent
 {
     private readonly bool _allowDoubleJump;
     private readonly PetBrain _brain;
+
+    private readonly PetEventManager _eventManager;
     private readonly PetViewModel _petViewModel;
     private int _jumpCounter;
-    
-    private PetEventManager _eventManager;
 
     public JumpControllerMovementState(PetEventManager eventManager, PetBrain petBrain, bool allowDoubleJump)
     {

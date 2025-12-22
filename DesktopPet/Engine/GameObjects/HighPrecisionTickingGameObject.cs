@@ -1,5 +1,4 @@
 using System.Windows;
-using System.Windows.Threading;
 
 namespace DesktopPet.Engine.GameObjects;
 
@@ -26,7 +25,7 @@ public abstract class HighPrecisionTickingGameObject : TimedGameObject
         }
 
         _timer.Interval = _timeMillis;
-        
+
         _timer.StartTicking();
 
         OnTickStart();
