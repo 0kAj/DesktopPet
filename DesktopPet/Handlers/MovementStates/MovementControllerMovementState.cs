@@ -1,3 +1,4 @@
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
@@ -7,13 +8,13 @@ public class MovementControllerMovementState : IBehaviourState
 {
     private readonly bool _allowAirControl;
     private readonly PetBrain _brain;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
 
     public MovementControllerMovementState(bool allowAirControl, PetBrain petBrain)
     {
         _allowAirControl = allowAirControl;
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
     }
 
     public bool IsDone => false;
@@ -26,13 +27,13 @@ public class MovementControllerMovementState : IBehaviourState
     public void Tick()
     {
         // _petWindow.debugLabel.Content = Helper.GetMousePosition().ToString();
-        var distance = Helper.GetMousePosition().X - _petWindow.Left - _petWindow.Width / 2;
+        var distance = Helper.GetMousePosition().X - _petViewModel.Left - _petViewModel.WindowWidth / 2;
 
         // only move if position not reached
         if (Math.Abs(distance) < 5)
-            _petWindow.VelocityX = 0;
+            _petViewModel.VelocityX = 0;
         else
-            _petWindow.VelocityX = Math.Sign(distance) * _brain.Speed;
+            _petViewModel.VelocityX = Math.Sign(distance) * _brain.Speed;
     }
 
     public void OnEnd()

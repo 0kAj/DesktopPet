@@ -1,8 +1,9 @@
 using System.Windows;
+using System.Windows.Threading;
 
-namespace DesktopPet.Engine;
+namespace DesktopPet.Engine.GameObjects;
 
-public abstract class HighPrecisionTickingWindow : TimedWindow
+public abstract class HighPrecisionTickingGameObject : TimedGameObject
 {
     private uint _timeMillis = 10;
     private HighPrecisionTimer? _timer;
@@ -25,21 +26,8 @@ public abstract class HighPrecisionTickingWindow : TimedWindow
         }
 
         _timer.Interval = _timeMillis;
-
-        try
-        {
-            _timer.StartTicking();
-        }
-        catch (Exception e)
-        {
-            var result = MessageBox.Show(e.Message,
-                "Fatal-Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error,
-                MessageBoxResult.OK);
-            if (result == MessageBoxResult.OK)
-                Close();
-        }
+        
+        _timer.StartTicking();
 
         OnTickStart();
     }
@@ -56,7 +44,7 @@ public abstract class HighPrecisionTickingWindow : TimedWindow
 
     private void TimerTick(float deltaMillis)
     {
-        Dispatcher.BeginInvoke(() =>
+        Application.Current.Dispatcher.BeginInvoke(() =>
         {
             Tick(deltaMillis);
             Tick();

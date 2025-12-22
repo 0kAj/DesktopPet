@@ -1,15 +1,16 @@
 using System.Windows;
 using System.Windows.Input;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
+using DesktopPet.Utils;
 using DesktopPet.WPF;
-using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers.MovementStates;
 
 public class DragDropMovementState : IBehaviourState
 {
     private readonly PetBrain _brain;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
     private Point _dragStartPos;
     private Vector _dragStartWindowPos;
 
@@ -20,7 +21,7 @@ public class DragDropMovementState : IBehaviourState
         _brain = petBrain;
         _eventManager = eventManager;
 
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
         // MouseDown="Pet_OnMouseDown"
         // MouseUp="Pet_OnMouseUp"
 
@@ -40,11 +41,12 @@ public class DragDropMovementState : IBehaviourState
     {
         if (_brain.IsOnDragging)
         {
-            var dragPos = _petWindow.GetDpiSaveGlobalMousePos();
+            // var dragPos = _petViewModel.GetDpiSaveGlobalMousePos();
+            var dragPos = Helper.GetMousePosition();
             var dir = dragPos - _dragStartPos;
             var targetpos = _dragStartWindowPos + dir;
-            _petWindow.Left = targetpos.X;
-            _petWindow.Top = targetpos.Y;
+            _petViewModel.Left = targetpos.X;
+            _petViewModel.Top = targetpos.Y;
         }
     }
 
@@ -67,9 +69,10 @@ public class DragDropMovementState : IBehaviourState
         // drag start
         _brain.IsOnDragging = true;
         _brain.IsOnGround = false;
-        _petWindow.ResetVelocity();
-        _dragStartPos = _petWindow.GetDpiSaveGlobalMousePos();
-        _dragStartWindowPos = new Vector(_petWindow.Left, _petWindow.Top);
+        _petViewModel.ResetVelocity();
+        // _dragStartPos = _petViewModel.GetDpiSaveGlobalMousePos();
+        _dragStartPos = Helper.GetMousePosition();
+        _dragStartWindowPos = new Vector(_petViewModel.Left, _petViewModel.Top);
         // _petWindow.debugLabel.Content = "Mouse Down";
         // _petWindow.CaptureMouse();
         _eventManager.OnCaptureMouse();

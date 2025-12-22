@@ -1,4 +1,5 @@
 using System.Windows;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
@@ -15,17 +16,17 @@ public class MoveToPositionMovementState : IBehaviourState
 
     private readonly PetBrain _brain;
 
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
     private readonly PositionState _targetPositionState;
 
     public MoveToPositionMovementState(PositionState targetPositionState, PetBrain petBrain)
     {
         _targetPositionState = targetPositionState;
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
     }
 
-    public bool IsDone => Math.Abs((GetTargetPosition() - _petWindow.GetPositionVector()).Length) <= 10;
+    public bool IsDone => Math.Abs((GetTargetPosition() - _petViewModel.GetPositionVector()).Length) <= 10;
 
     public bool CanTick()
     {
@@ -34,17 +35,17 @@ public class MoveToPositionMovementState : IBehaviourState
 
     public void Tick()
     {
-        var direction = GetTargetPosition() - _petWindow.GetPositionVector();
+        var direction = GetTargetPosition() - _petViewModel.GetPositionVector();
         direction.Normalize();
         direction *= _brain.Speed;
-        _petWindow.VelocityX = direction.X;
-        _petWindow.VelocityY = direction.Y;
+        _petViewModel.VelocityX = direction.X;
+        _petViewModel.VelocityY = direction.Y;
     }
 
     public void OnEnd()
     {
         // reset velocity
-        _petWindow.ResetVelocity();
+        _petViewModel.ResetVelocity();
     }
 
     public void UnRegister()
@@ -54,7 +55,8 @@ public class MoveToPositionMovementState : IBehaviourState
     private Vector GetTargetPosition()
     {
         // target y = taskbar y
-        var targetY = SystemParameters.WorkArea.Bottom - _petWindow.ActualHeight;
+        var targetY = SystemParameters.WorkArea.Bottom - _petViewModel.CollisionRect.Height - (_petViewModel.CollisionRect.Top - _petViewModel.Top);
+        // var targetY = SystemParameters.WorkArea.Bottom - _petViewModel.CollisionRect.Height - _petViewModel.CollisionRect.Top;
 
         // target x = CENTER, LEFT, RIGHT
         switch (_targetPositionState)

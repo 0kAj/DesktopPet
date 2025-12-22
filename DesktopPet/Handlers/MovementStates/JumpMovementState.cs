@@ -1,3 +1,4 @@
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
@@ -7,14 +8,14 @@ public class JumpMovementState : IBehaviourState
 {
     private readonly PetBrain _brain;
     private readonly int _jumpChance;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
     private readonly Random _random = new();
 
     public JumpMovementState(int jumpChance, PetBrain petBrain)
     {
         _jumpChance = jumpChance;
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
     }
 
     public bool IsDone => false;
@@ -29,7 +30,7 @@ public class JumpMovementState : IBehaviourState
         if (_brain.IsOnGround)
         {
             _brain.IsOnGround = false;
-            _petWindow.VelocityY = -5;
+            _petViewModel.VelocityY = -5;
         }
     }
 

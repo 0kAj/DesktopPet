@@ -105,7 +105,7 @@ public partial class MiniGameViewModel : ObservableObject
 
             // collide
             var foodRect = collectable.CollisionRect;
-            var playerRect = _brain.PetWindow.GetCollisionRect();
+            var playerRect = _brain.PetViewModel.CollisionRect;
 
             if (foodRect.IntersectsWith(playerRect))
             {

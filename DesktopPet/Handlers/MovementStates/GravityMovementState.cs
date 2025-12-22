@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
@@ -8,13 +9,13 @@ public class GravityMovementState : IBehaviourState
 {
     private readonly PetBrain _brain;
     private readonly double _gravity;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
 
     public GravityMovementState(double gravity, PetBrain petBrain)
     {
         _gravity = gravity;
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
 
         _brain.IsOnGround = false;
     }
@@ -28,18 +29,18 @@ public class GravityMovementState : IBehaviourState
 
     public void Tick()
     {
-        _petWindow.VelocityY += _gravity / 100;
-        var collisionRect = _petWindow.GetCollisionRect();
+        _petViewModel.VelocityY += _gravity / 100;
+        var collisionRect = _petViewModel.CollisionRect;
 
         var landed = false;
 
         // Taskbar Collision:
-        var targetY = SystemParameters.WorkArea.Bottom - collisionRect.Height - (collisionRect.Top - _petWindow.Top);
+        var targetY = SystemParameters.WorkArea.Bottom - collisionRect.Height - (collisionRect.Top - _petViewModel.Top);
 
-        if (_petWindow.Top >= targetY)
+        if (_petViewModel.Top >= targetY)
         {
-            _petWindow.Top = targetY;
-            _petWindow.VelocityY = 0;
+            _petViewModel.Top = targetY;
+            _petViewModel.VelocityY = 0;
             landed = true;
         }
 
@@ -57,11 +58,11 @@ public class GravityMovementState : IBehaviourState
                     collisionRect.Top < platformRect.Top && // from top
                     collisionRect.Right > platformRect.Left &&
                     collisionRect.Left < platformRect.Right &&
-                    _petWindow.VelocityY > 0) // only when falling
+                    _petViewModel.VelocityY > 0) // only when falling
                 {
                     // collision with platform
-                    _petWindow.Top -= overlap;
-                    _petWindow.VelocityY = platform.DefaultVelocityY;
+                    _petViewModel.Top -= overlap;
+                    _petViewModel.VelocityY = platform.DefaultVelocityY;
                     landed = true;
                     platform.OnPlayerContact(_brain);
                     break;

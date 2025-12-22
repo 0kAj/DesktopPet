@@ -3,7 +3,7 @@ using DesktopPet.Interfaces.Window;
 
 namespace DesktopPet.Engine;
 
-public abstract class VelocityWindow : HighPrecisionTickingWindow, IVelocity
+public abstract class VelocityWindow : HighPrecisionTickingWindow
 {
     public double VelocityX { get; set; }
     public double VelocityY { get; set; }

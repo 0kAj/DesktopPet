@@ -1,9 +1,8 @@
-﻿<engine:VelocityWindow x:Class="DesktopPet.WPF.PetWindow"
+﻿<Window x:Class="DesktopPet.WPF.PetWindow"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:engine="clr-namespace:DesktopPet.Engine"
                        mc:Ignorable="d"
                        Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                        WindowStyle="None"
@@ -13,19 +12,25 @@
                        WindowState="Normal"
                        ResizeMode="NoResize"
                        ShowInTaskbar="False"
-                       WindowStartupLocation="CenterScreen"
-                       Title="PetWindow" Height="100" Width="150">
+                       Top="{Binding Top, Mode=TwoWay}"
+                       Left="{Binding Left, Mode=TwoWay}"
+                       Height="{Binding WindowHeight, Mode=TwoWay}"
+                       Width="{Binding WindowWidth, Mode=TwoWay}"
+                       d:DesignHeight="100" d:DesignWidth="150"
+                       Title="PetWindow">
     <Window.Resources>
         <ResourceDictionary Source="/WPF/ResourceDictionaries/DesktopPetTheme.xaml" />
     </Window.Resources>
     <DockPanel HorizontalAlignment="Center">
-        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" x:Name="DebugLabel">DebugInfo</Label>
+        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Beige" x:Name="DebugLabel" Content="{Binding PetName}"></Label>
         <Grid x:Name="Pet"
               RenderOptions.BitmapScalingMode="NearestNeighbor"
               DockPanel.Dock="Bottom"
               VerticalAlignment="Bottom"
-              Height="50"
-              Width="50">
+              ContextMenu="{Binding PetContextMenu}"
+              d:DesignHeight="50" d:DesignWidth="50"
+              Height="{Binding ObjectHeight}"
+              Width="{Binding ObjectWidth}">
             <Rectangle Fill="{ Binding PrimaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }" />
             <Rectangle Fill="{ Binding SecondaryColorAttribute.Value,Converter={StaticResource StrToColorBrush} }">
                 <Rectangle.OpacityMask>
@@ -79,4 +84,4 @@
             </Rectangle>
         </Grid>
     </DockPanel>
-</engine:VelocityWindow>
+</Window>

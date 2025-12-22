@@ -1,6 +1,6 @@
 namespace DesktopPet.Handlers.LookEvents;
 
-public class MultiTickAttribute<T> where T : struct
+public class MultiTickAttribute
 {
     private readonly bool _pingPong;
     private readonly double _speed;

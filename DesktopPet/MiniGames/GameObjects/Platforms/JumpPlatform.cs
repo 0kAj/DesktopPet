@@ -71,6 +71,6 @@ public class JumpPlatform : FallingPlatform
         _isBouncing = true;
         _bounceProgress = 0;
 
-        player.PetWindow.VelocityY = -10; // launch player into the sky
+        player.PetViewModel.VelocityY = -10; // launch player into the sky
     }
 }

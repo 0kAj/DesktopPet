@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using PetWindow = DesktopPet.WPF.PetWindow;
 
@@ -7,13 +8,13 @@ namespace DesktopPet.Handlers.MovementStates;
 public class MovingMovementState : IBehaviourState
 {
     private readonly PetBrain _brain;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
     private double _targetX;
 
     public MovingMovementState(PetBrain petBrain)
     {
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
 
         GenerateRadomTargetX();
     }
@@ -30,11 +31,11 @@ public class MovingMovementState : IBehaviourState
         if (IsDone)
             return;
 
-        var distance = _targetX - _petWindow.Left;
+        var distance = _targetX - _petViewModel.Left;
         double direction = Math.Sign(distance);
 
         // _petWindow.Left += direction * Speed;
-        _petWindow.VelocityX = direction * _brain.Speed;
+        _petViewModel.VelocityX = direction * _brain.Speed;
 
         if (Math.Abs(distance) < 5)
         {
@@ -59,7 +60,7 @@ public class MovingMovementState : IBehaviourState
 
         // Zufällige Position auf der Taskleiste
         var random = new Random(DateTime.Now.Millisecond);
-        _targetX = random.Next((int)screen.Left, (int)(screen.Right - _petWindow.Width));
+        _targetX = random.Next((int)screen.Left, (int)(screen.Right - _petViewModel.WindowWidth));
 
         // _petWindow.debugLabel.Content = _targetX.ToString();
         IsDone = false;

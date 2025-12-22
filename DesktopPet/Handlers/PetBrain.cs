@@ -4,7 +4,6 @@ using DesktopPet.Handlers.MovementStates;
 using DesktopPet.MiniGames;
 using DesktopPet.WPF;
 using Microsoft.Extensions.DependencyInjection;
-using PetWindow = DesktopPet.WPF.PetWindow;
 
 namespace DesktopPet.Handlers;
 
@@ -16,15 +15,14 @@ public class PetBrain //todo Brain rework
         BasicPetController
     }
 
-    private readonly LookingPetViewModel _lookingPet;
+    public readonly PetViewModel PetViewModel;
 
     private readonly PetEventHandler _petEventHandler;
     private readonly PetMovementHandler _petMovementHandler;
 
-    public PetBrain(PetWindow petWindow, LookingPetViewModel lookingPetViewModel)
+    public PetBrain(PetViewModel petViewModel)
     {
-        PetWindow = petWindow;
-        _lookingPet = lookingPetViewModel;
+        PetViewModel = petViewModel;
 
         _petMovementHandler = new PetMovementHandler();
         // add PetEventHandler
@@ -32,47 +30,6 @@ public class PetBrain //todo Brain rework
     }
 
     public required string Name { get; set; }
-
-    public PetWindow PetWindow { get; } //todo is this necessary?:
-    
-    //################# what is it doing?? #################################
-    //# VOID KeyDown event register/unregister
-    //# VOID Ticking start/Stop
-    //# SET applying velocityY /X
-    //# VOID raise Event -> events path through
-    // RECT GetCollisionRect
-    
-    //####################### be in States ####################################################
-    //# VOID Moue up/down event register/ unregister
-    //# SET window position -> Left,Top
-    // VECTOR2 GetDPISave global mouse
-    //# VOID reset Velocity
-    //# VOID capture and release mouse
-    //# DOUBLE GET Top, Left
-    // VECTOR2 PositionVector
-    //# DOUBLE get actualheight
-    
-    // ##################### resulting Interfaces ########################
-    
-    // [DONE!] PetEventManager Singleton 
-    // - EVENTS:
-    //      - mouseUp/down keyUp/down
-    //      - capture and release mouse
-    // - TIMER start/Stop
-    
-    // IVelocity: -> MVVM Toolkit Messenger
-    // - Velocity GET/SET
-    
-    // IWindowPosition: -> MVVM -> X,Y,Height
-    // - position LEFT,TOP actualheight
-    
-    // IWindowHelper:
-    // - GetDPISave
-    // - PositionVector
-    
-    // missing :
-    // GetCollisionRect
-    
 
     public bool IsOnGround { get; set; }
     public bool IsOnDragging { get; set; }
@@ -88,9 +45,9 @@ public class PetBrain //todo Brain rework
         _petEventHandler.ClearStates();
 
         // add universal states
-        _petMovementHandler.AddState(new PetBlinkLookState(_lookingPet));
-        _petMovementHandler.AddState(new PetLookToMoveDirectionState(_lookingPet));
-        _petMovementHandler.AddState(new PetLookToMousePositionState(_lookingPet, PetWindow));
+        _petMovementHandler.AddState(new PetBlinkLookState(PetViewModel));
+        _petMovementHandler.AddState(new PetLookToMoveDirectionState(PetViewModel));
+        _petMovementHandler.AddState(new PetLookToMousePositionState(PetViewModel));
 
         var eventManager = App.Host.Services.GetRequiredService<PetEventManager>();
         

@@ -1,5 +1,5 @@
 using System.Runtime.InteropServices;
-using Point = System.Drawing.Point;
+using System.Windows;
 
 namespace DesktopPet;
 

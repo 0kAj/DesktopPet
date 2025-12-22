@@ -4,17 +4,17 @@ namespace DesktopPet.Handlers.LookEvents;
 
 public class PetBlinkLookState : IBehaviourState
 {
-    private readonly MultiTickAttribute<double> _eyeScaleYAttribute;
-    private readonly LookingPetViewModel _lookingPet;
+    private readonly MultiTickAttribute _eyeScaleYAttribute;
+    private readonly PetViewModel _lookingPet;
     private readonly Random _random = new();
     private bool _closeEyes;
 
-    public PetBlinkLookState(LookingPetViewModel lookingPet)
+    public PetBlinkLookState(PetViewModel lookingPet)
     {
         _lookingPet = lookingPet;
         lookingPet.EyeScaleY = 1.0;
 
-        _eyeScaleYAttribute = new MultiTickAttribute<double>(0.1, true);
+        _eyeScaleYAttribute = new MultiTickAttribute(0.1, true);
     }
 
     public bool IsDone => false;

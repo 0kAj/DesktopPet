@@ -5,32 +5,30 @@ namespace DesktopPet.Handlers.LookEvents;
 
 public class PetLookToMousePositionState : IBehaviourState
 {
-    private readonly MultiTickAttribute<double> _lookDirectionXAttribute;
-    private readonly MultiTickAttribute<double> _lookDirectionYAttribute;
-    private readonly LookingPetViewModel _lookingPet;
-    private readonly IWindowHelper _windowHelper;
+    private readonly MultiTickAttribute _lookDirectionXAttribute;
+    private readonly MultiTickAttribute _lookDirectionYAttribute;
+    private readonly PetViewModel _petViewModel;
 
-    public PetLookToMousePositionState(LookingPetViewModel lookingPet, IWindowHelper windowHelper)
+    public PetLookToMousePositionState(PetViewModel lookingPet)
     {
-        _lookingPet = lookingPet;
-        _windowHelper = windowHelper;
+        _petViewModel = lookingPet;
 
-        _lookDirectionXAttribute = new MultiTickAttribute<double>(0.1);
-        _lookDirectionYAttribute = new MultiTickAttribute<double>(0.1);
+        _lookDirectionXAttribute = new MultiTickAttribute(0.1);
+        _lookDirectionYAttribute = new MultiTickAttribute(0.1);
     }
 
-    public bool IsDone => _lookingPet.VelocityX == 0;
+    public bool IsDone => _petViewModel.VelocityX == 0;
 
     public bool CanTick()
     {
-        return _lookingPet.VelocityX == 0;
+        return _petViewModel.VelocityX == 0;
     }
 
     public void Tick()
     {
         var point = Helper.GetMousePosition();
 
-        var currentPos = _windowHelper.GetCollisionPositionVector();
+        var currentPos = _petViewModel.CollisionPositionVector;
 
         var dirX = point.X - currentPos.X;
         var dirY = point.Y - currentPos.Y;
@@ -38,8 +36,8 @@ public class PetLookToMousePositionState : IBehaviourState
         var targetX = Math.Clamp(dirX, -3, 3);
         var targetY = Math.Clamp(dirY, -3, 3);
 
-        _lookingPet.LookDirectionX = _lookDirectionXAttribute.Tick(_lookingPet.LookDirectionX, targetX);
-        _lookingPet.LookDirectionY = _lookDirectionYAttribute.Tick(_lookingPet.LookDirectionY, targetY);
+        _petViewModel.LookDirectionX = _lookDirectionXAttribute.Tick(_petViewModel.LookDirectionX, targetX);
+        _petViewModel.LookDirectionY = _lookDirectionYAttribute.Tick(_petViewModel.LookDirectionY, targetY);
     }
 
     public void OnEnd()

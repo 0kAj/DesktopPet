@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using DesktopPet.WPF;
 using PetWindow = DesktopPet.WPF.PetWindow;
@@ -9,7 +10,7 @@ public class JumpControllerMovementState : IPetEvent
 {
     private readonly bool _allowDoubleJump;
     private readonly PetBrain _brain;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
     private int _jumpCounter;
     
     private PetEventManager _eventManager;
@@ -19,7 +20,7 @@ public class JumpControllerMovementState : IPetEvent
         _eventManager = eventManager;
         _allowDoubleJump = allowDoubleJump;
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
 
         // add Event
         _eventManager.KeyDown += Jump;
@@ -52,6 +53,6 @@ public class JumpControllerMovementState : IPetEvent
             _jumpCounter++;
 
         _brain.IsOnGround = false;
-        _petWindow.VelocityY = -5;
+        _petViewModel.VelocityY = -5;
     }
 }

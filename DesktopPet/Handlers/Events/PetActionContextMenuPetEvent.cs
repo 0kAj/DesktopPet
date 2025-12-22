@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using DesktopPet.Data.Pet;
+using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using DesktopPet.MiniGames;
 using FontAwesome.WPF;
@@ -13,20 +14,20 @@ namespace DesktopPet.Handlers.Events;
 public class PetActionContextMenuPetEvent : IPetEvent
 {
     private readonly PetBrain _brain;
-    private readonly PetWindow _petWindow;
+    private readonly PetViewModel _petViewModel;
 
     public PetActionContextMenuPetEvent(PetBrain petBrain)
     {
         _brain = petBrain;
-        _petWindow = petBrain.PetWindow;
+        _petViewModel = petBrain.PetViewModel;
 
-        _petWindow.Pet.ContextMenu = CreatePetActionContextMenu();
+        _petViewModel.PetContextMenu = CreatePetActionContextMenu();
     }
 
     public void OnUnregister()
     {
         // Remove PetActionContextMenu
-        _petWindow.Pet.ContextMenu = null;
+        _petViewModel.PetContextMenu = null;
     }
 
     private ContextMenu CreatePetActionContextMenu() //todo as Binding?

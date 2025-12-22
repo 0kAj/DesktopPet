@@ -1,6 +1,6 @@
-namespace DesktopPet.Engine;
+namespace DesktopPet.Engine.GameObjects;
 
-public abstract class TimedWindow : Window
+public abstract class TimedGameObject : WPFGameObject
 {
     public abstract bool IsTicking { get; }
     protected event Action? TickStart;
