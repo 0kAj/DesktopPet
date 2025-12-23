@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DesktopPet.Handlers;
 
-public class PetBrain //todo Brain rework
+public class PetBrain
 {
-    public enum MovementTemplate //todo YOU can do this better!!!
+    public enum MovementTemplate
     {
         DefaultPet,
         BasicPetController
@@ -38,7 +38,7 @@ public class PetBrain //todo Brain rework
 
     public PlatformManager? PlatformManager { get; set; }
 
-    public void InitFromMovementTemplate(MovementTemplate template) //todo YOU can do this better!!!
+    public void InitFromMovementTemplate(MovementTemplate template)
     {
         // reset AI
         _petMovementHandler.ClearStates();

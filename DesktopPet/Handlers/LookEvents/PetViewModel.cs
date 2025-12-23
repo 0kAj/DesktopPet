@@ -16,8 +16,7 @@ public partial class PetViewModel : VelocityGameObject
     [ObservableProperty] private double _eyeScaleX;
     [ObservableProperty] private double _eyeScaleY;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(BodyShadowAngle))]
-    private double _lookDirectionX;
+    [ObservableProperty] private double _lookDirectionX;
 
     [ObservableProperty] private double _lookDirectionY;
 
@@ -44,13 +43,6 @@ public partial class PetViewModel : VelocityGameObject
     public PetAttribute PrimaryColorAttribute { get; set; }
     public PetAttribute SecondaryColorAttribute { get; set; }
 
-    public double BodyShadowAngle => Math.Sign(LookDirectionX) switch
-    {
-        > 0 => 180,
-        0 => 5,
-        < 0 => 0
-    };
-
     public void Init()
     {
         WindowWidth = 150;
@@ -69,6 +61,5 @@ public partial class PetViewModel : VelocityGameObject
 
     protected override void Tick(float delta)
     {
-        // debugLabel.Content = delta;
     }
 }

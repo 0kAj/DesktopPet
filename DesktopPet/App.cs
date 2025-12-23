@@ -2,10 +2,8 @@
 using DesktopPet.Background;
 using DesktopPet.Data.Pet;
 using DesktopPet.Factory;
-using DesktopPet.Handlers;
 using DesktopPet.MiniGames;
 using DesktopPet.WPF;
-using DesktopPet.WPF.GameWindows;
 using DesktopPet.WPF.WindowViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,10 +18,7 @@ public class App : Application
     {
         get
         {
-            if (_host == null)
-            {
-                _host = CreateHostBuilder().Build();
-            }
+            if (_host == null) _host = CreateHostBuilder().Build();
 
             return _host;
         }
@@ -33,7 +28,7 @@ public class App : Application
     [STAThread]
     public static void Main()
     {
-        App app = new App();
+        var app = new App();
         app.Startup += Application_Startup;
         app.Run();
 
@@ -48,24 +43,11 @@ public class App : Application
             services.AddTransient<WelcomeWindow>();
             services.AddTransient<WelcomeWindowViewModel>();
 
-            services.AddTransient<GameSelectorWindow>(); //todo
-            services.AddTransient<GameSelectorWindowViewModel>(); //todo PetBrain as singleton
-
             services.AddSingleton<PetEventManager>();
             services.AddSingleton<GameManager>();
-            
-            // services.AddSingleton<PetBrain>(); //todo
 
             services.AddTransient<RewardsWindow>();
             services.AddTransient<IRewardsWindowFactory, RewardsWindowFactory>();
-
-            services.AddTransient<FoodCollectorMiniGameWindow>(); //todo
-            services.AddTransient<FoodCollectorViewModel>();
-
-            services.AddTransient<PetJumpMiniGameWindow>(); //todo
-            services.AddTransient<PetJumpViewModel>();
-
-            services.AddTransient<PetWindow>(); //todo
         });
 
         return builder;

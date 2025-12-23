@@ -4,6 +4,8 @@ using DesktopPet.Data.Pet;
 using DesktopPet.Handlers.LookEvents;
 using DesktopPet.Interfaces;
 using DesktopPet.MiniGames;
+using DesktopPet.WPF;
+using DesktopPet.WPF.WindowViewModels;
 using FontAwesome.WPF;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -39,7 +41,13 @@ public class PetActionContextMenuPetEvent : IPetEvent
         gameSelectorMenuItem.Header = "Game Selector"; // Game Selector
         gameSelectorMenuItem.Icon =
             gameSelectorMenuItem.Icon = CreateIcon(FontAwesomeIcon.Gamepad);
-        // gameSelectorMenuItem.Click += (_, _) => App.Host.Services.GetRequiredService<GameSelectorWindow>().Show();
+
+        var openGameSelectorMenuItem = new MenuItem();
+        openGameSelectorMenuItem.Header = "Open";
+        openGameSelectorMenuItem.Icon = CreateIcon(FontAwesomeIcon.Map);
+        openGameSelectorMenuItem.Click +=
+            (_, _) => new GameSelectorWindow(new GameSelectorWindowViewModel(_brain)).Show();
+        gameSelectorMenuItem.Items.Add(openGameSelectorMenuItem);
 
         foreach (var game in gameManager.GetRegisteredGames())
         {
