@@ -12,8 +12,8 @@ public partial class WelcomeWindowViewModel : ObservableValidator
 {
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required(AllowEmptyStrings = false, ErrorMessage = "PetName is required.")]
-    [MinLength(3, ErrorMessage = "PetName must be at least 3 characters long.")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "pet name is required.")]
+    [MinLength(3, ErrorMessage = "pet name must be at least 3 characters long.")]
     [UniquePetName]
     [NotifyCanExecuteChangedFor(nameof(OkCommand))]
     private string? _petName;
@@ -33,6 +33,9 @@ public partial class WelcomeWindowViewModel : ObservableValidator
     [RelayCommand(CanExecute = nameof(HasNoErrors))]
     private void Ok()
     {
+        //remove whitespace at the end and the beginning of the petname
+        PetName = PetName!.Trim();
+        
         // create new Pet
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("hunger", "100"));
