@@ -43,6 +43,12 @@ public abstract class HighPrecisionTickingGameObject : TimedGameObject
 
     private void TimerTick(float deltaMillis)
     {
+        if (Application.Current == null)
+        {
+            StopTicking();
+            return;
+        }
+        
         Application.Current.Dispatcher.BeginInvoke(() =>
         {
             Tick(deltaMillis);

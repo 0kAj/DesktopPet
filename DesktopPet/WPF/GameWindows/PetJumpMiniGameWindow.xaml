@@ -10,7 +10,7 @@
                        AllowsTransparency="True"
                        WindowStyle="None"
                        WindowState="Normal"
-                       Topmost="False"
+                       Topmost="True"
                        ShowInTaskbar="False"
                        Title="PetJump" Height="450" Width="800">
     <engine:MiniGameWindow.Background>
