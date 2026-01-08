@@ -6,11 +6,11 @@ public class PetLookToMoveDirectionState : IBehaviourState
 {
     private readonly MultiTickAttribute _lookDirectionXAttribute;
     private readonly MultiTickAttribute _lookDirectionYAttribute;
-    private readonly PetViewModel _lookingPet;
+    private readonly PetViewModel _petViewModel;
 
-    public PetLookToMoveDirectionState(PetViewModel lookingPet)
+    public PetLookToMoveDirectionState(PetViewModel petViewModel)
     {
-        _lookingPet = lookingPet;
+        _petViewModel = petViewModel;
 
         _lookDirectionXAttribute = new MultiTickAttribute(0.1);
         _lookDirectionYAttribute = new MultiTickAttribute(0.1);
@@ -20,15 +20,15 @@ public class PetLookToMoveDirectionState : IBehaviourState
 
     public bool CanTick()
     {
-        return _lookingPet.VelocityX != 0;
+        return _petViewModel.VelocityX != 0;
     }
 
     public void Tick()
     {
-        var targetX = Math.Sign(_lookingPet.VelocityX) * 3;
-        _lookingPet.LookDirectionX = _lookDirectionXAttribute.Tick(_lookingPet.LookDirectionX, targetX);
-        var targetY = Math.Sign(_lookingPet.VelocityY) * 3;
-        _lookingPet.LookDirectionY = _lookDirectionYAttribute.Tick(_lookingPet.LookDirectionY, targetY);
+        var targetX = Math.Sign(_petViewModel.VelocityX) * 3;
+        _petViewModel.LookDirectionX = Double.Lerp(_petViewModel.LookDirectionX, targetX, 0.1f);
+        var targetY = Math.Sign(_petViewModel.VelocityY) * 3;
+        _petViewModel.LookDirectionY = Double.Lerp(_petViewModel.LookDirectionY, targetY, 0.1f);
     }
 
     public void OnEnd()

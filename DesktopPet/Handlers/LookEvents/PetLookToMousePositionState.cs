@@ -1,3 +1,4 @@
+using System.Numerics;
 using DesktopPet.Interfaces;
 
 namespace DesktopPet.Handlers.LookEvents;
@@ -34,9 +35,9 @@ public class PetLookToMousePositionState : IBehaviourState
 
         var targetX = Math.Clamp(dirX, -3, 3);
         var targetY = Math.Clamp(dirY, -3, 3);
-
-        _petViewModel.LookDirectionX = _lookDirectionXAttribute.Tick(_petViewModel.LookDirectionX, targetX);
-        _petViewModel.LookDirectionY = _lookDirectionYAttribute.Tick(_petViewModel.LookDirectionY, targetY);
+        
+        _petViewModel.LookDirectionX = Double.Lerp(_petViewModel.LookDirectionX, targetX, 0.1f);
+        _petViewModel.LookDirectionY = Double.Lerp(_petViewModel.LookDirectionY, targetY, 0.1f);
     }
 
     public void OnEnd()
