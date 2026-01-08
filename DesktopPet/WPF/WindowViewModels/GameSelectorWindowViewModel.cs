@@ -22,9 +22,13 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         PetAttributeHelper.InitAttributes(_brain.Name, out var hunger, out var thirst, out var collectedFood,
             out var collectedThirst);
         PetHungerAttribute = hunger;
+        PetHungerAttribute.PropertyChanged += (_, _) => FeedCommand.NotifyCanExecuteChanged();
         PetThirstAttribute = thirst;
+        PetThirstAttribute.PropertyChanged += (_, _) => ThirstCommand.NotifyCanExecuteChanged();
         CollectedFoodAttribute = collectedFood;
+        CollectedFoodAttribute.PropertyChanged += (_, _) => FeedCommand.NotifyCanExecuteChanged();
         CollectedThirstAttribute = collectedThirst;
+        CollectedThirstAttribute.PropertyChanged += (_, _) => ThirstCommand.NotifyCanExecuteChanged();
 
         PetAttributeHelper.InitPetColorAttributes(_brain.Name, out var primaryColor, out var secondaryColor);
         PrimaryColorAttribute = primaryColor;
@@ -47,7 +51,11 @@ public partial class GameSelectorWindowViewModel : ObservableObject
 
     public event Action? RequestClose;
 
-    [RelayCommand]
+    private bool IsHungry() => Int32.Parse(PetHungerAttribute.Value) < 100;
+    
+    private bool CanFeed() =>  IsHungry() && Int32.Parse(CollectedThirstAttribute.Value) > 0;
+
+    [RelayCommand(CanExecute = nameof(CanFeed))]
     private void Feed()
     {
         var petHunger = int.TryParse(PetHungerAttribute.Value, out var p) ? p : 0;
@@ -62,7 +70,11 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         CollectedFoodAttribute.Value = (collectedFood - amount).ToString();
     }
 
-    [RelayCommand]
+    private bool IsThirsty() => Int32.Parse(PetThirstAttribute.Value) < 100;
+    
+    private bool CanThirst() => IsThirsty() && Int32.Parse(CollectedThirstAttribute.Value) > 0;
+    
+    [RelayCommand(CanExecute = nameof(CanThirst))]
     private void Thirst()
     {
         var petThirst = int.TryParse(PetThirstAttribute.Value, out var p) ? p : 0;
