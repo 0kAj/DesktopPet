@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Window = DesktopPet.Engine.Window;
 
-namespace DesktopPet;
+namespace DesktopPet.Utils;
 
 public static class SizingHelper
 {

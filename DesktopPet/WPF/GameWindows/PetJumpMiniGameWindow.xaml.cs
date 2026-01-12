@@ -3,6 +3,7 @@ using DesktopPet.Attribute;
 using DesktopPet.Engine;
 using DesktopPet.Factory;
 using DesktopPet.Handlers;
+using DesktopPet.Utils;
 using DesktopPet.WPF.WindowViewModels;
 using Microsoft.Extensions.DependencyInjection;
 

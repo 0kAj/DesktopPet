@@ -10,8 +10,9 @@
                Background="Transparent"
                WindowStyle="None"
                Topmost="True"
+               Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
                WindowStartupLocation="CenterScreen"
-               Title="RewardsWindow" Height="450" Width="800">
+               Title="Rewards Window" Height="450" Width="800">
     <engine:Window.Resources>
         <ResourceDictionary Source="/WPF/ResourceDictionaries/DesktopPetTheme.xaml" />
     </engine:Window.Resources>

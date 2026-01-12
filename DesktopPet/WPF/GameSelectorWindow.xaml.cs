@@ -1,3 +1,4 @@
+using DesktopPet.Utils;
 using DesktopPet.WPF.WindowViewModels;
 using Window = DesktopPet.Engine.Window;
 

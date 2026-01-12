@@ -6,7 +6,7 @@
                        xmlns:engine="clr-namespace:DesktopPet.Engine"
                        xmlns:ui="clr-namespace:DesktopPet.WPF.GameWindows.customControls.UI"
                        mc:Ignorable="d"
-                       Icon="pack://application:,,,/Assets/Sprites/Pets/Mouse.png"
+                       Icon="pack://application:,,,/Assets/Sprites/Games/PetJump.png"
                        AllowsTransparency="True"
                        WindowStyle="None"
                        WindowState="Normal"
