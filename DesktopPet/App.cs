@@ -12,20 +12,21 @@ namespace DesktopPet;
 
 public class App : Application
 {
-    public static IHost Host { get; private set; }
+    private static IHost? _host;
+    public static IHost Host => _host ??= CreateHostBuilder().Build();
 
     [STAThread]
     public static void Main()
     {
-        Host = CreateHostBuilder().Build();
-        Host.Start();
+        _host = CreateHostBuilder().Build();
+        _host.Start();
         
         var app = new App();
         app.Startup += Application_Startup;
         app.Run();
         
-        Host.StopAsync().GetAwaiter().GetResult();
-        Host.Dispose();
+        _host.StopAsync().GetAwaiter().GetResult();
+        _host.Dispose();
     }
 
     private static HostBuilder CreateHostBuilder()
@@ -62,7 +63,7 @@ public class App : Application
         else
         {
             // new WelcomeWindow().Show();
-            Host.Services.GetService<WelcomeWindow>()!.Show();
+            Host.Services.GetRequiredService<WelcomeWindow>().Show();
         }
     }
 }

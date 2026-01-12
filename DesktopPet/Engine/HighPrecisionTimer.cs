@@ -15,7 +15,7 @@ public class HighPrecisionTimer
 
     private long _lastTicks;
 
-    private Stopwatch _stopwatch;
+    private Stopwatch? _stopwatch;
 
     private uint _timeMillis;
     private IntPtr _timerHandle = IntPtr.Zero;
@@ -32,7 +32,7 @@ public class HighPrecisionTimer
 
     public bool IsTicking => _timerHandle != IntPtr.Zero;
 
-    public event HighPrecisionTimerTick Tick;
+    public event HighPrecisionTimerTick? Tick;
 
     [DllImport("kernel32.dll")]
     private static extern bool CreateTimerQueueTimer(
@@ -88,7 +88,7 @@ public class HighPrecisionTimer
 
     private void TimerTick(IntPtr _, bool __)
     {
-        var now = _stopwatch.ElapsedTicks;
+        var now = _stopwatch!.ElapsedTicks;
 
         var deltaMillis = (now - _lastTicks) * 1000f / Stopwatch.Frequency;
         _lastTicks = now;

@@ -12,8 +12,8 @@ public partial class PauseMenu : UserControl
         LeaveButton.Click += (_, _) => LeaveClicked!.Invoke();
     }
 
-    public event Action ResumeClicked;
+    public event Action? ResumeClicked;
 
     // public event Action RestartClicked;
-    public event Action LeaveClicked;
+    public event Action? LeaveClicked;
 }

@@ -15,9 +15,7 @@ public class JumpPlatform : FallingPlatform
     private int _hue;
 
     private bool _isBouncing;
-
-    private int _stretchDirection = 1;
-
+    
     public JumpPlatform(double x, double y, double width, double height, double velocityY) : base(x, y, width, height,
         velocityY)
     {

@@ -16,7 +16,7 @@ public class PetStatUpdater : BackgroundService
 
     private bool _isSecondMinute;
 
-    private string _petName;
+    private string? _petName;
 
     public PetStatUpdater()
     {

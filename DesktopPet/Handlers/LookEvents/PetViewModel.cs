@@ -20,7 +20,7 @@ public partial class PetViewModel : VelocityGameObject
 
     [ObservableProperty] private double _lookDirectionY;
 
-    [ObservableProperty] private ContextMenu _petContextMenu;
+    [ObservableProperty] private ContextMenu? _petContextMenu;
 
     [ObservableProperty] private string _petName;
 
