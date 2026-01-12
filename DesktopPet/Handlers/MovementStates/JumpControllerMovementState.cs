@@ -42,8 +42,7 @@ public class JumpControllerMovementState : IPetEvent
 
     private void Jump(object sender, KeyEventArgs e)
     {
-        // _petWindow.debugLabel.Content = "Jump";
-        if (e.Key != Key.Space) return;
+        // if (e.Key != Key.Space) return;
         if (!CanJump()) return;
 
         if (_brain.IsOnGround)

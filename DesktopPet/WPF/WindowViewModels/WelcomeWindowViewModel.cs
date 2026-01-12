@@ -33,9 +33,9 @@ public partial class WelcomeWindowViewModel : ObservableValidator
     [RelayCommand(CanExecute = nameof(HasNoErrors))]
     private void Ok()
     {
-        //remove whitespace at the end and the beginning of the petname
+        // remove whitespace at the end and the beginning of the pet name
         PetName = PetName!.Trim();
-        
+
         // create new Pet
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("thurst", "100"));
         PetManager.Instance.SetAttribute(PetName, new PetAttribute("hunger", "100"));

@@ -26,9 +26,9 @@ public class PetLookToMoveDirectionState : IBehaviourState
     public void Tick()
     {
         var targetX = Math.Sign(_petViewModel.VelocityX) * 3;
-        _petViewModel.LookDirectionX = Double.Lerp(_petViewModel.LookDirectionX, targetX, 0.1f);
+        _petViewModel.LookDirectionX = double.Lerp(_petViewModel.LookDirectionX, targetX, 0.1f);
         var targetY = Math.Sign(_petViewModel.VelocityY) * 3;
-        _petViewModel.LookDirectionY = Double.Lerp(_petViewModel.LookDirectionY, targetY, 0.1f);
+        _petViewModel.LookDirectionY = double.Lerp(_petViewModel.LookDirectionY, targetY, 0.1f);
     }
 
     public void OnEnd()

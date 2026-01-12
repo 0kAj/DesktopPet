@@ -51,9 +51,15 @@ public partial class GameSelectorWindowViewModel : ObservableObject
 
     public event Action? RequestClose;
 
-    private bool IsHungry() => Int32.Parse(PetHungerAttribute.Value) < 100;
-    
-    private bool CanFeed() =>  IsHungry() && Int32.Parse(CollectedThirstAttribute.Value) > 0;
+    private bool IsHungry()
+    {
+        return int.Parse(PetHungerAttribute.Value) < 100;
+    }
+
+    private bool CanFeed()
+    {
+        return IsHungry() && int.Parse(CollectedThirstAttribute.Value) > 0;
+    }
 
     [RelayCommand(CanExecute = nameof(CanFeed))]
     private void Feed()
@@ -70,10 +76,16 @@ public partial class GameSelectorWindowViewModel : ObservableObject
         CollectedFoodAttribute.Value = (collectedFood - amount).ToString();
     }
 
-    private bool IsThirsty() => Int32.Parse(PetThirstAttribute.Value) < 100;
-    
-    private bool CanThirst() => IsThirsty() && Int32.Parse(CollectedThirstAttribute.Value) > 0;
-    
+    private bool IsThirsty()
+    {
+        return int.Parse(PetThirstAttribute.Value) < 100;
+    }
+
+    private bool CanThirst()
+    {
+        return IsThirsty() && int.Parse(CollectedThirstAttribute.Value) > 0;
+    }
+
     [RelayCommand(CanExecute = nameof(CanThirst))]
     private void Thirst()
     {

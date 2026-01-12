@@ -48,7 +48,7 @@ public abstract class HighPrecisionTickingGameObject : TimedGameObject
             StopTicking();
             return;
         }
-        
+
         Application.Current.Dispatcher.BeginInvoke(() =>
         {
             Tick(deltaMillis);
