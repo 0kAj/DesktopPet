@@ -15,7 +15,11 @@ Currently included mini games are **Food Collector** and **Pet Jump**.
 - 🎨 Customize the pet’s color appearance
 
 ## 🕹️ Controls
-The pet is controlled using the mouse cursor and keyboard input.
+Outside of mini games, the pet can be moved freely across the desktop using drag and drop.
+
+During mini games, the pet follows the mouse cursor and moves horizontally along the X-axis.
+Pressing the Space key triggers the jump action.
+The Escape key opens the pause menu.
 
 ## 🏗️ Architecture Overview
 ![DesktopPetTypeDependencyDiagram](DesktopPetTypeDependencyDiagram.png)
