@@ -5,6 +5,7 @@ using DesktopPet.Background;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Data.Pet;
 using DesktopPet.WPF.Validation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DesktopPet.WPF.WindowViewModels;
 
@@ -43,8 +44,8 @@ public partial class WelcomeWindowViewModel : ObservableValidator
         if (SetAsDefaultPet)
             PetManager.Instance.SetDefaultPet(PetName);
 
-        PetStatUpdater.Instance.PetName = PetName;
-
+        App.Host.Services.GetRequiredService<PetStatUpdater>().SetPetName(PetName);
+        
         RequestOpenPetWindow?.Invoke(PetName);
         RequestClose?.Invoke();
     }

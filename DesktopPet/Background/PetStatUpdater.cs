@@ -1,64 +1,68 @@
+using System.Net.Mime;
+using System.Windows;
+using System.Windows.Threading;
 using DesktopPet.Data.Attributes;
 using DesktopPet.Utils;
+using Microsoft.Extensions.Hosting;
 
 namespace DesktopPet.Background;
 
-public class PetStatUpdater
+public class PetStatUpdater : BackgroundService
 {
-    private bool _doTick;
+    private readonly TimeSpan _interval = TimeSpan.FromMinutes(1);
 
-    private PetAttribute _hungerAttribute;
+    private PetAttribute? _hungerAttribute;
+    private PetAttribute? _thirstAttribute;
 
     private bool _isSecondMinute;
 
     private string _petName;
-    private PetAttribute _thirstAttribute;
 
     public PetStatUpdater()
     {
     }
 
-    public PetStatUpdater(string petName)
+    public void SetPetName(string petName)
     {
-        PetAttributeHelper.InitStatsAttributes(petName, out _hungerAttribute, out _thirstAttribute);
+        _petName = petName;
+
+        PetAttributeHelper.InitStatsAttributes(petName, out var hunger, out var thirst);
+        _hungerAttribute = hunger;
+        _thirstAttribute = thirst;
     }
 
-    public static PetStatUpdater Instance { get; } = new();
-
-    public string PetName
+    private void UpdateStats()
     {
-        get => _petName;
-        set
+        if (_hungerAttribute == null || _thirstAttribute == null)
+            return;
+
+        Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            _doTick = false;
-            _petName = value;
-            PetAttributeHelper.InitStatsAttributes(value, out _hungerAttribute, out _thirstAttribute);
-            StartAsync();
-        }
+            if (_isSecondMinute)
+            {
+                var hunger = Parse(_hungerAttribute.Value);
+                _hungerAttribute.Value = Math.Max(hunger - 1, 0).ToString();
+            }
+
+            var thirst = Parse(_thirstAttribute.Value);
+            _thirstAttribute.Value = Math.Max(thirst - 1, 0).ToString();
+
+            _isSecondMinute = !_isSecondMinute;
+        });
     }
 
-    private async void StartAsync()
-    {
-        _doTick = true;
-        while (_doTick)
-        {
-            await Task.Delay(TimeSpan.FromMinutes(1));
+    private static int Parse(string value) => int.TryParse(value, out var integer) ? integer : 0;
 
-            Timer_Tick();
-        }
-    }
-
-    private void Timer_Tick()
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (_isSecondMinute)
+        while (!stoppingToken.IsCancellationRequested)
         {
-            var hunger = int.TryParse(_hungerAttribute.Value, out var hungerValue) ? hungerValue : 0;
-            _hungerAttribute.Value = Math.Max(hunger - 1, 0).ToString();
+            Task.Delay(_interval, stoppingToken).Wait(stoppingToken);
+
+            if (_petName != null)
+                UpdateStats();
         }
 
-        var thirst = int.TryParse(_thirstAttribute.Value, out var thirstValue) ? thirstValue : 0;
-        _thirstAttribute.Value = Math.Max(thirst - 1, 0).ToString();
-
-        _isSecondMinute = !_isSecondMinute;
+        return Task.CompletedTask;
     }
 }

@@ -12,27 +12,20 @@ namespace DesktopPet;
 
 public class App : Application
 {
-    private static IHost? _host;
-
-    public static IHost Host
-    {
-        get
-        {
-            if (_host == null) _host = CreateHostBuilder().Build();
-
-            return _host;
-        }
-        private set => _host = value;
-    }
+    public static IHost Host { get; private set; }
 
     [STAThread]
     public static void Main()
     {
+        Host = CreateHostBuilder().Build();
+        Host.Start();
+        
         var app = new App();
         app.Startup += Application_Startup;
         app.Run();
-
-        Host.Start();
+        
+        Host.StopAsync().GetAwaiter().GetResult();
+        Host.Dispose();
     }
 
     private static HostBuilder CreateHostBuilder()
@@ -40,6 +33,9 @@ public class App : Application
         var builder = new HostBuilder();
         builder.ConfigureServices((hostContext, services) =>
         {
+            services.AddSingleton<PetStatUpdater>();
+            services.AddHostedService(provider => provider.GetRequiredService<PetStatUpdater>());
+            
             services.AddTransient<WelcomeWindow>();
             services.AddTransient<WelcomeWindowViewModel>();
 
@@ -59,7 +55,7 @@ public class App : Application
         var defaultPet = PetManager.Instance.GetDefaultPet();
         if (defaultPet != null)
         {
-            PetStatUpdater.Instance.PetName = defaultPet.PetName;
+            Host.Services.GetRequiredService<PetStatUpdater>().SetPetName(defaultPet.PetName);
             // new PetWindow(defaultPet.PetName).Show();
             ActivatorUtilities.CreateInstance<PetWindow>(Host.Services, defaultPet.PetName).Show();
         }
